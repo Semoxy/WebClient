@@ -1,17 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { ErrorProvider } from "./ctx/error";
+import {BrowserRouter, Route} from "react-router-dom";
+import {LoginView} from "./login";
+import {AuthProvider, useAuth} from "./ctx/auth";
+import {deleteSession} from "./services/session";
+
+
+function LogoutButton() {
+    const auth = useAuth()
+
+    function logout() {
+        deleteSession().then(i => i && auth.setSessionId(null))
+    }
+
+    return <button onClick={logout}>Logout</button>
+}
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <ErrorProvider>
+            <BrowserRouter>
+                <AuthProvider>
+                    <Route path={"/login"}>
+                        <LoginView />
+                    </Route>
+                    <Route path={"/"} exact>
+                        Logged IN!!!!
+                        <LogoutButton />
+                    </Route>
+                </AuthProvider>
+            </BrowserRouter>
+        </ErrorProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
