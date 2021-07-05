@@ -1,32 +1,36 @@
 import React, {useContext, useEffect} from "react";
 import {useSession} from "../hooks";
 import {useHistory} from "react-router";
+import * as stream from "stream";
 
 
 interface AuthContextProps {
     isLoggedIn: boolean,
     sessionId: string | null,
-    setSessionId(s: string | null): void
+    setSessionId(s: string | null): void,
+    userId: string | null,
 }
 
 const AuthContext = React.createContext<AuthContextProps>({
     isLoggedIn: false,
     sessionId: null,
     setSessionId(s: string | null) {},
+    userId: null,
 })
 
 export const AuthProvider: React.FC = ({children}) => {
-    const [sessionId, setSessionId, isLoggedIn, sessionLoading] = useSession()
+    const [sessionId, setSessionId, isLoggedIn, sessionLoading, userId] = useSession()
     const history = useHistory()
 
     useEffect(() => {
-        history.push(isLoggedIn ? "/" : "/login")
+        history.replace(isLoggedIn ? "/" : "/login")
     }, [isLoggedIn])
 
     return <AuthContext.Provider value={{
         sessionId,
         setSessionId,
-        isLoggedIn
+        isLoggedIn,
+        userId
     }}>
         {sessionLoading || children}
     </AuthContext.Provider>

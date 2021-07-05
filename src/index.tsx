@@ -2,20 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { ErrorProvider } from "./ctx/error";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {LoginView} from "./login";
 import {AuthProvider, useAuth} from "./ctx/auth";
 import {deleteSession} from "./services/session";
+import {Title} from "./title";
+import {UserProvider, useUser} from "./ctx/user";
+import {ConfigProvider, useConfig} from "./ctx/config";
 
 
 function LogoutButton() {
     const auth = useAuth()
+    const user = useUser()
+    const config = useConfig()
 
     function logout() {
         deleteSession().then(i => i && auth.setSessionId(null))
     }
 
-    return <button onClick={logout}>Logout</button>
+    return <>
+        Hello, {user.username}<br />
+        The maximum RAM you can use per server is {config.config.maxRam}GB<br />
+        <button onClick={logout}>Logout</button>
+    </>
 }
 
 
@@ -24,13 +33,20 @@ ReactDOM.render(
         <ErrorProvider>
             <BrowserRouter>
                 <AuthProvider>
-                    <Route path={"/login"}>
-                        <LoginView />
-                    </Route>
-                    <Route path={"/"} exact>
-                        Logged IN!!!!
-                        <LogoutButton />
-                    </Route>
+                    <Switch>
+                        <Route path={"/login"}>
+                            <Title title={"Login"} />
+                            <LoginView />
+                        </Route>
+                        <Route path={"/"}>
+                            <UserProvider>
+                                <ConfigProvider>
+                                    <Title title={"Interface"} />
+                                    <LogoutButton />
+                                </ConfigProvider>
+                            </UserProvider>
+                        </Route>
+                    </Switch>
                 </AuthProvider>
             </BrowserRouter>
         </ErrorProvider>

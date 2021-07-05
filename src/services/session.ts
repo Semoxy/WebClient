@@ -44,3 +44,14 @@ export async function deleteSession(): Promise<boolean> {
         return false
     }
 }
+
+interface UserInformation {
+    username: string,
+    permissions: string[]
+}
+
+export async function getUserInformation(): Promise<UserInformation> {
+    let request = new APIRequest("account")
+    request.addCredentials()
+    return (await request.get()).data
+}
