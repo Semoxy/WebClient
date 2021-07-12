@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useAuth} from "./auth";
 import {getUserInformation} from "../services/session";
-
+import {useLoading} from "./loading";
 
 interface IUserContextProps {
     username: string,
@@ -9,13 +9,11 @@ interface IUserContextProps {
     permissions: string[]
 }
 
-
 const UserContext = React.createContext<IUserContextProps>({
     username: "<unknown>",
     userId: "<unknown>",
     permissions: []
 })
-
 
 export const UserProvider: React.FC = ({children}) => {
     const [username, setUsername] = useState<string>("")
@@ -23,11 +21,14 @@ export const UserProvider: React.FC = ({children}) => {
     const [fetched, setFetched] = useState(false)
 
     const auth = useAuth()
+    const loading = useLoading()
 
     useEffect(() => {
+        loading.requestIntent("Loading User Information", "LOAD_USER_INFO")
         getUserInformation().then(i => {
             setUsername(i.username)
             setPermissions(i.permissions)
+            loading.finishIntent("LOAD_USER_INFO")
             setFetched(true)
         })
     }, [])

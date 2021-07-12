@@ -9,6 +9,7 @@ import {deleteSession} from "./services/session";
 import {Title} from "./title";
 import {UserProvider, useUser} from "./ctx/user";
 import {ConfigProvider, useConfig} from "./ctx/config";
+import {LoadingProvider} from "./ctx/loading";
 
 
 function LogoutButton() {
@@ -31,24 +32,26 @@ function LogoutButton() {
 ReactDOM.render(
     <React.StrictMode>
         <ErrorProvider>
-            <BrowserRouter>
-                <AuthProvider>
-                    <Switch>
-                        <Route path={"/login"}>
-                            <Title title={"Login"} />
-                            <LoginView />
-                        </Route>
-                        <Route path={"/"}>
-                            <UserProvider>
-                                <ConfigProvider>
-                                    <Title title={"Interface"} />
-                                    <LogoutButton />
-                                </ConfigProvider>
-                            </UserProvider>
-                        </Route>
-                    </Switch>
-                </AuthProvider>
-            </BrowserRouter>
+            <LoadingProvider>
+                <BrowserRouter>
+                    <AuthProvider>
+                        <Switch>
+                            <Route path={"/login"}>
+                                <Title title={"Login"} />
+                                <LoginView />
+                            </Route>
+                            <Route path={"/"}>
+                                <UserProvider>
+                                    <ConfigProvider>
+                                        <Title title={"Interface"} />
+                                        <LogoutButton />
+                                    </ConfigProvider>
+                                </UserProvider>
+                            </Route>
+                        </Switch>
+                    </AuthProvider>
+                </BrowserRouter>
+            </LoadingProvider>
         </ErrorProvider>
     </React.StrictMode>,
     document.getElementById('root')

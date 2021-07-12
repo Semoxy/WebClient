@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Config, getConfig} from "../services/config";
+import {useLoading} from "./loading";
 
 interface ConfigContextProps {
     config: Config
@@ -21,10 +22,14 @@ export const ConfigProvider: React.FC = ({children}) => {
     });
     const [fetched, setFetched] = useState(false)
 
+    const loading = useLoading()
+
     useEffect(() => {
+        loading.requestIntent("Loading Config", "LOAD_CONFIG")
         getConfig().then(c => {
             setConfig(c)
             setFetched(true)
+            loading.finishIntent("LOAD_CONFIG")
         })
     }, [])
 
