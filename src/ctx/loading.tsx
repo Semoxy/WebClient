@@ -27,7 +27,7 @@ export const LoadingProvider: React.FC = ({children}) => {
     }
 
     function finishIntent(identifier: string): void {
-        let newIntents = intents.slice().filter(i => i.identifier != identifier)
+        let newIntents = intents.slice().filter(i => i.identifier !== identifier)
         setIntents(newIntents)
     }
 

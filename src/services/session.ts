@@ -22,15 +22,9 @@ export async function createSession(username: string, password: string): Promise
     request.setData({username, password})
     let data: any = (await request.post()).data
 
-    if (data.success) {
-        return {
-            success: true,
-            sessionId: data.data.sessionId
-        }
-    }
     return {
-        success: false,
-        sessionId: "<unknown>"
+        success: data.success,
+        sessionId: data?.data?.sessionId
     }
 }
 

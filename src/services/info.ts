@@ -1,13 +1,13 @@
 import {APIRequest} from "./index";
 
-export interface Config {
+export interface Info {
     javaVersions: {[x: string]: string},
     maxRam: number,
     publicIP: string
 }
 
-export async function getConfig(): Promise<Config> {
-    let request = new APIRequest("config")
+export async function getInfo(): Promise<Info> {
+    let request = new APIRequest("info")
     request.addCredentials()
     return (await request.get()).data
 }

@@ -38,7 +38,7 @@ export function useSession(): [string | null, (s: string) => void, boolean, bool
             setUserId(i.userId)
             setLoggedIn(i.loggedIn)
             setLoading(false)
-        }).catch(e => {
+        }).catch(() => {
             setUserId(null)
             setLoggedIn(false)
             setLoading(false)

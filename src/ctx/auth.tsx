@@ -1,7 +1,6 @@
 import React, {useContext, useEffect} from "react";
 import {useSession} from "../hooks";
 import {useHistory} from "react-router";
-import * as stream from "stream";
 
 
 interface AuthContextProps {
