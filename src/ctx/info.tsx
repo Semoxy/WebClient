@@ -14,6 +14,7 @@ const InfoContext = React.createContext<InfoContextProps>({
     }
 })
 
+// TODO: add uptime
 export const InfoProvider: React.FC = ({children}) => {
     const [info, setInfo] = useState<Info>({
         javaVersions: {},
@@ -28,8 +29,8 @@ export const InfoProvider: React.FC = ({children}) => {
         loading.requestIntent("Loading Instance Information", "LOAD_INFO")
         getInfo().then(c => {
             setInfo(c)
-            setFetched(true)
             loading.finishIntent("LOAD_INFO")
+            setFetched(true)
         })
     }, [])
 

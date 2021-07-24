@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 interface ITitleProps {
     title: string
@@ -7,7 +7,7 @@ interface ITitleProps {
 export const Title: React.FC<ITitleProps> = ({title}) => {
     useEffect(() => {
         document.title = title + " | Semoxy"
-    }, [])
+    }, [title])
 
     return <></>
 }

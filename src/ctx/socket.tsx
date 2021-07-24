@@ -104,6 +104,7 @@ export const SocketProvider: React.FC = ({children}) => {
         }
 
         socket.current.onclose = (e) => {
+            setAuthenticated(false)
             console.log("Socket Closed")
             // push error when the socket wasn't closed by the client
             if (e.code !== 1000 && e.code !== 1006) return
