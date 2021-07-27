@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { getSessionInformation } from "./services/session";
 import { useLoading } from "./ctx/loading";
 
@@ -14,6 +14,49 @@ export function useStorage(key: string, storage: Storage = localStorage): [strin
     }, [state, key, storage])
 
     return [state, setState]
+}
+
+const idCounter: {[x: string]: number} = {}
+
+export function useUniqueId(prefix: string = "component"): string {
+    const firstRender = useRef(true)
+
+    let idToUse = "";
+    if (firstRender.current) {
+        if (!idCounter[prefix]) {
+            idCounter[prefix] = 0
+        }
+
+        idToUse = `${prefix}-${++idCounter[prefix]}`
+    }
+
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false
+        }
+    }, [])
+
+    return useRef<string>(idToUse).current
+}
+
+export function useMouseDown(): [boolean, () => void] {
+    const [mouseDown, setMouseDown] = useState(false)
+
+    useEffect(() => {
+        function mouseUpListener() {
+            setMouseDown(false)
+        }
+
+        window.addEventListener("mouseup", mouseUpListener)
+
+        return () => {
+            window.removeEventListener("mouseup", mouseUpListener)
+        }
+    }, [])
+
+    return [mouseDown, () => {
+        setMouseDown(true)
+    }]
 }
 
 export function useSession(): [string | null, (s: string) => void, boolean, boolean, string | null] {
