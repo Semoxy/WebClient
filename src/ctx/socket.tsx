@@ -25,56 +25,23 @@ const SocketContext = React.createContext<SocketContextProps>({
 })
 
 export const SocketProvider: React.FC = ({children}) => {
-    const [callbacks, setCallbacks] = useState<Callbacks>({})
     const [authenticated, setAuthenticated] = useState(false)
 
+    const callbacks = useRef<Callbacks>({})
     const socket = useRef<WebSocket>()
-    const unmounted = useRef(false)
+    const mounted = useRef(true)
 
     const auth = useAuth()
     const error = useError()
-
-    function handlePacket(e: MessageEvent) {
-        let data: Packet = JSON.parse(e.data)
-
-        switch (data.action) {
-            case "AUTH_SUCCESS":
-                setAuthenticated(true)
-                console.log("Socket Ready")
-                break
-            case "AUTH_ERROR":
-                error.pushError({
-                    name: "WebSocket authentication failed",
-                    description: "",
-                    retryCallback(): boolean {
-                        reconnectWebsocket()
-                        return true
-                    }
-                })
-                break
-        }
-
-        if (!callbacks[data.action]) {
-            return
-        }
-
-        // run callbacks
-        Object.values(callbacks[data.action]).forEach(c => c(data))
-    }
-
-    useEffect(() => {
-        if (!socket.current) return
-        // update the current onmessage when the callbacks change
-        socket.current.onmessage = handlePacket
-    }, [callbacks])
 
     useEffect(() => {
         // connect the websocket on mount
         reconnectWebsocket()
 
         return () => {
+            mounted.current = false
+
             // close socket on unmount
-            unmounted.current = true
             socket.current?.close()
         }
     }, [])
@@ -90,7 +57,6 @@ export const SocketProvider: React.FC = ({children}) => {
             socket.current.close()
         }
 
-        console.log("Open Socket")
         socket.current = new WebSocket(`ws://${window.location.host}/api/server/events`)
 
         socket.current.onopen = () => {
@@ -103,8 +69,17 @@ export const SocketProvider: React.FC = ({children}) => {
             }))
         }
 
+        socket.current.onmessage = (e) => {
+            let data: Packet = JSON.parse(e.data)
+
+            if (!callbacks.current[data.action]) {
+                return
+            }
+
+            Object.values(callbacks.current[data.action]).forEach(c => c(data))
+        }
+
         socket.current.onclose = (e) => {
-            setAuthenticated(false)
             console.log("Socket Closed")
             // push error when the socket wasn't closed by the client
             if (e.code !== 1000 && e.code !== 1006) return
@@ -120,31 +95,41 @@ export const SocketProvider: React.FC = ({children}) => {
     }
 
     function registerCallback(callback: OnMessageCallback, action: Action, identifier: string): void {
-        let newCallbacks = Object.assign({}, callbacks)
-
-        if (!newCallbacks[action]) {
-            newCallbacks[action] = {}
+        if (!callbacks.current[action]) {
+            callbacks.current[action] = {}
         }
 
-        newCallbacks[action][identifier] = callback
-        setCallbacks(newCallbacks)
+        callbacks.current[action][identifier] = callback
     }
 
     function unregisterCallback(action: Action, identifier: string) {
-        if (Object.keys(callbacks).length === 0) return
-
-        let newCallbacks = Object.assign({}, callbacks)
-
-        delete newCallbacks[action][identifier]
-
-        setCallbacks(newCallbacks)
+        if (Object.keys(callbacks.current).length === 0) return
+        delete callbacks.current[action][identifier]
     }
 
-    return <SocketContext.Provider value={{
+    const value = {
         registerCallback,
         unregisterCallback,
         authenticated
-    }}>
+    }
+
+    useSocketMessage(() => {
+        setAuthenticated(true)
+        console.log("Socket Logged In")
+    }, "AUTH_SUCCESS", "SocketContext", value)
+
+    useSocketMessage(() => {
+        error.pushError({
+            name: "WebSocket authentication failed",
+            description: "",
+            retryCallback(): boolean {
+                reconnectWebsocket()
+                return true
+            }
+        })
+    }, "AUTH_ERROR", "LogoutButton", value)
+
+    return <SocketContext.Provider value={value}>
         {children}
     </SocketContext.Provider>
 }
@@ -154,9 +139,11 @@ export const SocketProvider: React.FC = ({children}) => {
  * @param callback the callback to call on the specific action.
  * @param action the action to call the callback on.
  * @param identifier a unique identifier for the component. In most cases this can be the component name.
+ * @param context a custom context (useful for using this hook INSIDE the context provider)
  */
-export function useSocketMessage<T extends Packet>(callback: (packet: T) => void, action: Action, identifier: string) {
-    const socket = useSocket()
+export function useSocketMessage<T extends Packet>(callback: (packet: T) => void, action: Action, identifier: string, context?: SocketContextProps) {
+    let socket = useSocket()
+    socket = context || socket
 
     useEffect(() => {
         let id = identifier + ":" + action

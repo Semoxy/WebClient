@@ -20,11 +20,18 @@ interface LoginResponse {
 export async function createSession(username: string, password: string): Promise<LoginResponse> {
     let request = new APIRequest("account/login")
     request.setData({username, password})
-    let data: any = (await request.post()).data
 
-    return {
-        success: data.success,
-        sessionId: data?.data?.sessionId
+    try {
+        let data: any = (await request.post()).data
+        return {
+            success: data.success,
+            sessionId: data?.data?.sessionId
+        }
+    } catch (e) {
+        return {
+            success: false,
+            sessionId: "undefined"
+        }
     }
 }
 
