@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import { getSessionInformation } from "./services/session";
-import { useLoading } from "./ctx/loading";
+import { useLoading } from "./ctx/loading/loading";
 
-export function useStorage(key: string, storage: Storage = localStorage): [string | null, (val: string) => void] {
+export function useStorage(key: string, storage: Storage = localStorage): [string | null, (val: string | null) => void] {
     const [state, setState] = useState<string | null>(storage.getItem(key));
 
     useEffect(() => {

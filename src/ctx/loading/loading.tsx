@@ -1,4 +1,6 @@
 import React, {useContext, useState} from "react"
+import FullSizeContainer from "../../components/form/full";
+import styles from "./loading.module.css"
 
 interface LoadingContextProps {
     requestIntent(msg: string, identifier: string): void,
@@ -6,10 +8,8 @@ interface LoadingContextProps {
 }
 
 const LoadingContext = React.createContext<LoadingContextProps>({
-    requestIntent(msg: string, identifier: string) {
-    },
-    finishIntent(identifier: string) {
-    }
+    requestIntent() { },
+    finishIntent() { }
 })
 
 interface Intent {
@@ -34,9 +34,23 @@ export const LoadingProvider: React.FC = ({children}) => {
     const lastIntent = intents[intents.length - 1]
 
     return <LoadingContext.Provider value={{requestIntent, finishIntent}}>
-        { lastIntent && <h1>{lastIntent.msg}</h1> }
+        { lastIntent &&
+            <FullSizeContainer zIndex={10} className={styles.container}>
+                <LoadingAnimation />
+                <span>{lastIntent.msg}</span>
+            </FullSizeContainer>
+        }
         {children}
     </LoadingContext.Provider>
+}
+
+export const LoadingAnimation: React.FC = () => {
+    return <div className={styles.ring}>
+        <div />
+        <div />
+        <div />
+        <div />
+    </div>
 }
 
 export function useLoading() {

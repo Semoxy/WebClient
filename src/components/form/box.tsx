@@ -1,8 +1,15 @@
 import React from "react";
 import styles from "./box.module.css"
 
-const FormBox: React.FC = ({children}) => {
-    return <div className={styles.container}>
+interface IFormBoxProps {
+    onSubmit?(): void
+}
+
+const FormBox: React.FC<IFormBoxProps> = ({children, onSubmit}) => {
+    return <div
+        className={styles.container}
+        onKeyDown={(e) => e.key === "Enter" && onSubmit && onSubmit()}
+    >
         {children}
     </div>
 }

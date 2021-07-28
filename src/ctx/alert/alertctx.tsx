@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import styles from "./alert.module.css"
 import Alert from "./alert";
 
-export type AlertType = "success" | "warning" | "error"
+export type AlertType = "success" | "warning" | "error" | "info"
 
 export interface Alert {
     type: AlertType,
@@ -13,11 +13,11 @@ export interface Alert {
 }
 
 export interface IAlertContextProps {
-    alert(alert: Alert): void
+    alert(alert: Alert): () => void
 }
 
 const AlertContext = React.createContext<IAlertContextProps>({
-    alert: () => {}
+    alert: () => () => {}
 })
 
 export const AlertProvider: React.FC = ({children}) => {
@@ -36,12 +36,13 @@ export const AlertProvider: React.FC = ({children}) => {
         return () => alertStack.forEach((a) => a.timeout && clearTimeout(a.timeout))
     }, [])
 
-    function alert(alert: Alert): void {
+    function alert(alert: Alert): () => void {
         alert.id = idPointer.current++
         const newAlerts = alertStack.slice()
         newAlerts.push(alert)
         setAlertStack(newAlerts)
         alert.timeout = setTimeout(() => closeAlert(alert.id), 3000)
+        return () => closeAlert(alert.id)
     }
 
     return <AlertContext.Provider value={{ alert }}>

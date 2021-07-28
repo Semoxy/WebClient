@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Info, getInfo} from "../services/info";
-import {useLoading} from "./loading";
+import {useLoading} from "./loading/loading";
 
 interface InfoContextProps {
     info: Info

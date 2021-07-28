@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useAuth} from "./auth";
 import {getUserInformation} from "../services/session";
-import {useLoading} from "./loading";
+import {useLoading} from "./loading/loading";
 
 interface IUserContextProps {
     username: string,

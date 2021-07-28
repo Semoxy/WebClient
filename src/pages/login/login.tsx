@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import {createSession} from "../../services/session";
 import {useAuth} from "../../ctx/auth";
-import {useLoading} from "../../ctx/loading";
+import {useLoading} from "../../ctx/loading/loading";
 import Button from "../../components/button";
 import Input, {PasswordInput} from "../../components/input";
 
 import styles from "./login.module.css"
-import FullScreenFormContainer from "../../components/form/fullscreen";
+import FullSizeContainer from "../../components/form/full";
 import FormBox, {BoxHeading, BoxText} from "../../components/form/box";
 import {LoginScreenLogo} from "../../components/semoxy";
-import {useAlert} from "../../alert/alertctx";
+import {useAlert} from "../../ctx/alert/alertctx";
 
 export const LoginView: React.FC = () => {
     const [username, setUsername] = useState<string>("")
@@ -20,6 +20,15 @@ export const LoginView: React.FC = () => {
     const alert = useAlert()
 
     function login() {
+        if (!username || !password) {
+            alert.alert({
+                type: "info",
+                message: "No " + (username ? "Password" : "Username"),
+                description: "Please enter your Credentials"
+            })
+            return
+        }
+
         loader.requestIntent("Logging in", "LOG_IN")
         createSession(username, password)
             .then(l => {
@@ -36,8 +45,8 @@ export const LoginView: React.FC = () => {
             })
     }
 
-    return <FullScreenFormContainer>
-        <FormBox>
+    return <FullSizeContainer>
+        <FormBox onSubmit={login}>
             <LoginScreenLogo />
             <BoxHeading>Login</BoxHeading>
             <BoxText>
@@ -62,5 +71,5 @@ export const LoginView: React.FC = () => {
                 <Button onClick={login} type={"primary"}>Login</Button>
             </div>
         </FormBox>
-    </FullScreenFormContainer>
+    </FullSizeContainer>
 }

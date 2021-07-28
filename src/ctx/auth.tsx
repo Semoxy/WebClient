@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useSession} from "../hooks";
 import {useHistory} from "react-router";
 
@@ -8,28 +8,51 @@ interface AuthContextProps {
     sessionId: string | null,
     setSessionId(s: string | null): void,
     userId: string | null,
+    sessionLoading: boolean
 }
 
 const AuthContext = React.createContext<AuthContextProps>({
     isLoggedIn: false,
     sessionId: null,
-    setSessionId(s: string | null) {},
+    setSessionId() {},
     userId: null,
+    sessionLoading: true
 })
 
 export const AuthProvider: React.FC = ({children}) => {
     const [sessionId, setSessionId, isLoggedIn, sessionLoading, userId] = useSession()
+    const [urlAfterLogin, setUrlAfterLogin] = useState<string | null>(null)
     const history = useHistory()
 
     useEffect(() => {
-        history.replace(isLoggedIn ? "/" : "/login")
-    }, [isLoggedIn])
+        if (sessionLoading) return
+
+        // when not logged in
+        if (!isLoggedIn && !history.location.pathname.startsWith("/login")) {
+            setUrlAfterLogin(history.location.pathname)
+            console.log("replace login")
+            history.replace("/login")
+            return
+        }
+
+        // when already logged in
+        if (history.location.pathname.startsWith("/login")) {
+            console.log("replace /")
+            history.replace("/")
+        }
+
+        if (urlAfterLogin !== null) {
+            console.log("replace def " + urlAfterLogin)
+            history.push(urlAfterLogin)
+        }
+    }, [isLoggedIn, sessionLoading])
 
     return <AuthContext.Provider value={{
         sessionId,
         setSessionId,
         isLoggedIn,
-        userId
+        userId,
+        sessionLoading
     }}>
         {sessionLoading || children}
     </AuthContext.Provider>

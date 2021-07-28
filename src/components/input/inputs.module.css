@@ -26,12 +26,15 @@
 }
 
 .field:focus {
-    border: 1px solid var(--primary-blue);
-    background-color: var(--input-backgound-hover);
+    border-color: var(--primary-blue);
 }
 
 .field::placeholder {
     color: var(--placeholder-color);
+}
+
+.field:not(:placeholder-shown), .field:focus {
+    background-color: var(--input-backgound-filled);
 }
 
 .icon {

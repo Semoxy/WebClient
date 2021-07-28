@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 
-interface ITitleProps {
-    title: string
-}
-
-export const Title: React.FC<ITitleProps> = ({title}) => {
+export const Title: React.FC = ({children}) => {
     useEffect(() => {
-        document.title = title + " | Semoxy"
-    }, [title])
+        if (typeof children !== "string") {
+            throw new TypeError("children of <Title /> must be string, got " + children + " instead")
+        }
+        document.title = children.toString() + " | Semoxy"
+    }, [])
 
     return <></>
 }
