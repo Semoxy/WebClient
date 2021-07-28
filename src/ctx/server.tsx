@@ -17,7 +17,7 @@ const ServerContext = React.createContext<ServerContextProps>({
 
 export const ServerProvider: React.FC = ({children}) => {
     const [servers, setServers] = useState<Server[]>([])
-    const [currentId, setCurrentId] = useState<string>("")
+    const [currentId, setCurrentId] = useState<string>()
 
     const [fetched, setFetched] = useState(false)
 
@@ -38,7 +38,8 @@ export const ServerProvider: React.FC = ({children}) => {
     useEffect(() => {
         if (!fetched) return;
 
-        if (!currentServer && currentId !== "") {
+        if (!currentServer && currentId !== undefined) {
+            // redirect to dashboard when id is wrong or not present
             history.replace("/dashboard")
         }
     }, [currentId, fetched])
