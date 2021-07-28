@@ -1,3 +1,10 @@
-.logo {
+.login-logo {
     padding: 8px 80px;
+}
+
+.header-logo {
+    height: 2.5rem;
+    width: auto;
+    position: relative;
+    top: 2px;
 }

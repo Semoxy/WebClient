@@ -1,0 +1,21 @@
+.grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    --gap: .9em;
+    gap: var(--gap);
+    padding-bottom: var(--gap);
+    grid-template-areas:
+        "header header"
+        "navigation content";
+}
+
+.grid > * {
+    box-sizing: border-box;
+}
+
+.content {
+    grid-area: content;
+    height: 100%;
+    padding-top: 14px;
+}
