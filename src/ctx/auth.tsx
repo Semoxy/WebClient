@@ -34,6 +34,10 @@ export const AuthProvider: React.FC = ({children}) => {
             return
         }
 
+        if (history.location.pathname.startsWith("/login") && isLoggedIn) {
+            history.replace("/")
+        }
+
         if (urlAfterLogin !== null) {
             // redirect to url that was requested before redirect to login page
             history.push(urlAfterLogin)
