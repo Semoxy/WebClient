@@ -6,7 +6,7 @@ export const Title: React.FC = ({children}) => {
             throw new TypeError("children of <Title /> must be string, got " + children + " instead")
         }
         document.title = children.toString() + " | Semoxy"
-    }, [])
+    })
 
     return <></>
 }

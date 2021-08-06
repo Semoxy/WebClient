@@ -40,42 +40,51 @@ export const App: React.FC = () => {
                 <SocketProvider>
                     <InfoProvider>
                         <ServerProvider>
-                            <Title>Interface</Title>
                             <InterfaceGrid>
                                 <Switch>
                                     <Route path={"/dashboard"}>
+                                        <Title>Dashboard</Title>
                                         Dashboard
                                     </Route>
                                     <Route path={"/server"}>
                                         <Switch>
                                             <Route path={"/server/new"}>
+                                                <Title>New Server</Title>
                                                 New Server
                                             </Route>
 
                                             <Route path={"/server/:serverId"}>
                                                 <Switch>
                                                     <Route path={"/server/:serverId/players"}>
+                                                        <Title>Players</Title>
                                                         Players
                                                     </Route>
                                                     <Route path={"/server/:serverId/console"}>
+                                                        <Title>Console</Title>
                                                         Console
                                                     </Route>
                                                     <Route path={"/server/:serverId/backups"}>
+                                                        <Title>Backups</Title>
                                                         Backups
                                                     </Route>
                                                     <Route path={"/server/:serverId/settings"}>
+                                                        <Title>Settings</Title>
                                                         Settings
                                                     </Route>
                                                     <Route path={"/server/:serverId/addons"}>
+                                                        <Title>Addons</Title>
                                                         Addons
                                                     </Route>
                                                     <Route path={"/server/:serverId/worlds"}>
+                                                        <Title>Worlds</Title>
                                                         Worlds
                                                     </Route>
                                                     <Route path={"/server/:serverId/dsm"}>
+                                                        <Title>DSM</Title>
                                                         Dynamic Server Management
                                                     </Route>
                                                     <Route path={"/server/:serverId"}>
+                                                        <Title>Overview</Title>
                                                         Server Overview
                                                     </Route>
                                                 </Switch>
@@ -89,10 +98,12 @@ export const App: React.FC = () => {
                                     </Route>
 
                                     <Route path={"/users"}>
+                                        <Title>User Settings</Title>
                                         User Settings
                                     </Route>
 
                                     <Route path={"/settings"}>
+                                        <Title>Semoxy Settings</Title>
                                         Semoxy Settings
                                     </Route>
 

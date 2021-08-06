@@ -68,32 +68,30 @@ interface INavigationItemProps {
 
 
 const NavigationItem: React.FC<INavigationItemProps> = ({index, currentIndex, setCurrentIndex, text, icon, onClick, redirect}) => {
-    const selected = index === currentIndex
     const history = useHistory()
+
+    // issue: click users, F5, change server in dropdown
+    if (history.location.pathname === redirect) {
+        setCurrentIndex(index)
+    }
+    const selected = currentIndex === index
 
     const classNames = [styles.item]
     selected && classNames.push(styles.selected)
 
     function _onClick() {
-        if (selected) return
-
         setCurrentIndex(index)
         onClick && onClick()
         redirect && history.push(redirect)
     }
 
-    let Icon
-    if (typeof icon === "string") {
-       Icon = <img className={styles.icon} src={`icons/${icon}.svg`} alt={`${text}-Icon`} />
-    } else {
-        Icon = React.cloneElement(icon as JSX.Element, {
-            className: styles.icon,
-            selected: selected
-        })
-    }
+    icon = React.cloneElement(icon as JSX.Element, {
+        className: styles.icon,
+        selected: selected
+    })
 
     return <div onClick={_onClick} className={classNames.join(" ")}>
-        {Icon}
+        {icon}
         <span>{text}</span>
         { selected && <div className={styles.selectrect} /> }
     </div>

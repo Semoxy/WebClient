@@ -7,11 +7,16 @@ import {Server} from "../../services/server";
 export const ServerSelection: React.FC = () => {
     const servers = useServers()
     const history = useHistory()
+    const hasBeenSwitched = useRef(false)
 
     const lastId = useRef<string | undefined>(servers.currentServer?.id)
 
     function rerouteToServerId(newId?: string) {
         if (!newId) return;
+
+        if (!history.location.pathname.startsWith("/server") && !hasBeenSwitched.current) {
+            return;
+        }
 
         // redirect to server overview when the server was switched but no server page is open or no previous server was selected
         if (!history.location.pathname.startsWith("/server") || !lastId.current) {
@@ -22,11 +27,12 @@ export const ServerSelection: React.FC = () => {
         let newRoute = history.location.pathname.slice()
         newRoute = newRoute.replace(lastId.current, newId)
 
-        history.replace(newRoute)
+        history.push(newRoute)
     }
 
     function switchServer(newId: string) {
         if (!newId) return
+        hasBeenSwitched.current = true
         servers.setCurrentServer(newId)
     }
 
