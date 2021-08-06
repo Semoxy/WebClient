@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import styles from "./serverselection.module.css"
 import {useServers} from "../../ctx/server";
 import {useHistory} from "react-router";
 import {Server} from "../../services/server";
+import {DropDown} from "../dropdown/dropdown";
 
 export const ServerSelection: React.FC = () => {
     const servers = useServers()
@@ -49,29 +50,21 @@ interface IServerSelectionSelectProps {
 }
 
 const ServerSelectionSelect: React.FC<IServerSelectionSelectProps> = ({onChange}) => {
-    const [collapsed, setCollapsed] = useState(true)
     const server = useServers()
 
-    const classNames = [styles.select]
-    if (!collapsed) classNames.push(styles.open)
-
-    return <div tabIndex={0} className={classNames.join(" ")} onClick={() => setCollapsed(!collapsed)} onBlur={() => setCollapsed(true)}>
-        { server.currentServer && <ServerEntry server={server.currentServer} /> }
-        <img className={styles["dropdown-arrow"]} src={"assets/arrow_down.svg"} alt={"Arrow Down"} />
-        <div className={styles.dropdown}>
-            {server.servers.map(s => s.id !== server.currentServer?.id && <ServerEntry key={s.id} server={s} onClick={() => onChange && onChange(s.id)} />)}
-        </div>
-    </div>
+    return <DropDown currentItem={<ServerEntry server={server.currentServer} />} tabIndex={0} onItemClick={(e) => onChange && onChange(e.props["data-id"])}>
+        {server.servers.map(s => s.id !== server.currentServer?.id && <ServerEntry key={s.id} server={s} data-id={s.id}/>)}
+    </DropDown>
 }
 
 interface IServerEntryProps {
-    server: Server,
+    server: Server | null,
     onClick?(): void
 }
 
 const ServerEntry: React.FC<IServerEntryProps> = ({server, onClick}) => {
     return <div className={styles.item} onClick={onClick}>
-        <h3>{server.displayName}</h3>
-        { server.description && <p>{server.description}</p> }
+        <h3>{server?.displayName}</h3>
+        { server?.description && <p>{server.description}</p> }
     </div>
 }
