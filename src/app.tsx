@@ -22,7 +22,7 @@ function ServerIdSetter() {
         servers.setCurrentServer(url.serverId)
     }, [url])
 
-    return <></>
+    return <>Server Name: {servers.currentServer?.name}</>
 }
 
 
@@ -42,17 +42,38 @@ export const App: React.FC = () => {
                         <ServerProvider>
                             <Title>Interface</Title>
                             <InterfaceGrid>
-                                {/*Header, Navbar*/}
                                 <Switch>
                                     <Route path={"/dashboard"}>
                                         Dashboard
                                     </Route>
                                     <Route path={"/server"}>
                                         <Switch>
+                                            <Route path={"/server/new"}>
+                                                New Server
+                                            </Route>
+
                                             <Route path={"/server/:serverId"}>
                                                 <Switch>
                                                     <Route path={"/server/:serverId/players"}>
                                                         Players
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/console"}>
+                                                        Console
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/backups"}>
+                                                        Backups
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/settings"}>
+                                                        Settings
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/addons"}>
+                                                        Addons
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/worlds"}>
+                                                        Worlds
+                                                    </Route>
+                                                    <Route path={"/server/:serverId/dsm"}>
+                                                        Dynamic Server Management
                                                     </Route>
                                                     <Route path={"/server/:serverId"}>
                                                         Server Overview
@@ -60,10 +81,19 @@ export const App: React.FC = () => {
                                                 </Switch>
                                                 <ServerIdSetter />
                                             </Route>
+
                                             <Route path={"/"}>
                                                 <Redirect to={"/dashboard"} />
                                             </Route>
                                         </Switch>
+                                    </Route>
+
+                                    <Route path={"/users"}>
+                                        User Settings
+                                    </Route>
+
+                                    <Route path={"/settings"}>
+                                        Semoxy Settings
                                     </Route>
 
                                     <Route path={"/"}>

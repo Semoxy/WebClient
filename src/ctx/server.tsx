@@ -30,6 +30,13 @@ export const ServerProvider: React.FC = ({children}) => {
         loading.requestIntent("Loading Servers", "LOAD_SERVERS")
         getServers().then(s => {
             setServers(s)
+
+            if (s.length === 0) {
+                history.replace("/server/new")
+            } else {
+                setCurrentId(s[0].id)
+            }
+
             loading.finishIntent("LOAD_SERVERS")
             setFetched(true)
         })
