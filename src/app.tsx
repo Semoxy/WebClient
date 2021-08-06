@@ -22,7 +22,7 @@ function ServerIdSetter() {
         servers.setCurrentServer(url.serverId)
     }, [url])
 
-    return <>Server Name: {servers.currentServer?.name}</>
+    return <></>
 }
 
 

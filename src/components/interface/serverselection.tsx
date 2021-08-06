@@ -51,12 +51,11 @@ interface IServerSelectionSelectProps {
 const ServerSelectionSelect: React.FC<IServerSelectionSelectProps> = ({onChange}) => {
     const [collapsed, setCollapsed] = useState(true)
     const server = useServers()
-    const select = useRef<HTMLDivElement | null>(null)
 
     const classNames = [styles.select]
     if (!collapsed) classNames.push(styles.open)
 
-    return <div tabIndex={0} className={classNames.join(" ")} onClick={() => setCollapsed(!collapsed)} ref={select} onBlur={() => setCollapsed(true)}>
+    return <div tabIndex={0} className={classNames.join(" ")} onClick={() => setCollapsed(!collapsed)} onBlur={() => setCollapsed(true)}>
         { server.currentServer && <ServerEntry server={server.currentServer} /> }
         <img className={styles["dropdown-arrow"]} src={"assets/arrow_down.svg"} alt={"Arrow Down"} />
         <div className={styles.dropdown}>
