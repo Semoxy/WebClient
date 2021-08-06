@@ -2,29 +2,12 @@
     grid-area: header;
     min-height: 10px;
     height: 100%;
-    padding: 10px 14px 10px 24px;
+    padding: 0 10px 0 24px;
     background-color: #FFFFFF;
     display: flex;
     justify-content: space-between;
 }
 
-.user-menu {
-    border: none;
-    border-radius: 0;
-}
-
-.dropdown {
-    border-radius: 0;
-    padding: 0;
-}
-
 .end {
     display: flex;
-}
-
-.logout {
-    width: 100%;
-    background-color: #FFFFFF;
-    padding: 12px 12px;
-    cursor: pointer;
 }

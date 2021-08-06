@@ -101,7 +101,6 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # Cache file creation bug
-# See https://youtrack.jetbrains.com/issue/JBR-2257
 .idea/$CACHE_FILE$
 
 # CodeStream plugin
