@@ -1,32 +1,42 @@
 import styles from "./navigation.module.css"
-import React from "react";
+import React, {useState} from "react";
 import {ServerSelection} from "./serverselection";
 import {useHistory} from "react-router";
 import {useServers} from "../../ctx/server";
+import {
+    AddonIcon,
+    BackupIcon,
+    ConsoleIcon,
+    DashboardIcon, DSMIcon, NewServerIcon,
+    OverviewIcon,
+    PlayerIcon,
+    SettingsIcon, UserIcon, WorldIcon
+} from "../semoxy/icons";
 
 
 export const Navigation: React.FC = () => {
     const server = useServers().currentServer
+    const [selected, setSelected] = useState(0)
 
     return <nav className={styles.nav}>
         <ServerSelection />
         <NavigationSection>
-            <NavigationItem text={"Dashboard"} icon={"overview"} selected redirect={"/dashboard"} />
+            <NavigationItem text={"Dashboard"} icon={<OverviewIcon />} redirect={"/dashboard"} currentIndex={selected} setCurrentIndex={setSelected} index={0} />
         </NavigationSection>
         <NavigationSection title={"Current Server"}>
-            <NavigationItem text={"Overview"} icon={"dashboard"} redirect={`/server/${server?.id}`} />
-            <NavigationItem text={"Players"} icon={"players"} redirect={`/server/${server?.id}/players`} />
-            <NavigationItem text={"Console"} icon={"console"} redirect={`/server/${server?.id}/console`} />
-            <NavigationItem text={"Backups"} icon={"backups"} redirect={`/server/${server?.id}/backups`} />
-            <NavigationItem text={"Settings"} icon={"settings"} redirect={`/server/${server?.id}/settings`} />
-            <NavigationItem text={"Addons"} icon={"addons"} redirect={`/server/${server?.id}/addons`} />
-            <NavigationItem text={"Worlds"} icon={"worlds"} redirect={`/server/${server?.id}/worlds`} />
-            <NavigationItem text={"DSM"} icon={"dsm"} redirect={`/server/${server?.id}/dsm`} />
+            <NavigationItem text={"Overview"} icon={<DashboardIcon />} redirect={`/server/${server?.id}`} currentIndex={selected} setCurrentIndex={setSelected} index={1} />
+            <NavigationItem text={"Players"} icon={<PlayerIcon />} redirect={`/server/${server?.id}/players`} currentIndex={selected} setCurrentIndex={setSelected} index={2} />
+            <NavigationItem text={"Console"} icon={<ConsoleIcon />} redirect={`/server/${server?.id}/console`} currentIndex={selected} setCurrentIndex={setSelected} index={3} />
+            <NavigationItem text={"Backups"} icon={<BackupIcon />} redirect={`/server/${server?.id}/backups`} currentIndex={selected} setCurrentIndex={setSelected} index={4} />
+            <NavigationItem text={"Settings"} icon={<SettingsIcon />} redirect={`/server/${server?.id}/settings`} currentIndex={selected} setCurrentIndex={setSelected} index={5} />
+            <NavigationItem text={"Addons"} icon={<AddonIcon />} redirect={`/server/${server?.id}/addons`} currentIndex={selected} setCurrentIndex={setSelected} index={6} />
+            <NavigationItem text={"Worlds"} icon={<WorldIcon />} redirect={`/server/${server?.id}/worlds`} currentIndex={selected} setCurrentIndex={setSelected} index={7} />
+            <NavigationItem text={"DSM"} icon={<DSMIcon />} redirect={`/server/${server?.id}/dsm`} currentIndex={selected} setCurrentIndex={setSelected} index={8} />
         </NavigationSection>
         <NavigationSection title={"General"}>
-            <NavigationItem text={"Users"} icon={"users"} redirect={"/users"} />
-            <NavigationItem text={"Create Server"} icon={"newserver"} redirect={"/server/new"} />
-            <NavigationItem text={"Semoxy Settings"} icon={"settings"} redirect={"/settings"} />
+            <NavigationItem text={"Users"} icon={<UserIcon />} redirect={"/users"} currentIndex={selected} setCurrentIndex={setSelected} index={9} />
+            <NavigationItem text={"Create Server"} icon={<NewServerIcon />} redirect={"/server/new"} currentIndex={selected} setCurrentIndex={setSelected} index={10} />
+            <NavigationItem text={"Semoxy Settings"} icon={<SettingsIcon />} redirect={"/settings"} currentIndex={selected} setCurrentIndex={setSelected} index={11} />
         </NavigationSection>
     </nav>
 }
@@ -46,32 +56,43 @@ const NavigationSection: React.FC<INavigationSectionProps> = ({title, children})
 
 
 interface INavigationItemProps {
-    selected?: boolean,
     text: string,
-    icon?: string,
+    icon?: JSX.Element | string,
     onClick?(): void,
-    redirect?: string
+    redirect?: string,
+    index: number,
+    currentIndex: number,
+    setCurrentIndex(i: number): void
 }
 
 
-const NavigationItem: React.FC<INavigationItemProps> = ({selected, text, icon, onClick, redirect}) => {
+const NavigationItem: React.FC<INavigationItemProps> = ({index, currentIndex, setCurrentIndex, text, icon, onClick, redirect}) => {
+    const selected = index === currentIndex
     const history = useHistory()
 
     const classNames = [styles.item]
     selected && classNames.push(styles.selected)
 
-    // <img className={styles.icon} src={`icons/${icon}.svg`} alt={`${text}-Icon`} />
-
     function _onClick() {
         if (selected) return
 
+        setCurrentIndex(index)
         onClick && onClick()
         redirect && history.push(redirect)
     }
 
+    let Icon
+    if (typeof icon === "string") {
+       Icon = <img className={styles.icon} src={`icons/${icon}.svg`} alt={`${text}-Icon`} />
+    } else {
+        Icon = React.cloneElement(icon as JSX.Element, {
+            className: styles.icon,
+            selected: selected
+        })
+    }
+
     return <div onClick={_onClick} className={classNames.join(" ")}>
-        {/* @ts-ignore */}
-        <img className={styles.icon} src={`icons/${icon}.svg`} alt={`${text}-Icon`} />
+        {Icon}
         <span>{text}</span>
         { selected && <div className={styles.selectrect} /> }
     </div>
