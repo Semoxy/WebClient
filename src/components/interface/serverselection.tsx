@@ -52,8 +52,8 @@ interface IServerSelectionSelectProps {
 const ServerSelectionSelect: React.FC<IServerSelectionSelectProps> = ({onChange}) => {
     const server = useServers()
 
-    return <DropDown currentItem={<ServerEntry server={server.currentServer} />} tabIndex={0} onItemClick={(e) => onChange && onChange(e.props["data-id"])}>
-        {server.servers.map(s => s.id !== server.currentServer?.id && <ServerEntry key={s.id} server={s} data-id={s.id}/>)}
+    return <DropDown currentItem={<ServerEntry server={server.currentServer} />} tabIndex={0}>
+        {server.servers.map(s => s.id !== server.currentServer?.id && <ServerEntry key={s.id} server={s} data-id={s.id} onClick={() => onChange && onChange(s.id)} />)}
     </DropDown>
 }
 

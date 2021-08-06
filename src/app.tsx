@@ -11,9 +11,6 @@ import {useParams} from "react-router";
 import {InterfaceGrid} from "./components/interface/grid";
 
 
-// logout: deleteSession().then(i => i && auth.setSessionId(null))
-
-
 function ServerIdSetter() {
     const url = useParams<{serverId: string}>()
     const servers = useServers()

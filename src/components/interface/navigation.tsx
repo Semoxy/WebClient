@@ -73,7 +73,7 @@ const NavigationItem: React.FC<INavigationItemProps> = ({index, currentIndex, se
     // issue: click users, F5, change server in dropdown
     if (history.location.pathname === redirect) {
         // issue: setState in render
-        setCurrentIndex(index)
+        // setCurrentIndex(index)
     }
     const selected = currentIndex === index
 
