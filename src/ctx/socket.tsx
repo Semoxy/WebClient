@@ -3,6 +3,7 @@ import {useAuth} from "./auth";
 import {Packet} from "../services/socket";
 import {useError} from "./error";
 import {Action} from "../services/socket";
+import {useUniqueId} from "../hooks";
 
 type OnMessageCallback = (data: Packet) => void
 
@@ -116,7 +117,7 @@ export const SocketProvider: React.FC = ({children}) => {
     useSocketMessage(() => {
         setAuthenticated(true)
         console.log("Socket Logged In")
-    }, "AUTH_SUCCESS", "SocketContext", value)
+    }, "AUTH_SUCCESS", value)
 
     useSocketMessage(() => {
         error.pushError({
@@ -127,7 +128,7 @@ export const SocketProvider: React.FC = ({children}) => {
                 return true
             }
         })
-    }, "AUTH_ERROR", "LogoutButton", value)
+    }, "AUTH_ERROR", value)
 
     return <SocketContext.Provider value={value}>
         {children}
@@ -138,12 +139,12 @@ export const SocketProvider: React.FC = ({children}) => {
  * A custom hook for listening to websocket messages.
  * @param callback the callback to call on the specific action.
  * @param action the action to call the callback on.
- * @param identifier a unique identifier for the component. In most cases this can be the component name.
  * @param context a custom context (useful for using this hook INSIDE the context provider)
  */
-export function useSocketMessage<T extends Packet>(callback: (packet: T) => void, action: Action, identifier: string, context?: SocketContextProps) {
+export function useSocketMessage<T extends Packet>(callback: (packet: T) => void, action: Action, context?: SocketContextProps) {
     let socket = useSocket()
     socket = context || socket
+    const identifier = useUniqueId("socket-subscriber")
 
     useEffect(() => {
         let id = identifier + ":" + action

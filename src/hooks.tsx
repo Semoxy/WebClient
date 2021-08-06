@@ -21,20 +21,17 @@ const idCounter: {[x: string]: number} = {}
 export function useUniqueId(prefix: string = "component"): string {
     const firstRender = useRef(true)
 
+    useEffect(() => {
+        firstRender.current = false
+    }, [])
+
     let idToUse = "";
     if (firstRender.current) {
         if (!idCounter[prefix]) {
             idCounter[prefix] = 0
         }
-
-        idToUse = `${prefix}-${++idCounter[prefix]}`
+        idToUse = `${prefix}-${idCounter[prefix]++}`
     }
-
-    useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false
-        }
-    }, [])
 
     return useRef<string>(idToUse).current
 }
