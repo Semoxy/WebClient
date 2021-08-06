@@ -21,7 +21,8 @@ export interface Server {
         mods: boolean,
         plugins: boolean
     },
-    consoleOut: string[]
+    consoleOut: string[],
+    description: string | null
 }
 
 export interface Addon {

@@ -14,6 +14,7 @@ import {
 } from "../semoxy/icons";
 
 
+// TODO: select initial item based on URL
 export const Navigation: React.FC = () => {
     const server = useServers().currentServer
     const [selected, setSelected] = useState(0)
