@@ -10,16 +10,17 @@ const InfoContext = React.createContext<InfoContextProps>({
     info: {
         javaVersions: {},
         maxRam: 0,
-        publicIP: "127.0.0.1"
+        publicIP: "127.0.0.1",
+        startTime: 0
     }
 })
 
-// TODO: add uptime
 export const InfoProvider: React.FC = ({children}) => {
     const [info, setInfo] = useState<Info>({
         javaVersions: {},
         maxRam: 0,
-        publicIP: "127.0.0.1"
+        publicIP: "127.0.0.1",
+        startTime: new Date().getTime()
     });
     const [fetched, setFetched] = useState(false)
 

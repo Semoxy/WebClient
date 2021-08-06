@@ -3,7 +3,8 @@ import {APIRequest} from "./index";
 export interface Info {
     javaVersions: {[x: string]: string},
     maxRam: number,
-    publicIP: string
+    publicIP: string,
+    startTime: number
 }
 
 export async function getInfo(): Promise<Info> {
