@@ -1,10 +1,10 @@
 import React from "react";
-import {Alert as AlertType} from "./alertctx";
+import {IAlert} from "./alertctx";
 import styles from "./alert.module.css"
 import {Spacing} from "../../components/form/box";
 
 interface IAlertProps {
-    alert: AlertType,
+    alert: IAlert,
     close(): void
 }
 

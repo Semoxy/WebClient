@@ -4,7 +4,7 @@ import Alert from "./alert";
 
 export type AlertType = "success" | "warning" | "error" | "info"
 
-export interface Alert {
+export interface IAlert {
     type: AlertType,
     message: string,
     description: string,
@@ -13,7 +13,7 @@ export interface Alert {
 }
 
 export interface IAlertContextProps {
-    alert(alert: Alert): () => void
+    alert(alert: IAlert): () => void
 }
 
 const AlertContext = React.createContext<IAlertContextProps>({
@@ -21,7 +21,7 @@ const AlertContext = React.createContext<IAlertContextProps>({
 })
 
 export const AlertProvider: React.FC = ({children}) => {
-    const [alertStack, setAlertStack] = useState<Alert[]>([]);
+    const [alertStack, setAlertStack] = useState<IAlert[]>([]);
 
     const alerts = useRef(alertStack)
     alerts.current = alertStack
@@ -36,7 +36,7 @@ export const AlertProvider: React.FC = ({children}) => {
         return () => alertStack.forEach((a) => a.timeout && clearTimeout(a.timeout))
     }, [])
 
-    function alert(alert: Alert): () => void {
+    function alert(alert: IAlert): () => void {
         alert.id = idPointer.current++
         const newAlerts = alertStack.slice()
         newAlerts.push(alert)
