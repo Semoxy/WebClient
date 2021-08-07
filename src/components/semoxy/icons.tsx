@@ -1,12 +1,11 @@
 import React from "react";
 
 interface INavIconProps {
-    selected?: boolean,
     className?: string
 }
 
-export const DashboardIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const DashboardIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
         <path d="M11.5547 2.71875H3.85156C3.22593 2.71875 2.71875 3.22593 2.71875 3.85156V11.5547C2.71875 12.1803 3.22593 12.6875 3.85156 12.6875H11.5547C12.1803 12.6875 12.6875 12.1803 12.6875 11.5547V3.85156C12.6875 3.22593 12.1803 2.71875 11.5547 2.71875Z" stroke={fill} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -17,8 +16,8 @@ export const DashboardIcon: React.FC<INavIconProps> = ({selected, className}) =>
 
 }
 
-export const OverviewIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const OverviewIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="path-1-inside-1" fill="white">
@@ -36,8 +35,8 @@ export const OverviewIcon: React.FC<INavIconProps> = ({selected, className}) => 
     </svg>
 }
 
-export const PlayerIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const PlayerIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.8892 9.51562C22.7232 11.8192 21.0143 13.5938 19.1509 13.5938C17.2874 13.5938 15.5757 11.8198 15.4126 9.51562C15.2427 7.11916 16.9062 5.4375 19.1509 5.4375C21.3955 5.4375 23.0591 7.16277 22.8892 9.51562Z" stroke={fill} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -47,16 +46,16 @@ export const PlayerIcon: React.FC<INavIconProps> = ({selected, className}) => {
     </svg>
 }
 
-export const ConsoleIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const ConsoleIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.1196 9L12.1196 15L5.1196 21M12.1196 22.5H24.1196" stroke={fill} strokeWidth="3"/>
     </svg>
 }
 
-export const BackupIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const BackupIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3.71875 19.0312V24.4688C3.72084 25.1892 4.00795 25.8795 4.51736 26.3889C5.02678 26.8983 5.71709 27.1854 6.4375 27.1875H24.5625C25.2829 27.1854 25.9732 26.8983 26.4826 26.3889C26.992 25.8795 27.2792 25.1892 27.2812 24.4688V19.0312" stroke={fill} strokeWidth="3" strokeLinejoin="round"/>
@@ -67,16 +66,16 @@ export const BackupIcon: React.FC<INavIconProps> = ({selected, className}) => {
 
 }
 
-export const SettingsIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const SettingsIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M15.8563 10.8926C15.1125 10.8191 14.3642 10.9773 13.7139 11.3456C13.0635 11.7138 12.5429 12.2741 12.2232 12.9497C11.9036 13.6253 11.8006 14.3831 11.9283 15.1195C12.0561 15.8559 12.4083 16.5348 12.9367 17.0633C13.4652 17.5917 14.1441 17.944 14.8805 18.0717C15.6169 18.1994 16.3748 18.0964 17.0503 17.7768C17.7259 17.4571 18.2862 16.9365 18.6544 16.2861C19.0227 15.6358 19.1809 14.8875 19.1075 14.1437C19.0237 13.31 18.6543 12.5308 18.0617 11.9383C17.4692 11.3457 16.69 10.9763 15.8563 10.8926V10.8926ZM24.5846 14.5C24.5823 14.894 24.5533 15.2874 24.4979 15.6776L27.0587 17.686C27.1702 17.7785 27.2453 17.9074 27.2707 18.05C27.2961 18.1926 27.2702 18.3396 27.1974 18.4648L24.7749 22.6562C24.7013 22.7803 24.5863 22.8744 24.4502 22.922C24.314 22.9695 24.1655 22.9675 24.0307 22.9162L21.4875 21.8922C21.3472 21.8363 21.1953 21.8162 21.0454 21.8335C20.8954 21.8508 20.7521 21.905 20.6283 21.9913C20.2401 22.2586 19.8323 22.496 19.4082 22.7016C19.2749 22.7664 19.1596 22.863 19.0725 22.9829C18.9853 23.1028 18.9291 23.2424 18.9086 23.3892L18.5275 26.1017C18.5024 26.245 18.4284 26.3751 18.3181 26.4698C18.2077 26.5645 18.0679 26.618 17.9225 26.6211H13.0775C12.9345 26.6186 12.7966 26.5675 12.6865 26.4762C12.5765 26.3849 12.5008 26.2588 12.472 26.1187L12.0914 23.4101C12.07 23.2617 12.0123 23.1208 11.9234 23.0001C11.8344 22.8793 11.717 22.7824 11.5816 22.718C11.1581 22.5135 10.7516 22.2755 10.3661 22.006C10.2427 21.9201 10.0998 21.8663 9.95043 21.8494C9.80102 21.8325 9.64976 21.853 9.51027 21.9092L6.96767 22.9327C6.83293 22.984 6.6844 22.9861 6.54825 22.9386C6.4121 22.8912 6.29707 22.7972 6.22341 22.6732L3.80089 18.4818C3.72806 18.3566 3.70203 18.2096 3.72744 18.067C3.75286 17.9244 3.82806 17.7954 3.93966 17.703L6.1039 16.0038C6.22247 15.9097 6.31565 15.7874 6.375 15.6482C6.43435 15.5089 6.45798 15.357 6.44374 15.2063C6.42335 14.9701 6.41089 14.7345 6.41089 14.4983C6.41089 14.2621 6.42279 14.0299 6.44374 13.7988C6.45642 13.649 6.43163 13.4984 6.37162 13.3606C6.3116 13.2227 6.21823 13.102 6.09993 13.0092L3.93683 11.31C3.82704 11.2172 3.75342 11.0886 3.72888 10.947C3.70433 10.8053 3.73043 10.6595 3.80259 10.5352L6.22511 6.34375C6.29868 6.2197 6.41367 6.1256 6.54983 6.07804C6.68599 6.03048 6.83456 6.03251 6.96937 6.08377L9.51253 7.10783C9.65278 7.16367 9.80468 7.18385 9.95464 7.16655C10.1046 7.14925 10.2479 7.09502 10.3718 7.00871C10.7599 6.74144 11.1677 6.504 11.5918 6.29844C11.7251 6.23364 11.8404 6.13701 11.9276 6.01709C12.0147 5.89717 12.071 5.75764 12.0914 5.61082L12.4726 2.8983C12.4976 2.75505 12.5716 2.62493 12.682 2.5302C12.7923 2.43546 12.9321 2.38198 13.0775 2.37891H17.9225C18.0655 2.38138 18.2034 2.43249 18.3135 2.52381C18.4235 2.61514 18.4992 2.74123 18.528 2.88131L18.9086 5.58986C18.93 5.7383 18.9877 5.87915 19.0767 5.99991C19.1656 6.12066 19.283 6.21756 19.4184 6.28201C19.842 6.48646 20.2484 6.72455 20.6339 6.99398C20.7573 7.07986 20.9002 7.13368 21.0496 7.15058C21.199 7.16749 21.3503 7.14696 21.4898 7.09084L24.0324 6.06734C24.1671 6.01603 24.3156 6.01392 24.4518 6.06137C24.5879 6.10883 24.703 6.20281 24.7766 6.32676L27.1991 10.5182C27.272 10.6434 27.298 10.7904 27.2726 10.933C27.2472 11.0756 27.172 11.2046 27.0604 11.297L24.8961 12.9962C24.777 13.09 24.6833 13.2121 24.6235 13.3514C24.5636 13.4907 24.5395 13.6427 24.5534 13.7937C24.5721 14.0282 24.5846 14.2638 24.5846 14.5Z" stroke={fill} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 }
 
-export const AddonIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const AddonIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M24.0527 7.25H11.4785C9.69546 7.25 8.25 8.69546 8.25 10.4785V23.0527C8.25 24.8358 9.69546 26.2812 11.4785 26.2812H24.0527C25.8358 26.2812 27.2812 24.8358 27.2812 23.0527V10.4785C27.2812 8.69546 25.8358 7.25 24.0527 7.25Z" stroke={fill} strokeWidth="3" strokeLinejoin="round"/>
@@ -84,16 +83,16 @@ export const AddonIcon: React.FC<INavIconProps> = ({selected, className}) => {
     </svg>
 }
 
-export const WorldIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const WorldIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 8.07419V21.0806L15.5 26.5M4 8.07419L15.5 2.5L27 8.07419M4 8.07419L15.5 13.3387M15.5 26.5L27 21.0806V8.07419M15.5 26.5V13.3387M27 8.07419L15.5 13.3387" stroke={fill} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 }
 
-export const DSMIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const DSMIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0)">
@@ -119,8 +118,8 @@ export const DSMIcon: React.FC<INavIconProps> = ({selected, className}) => {
     </svg>
 }
 
-export const NewServerIcon: React.FC<INavIconProps> = ({selected, className}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const NewServerIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0)">
@@ -146,8 +145,8 @@ export const NewServerIcon: React.FC<INavIconProps> = ({selected, className}) =>
     </svg>
 }
 
-export const UserIcon: React.FC<INavIconProps> = ({className, selected}) => {
-    const fill = selected ? "var(--semoxy-blue)" : "var(--text)"
+export const UserIcon: React.FC<INavIconProps> = ({className}) => {
+    const fill = "var(--icon-color)"
 
     return <svg className={className} width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20.4844 8.15625C20.2624 11.1508 17.9922 13.5938 15.5 13.5938C13.0078 13.5938 10.7337 11.1514 10.5156 8.15625C10.2891 5.04102 12.498 2.71875 15.5 2.71875C18.502 2.71875 20.711 5.09766 20.4844 8.15625Z" stroke={fill} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
