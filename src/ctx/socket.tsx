@@ -72,6 +72,7 @@ export const SocketProvider: React.FC = ({children}) => {
 
         socket.current.onmessage = (e) => {
             let data: Packet = JSON.parse(e.data)
+            console.log(data)
 
             if (!callbacks.current[data.action]) {
                 return
@@ -152,7 +153,7 @@ export function useSocketMessage<T extends Packet>(callback: (packet: T) => void
         socket.registerCallback(callback as (_: Packet) => void, action, id)
 
         return () => socket.unregisterCallback(action, id)
-    }, [])
+    })
 }
 
 export const useSocket = () => {

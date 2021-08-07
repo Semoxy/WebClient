@@ -38,6 +38,11 @@ export class APIRequest {
         return this.request()
     }
 
+    async put(): Promise<AxiosResponse> {
+        this.requestConfig.method = "put";
+        return this.request()
+    }
+
     async post(): Promise<AxiosResponse> {
         this.requestConfig.method = "post";
         return this.request()
@@ -53,3 +58,6 @@ export class APIRequest {
         return this.request()
     }
 }
+
+// @ts-ignore
+window.APIRequest = APIRequest

@@ -1,3 +1,5 @@
+import {Server} from "./server";
+
 export type Action = "SERVER_STATE_CHANGE" |
     "CONSOLE_LINE" |
     "META_MESSAGE" |
@@ -18,5 +20,12 @@ export interface AuthSuccessPacket extends Packet {
 export interface MetaMessagePacket extends Packet {
     data: {
         message: string
+    }
+}
+
+export interface ServerStateChangePacket extends Packet {
+    data: {
+        id: string,
+        patch: Partial<Server>
     }
 }

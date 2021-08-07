@@ -18,20 +18,20 @@ export const Navigation: React.FC = () => {
     const server = useServers().currentServer
 
     return <nav className={styles.nav}>
-        <ServerSelection />
+        { server && <ServerSelection /> }
         <NavigationSection>
             <NavigationItem text={"Dashboard"} icon={<OverviewIcon />} redirect={"/dashboard"} />
         </NavigationSection>
-        <NavigationSection title={"Current Server"}>
-            <NavigationItem text={"Overview"} icon={<DashboardIcon />} redirect={`/server/${server?.id}`} exact />
-            <NavigationItem text={"Players"} icon={<PlayerIcon />} redirect={`/server/${server?.id}/players`} />
-            <NavigationItem text={"Console"} icon={<ConsoleIcon />} redirect={`/server/${server?.id}/console`} />
-            <NavigationItem text={"Backups"} icon={<BackupIcon />} redirect={`/server/${server?.id}/backups`} />
-            <NavigationItem text={"Settings"} icon={<SettingsIcon />} redirect={`/server/${server?.id}/settings`} />
-            <NavigationItem text={"Addons"} icon={<AddonIcon />} redirect={`/server/${server?.id}/addons`} />
-            <NavigationItem text={"Worlds"} icon={<WorldIcon />} redirect={`/server/${server?.id}/worlds`} />
-            <NavigationItem text={"DSM"} icon={<DSMIcon />} redirect={`/server/${server?.id}/dsm`} />
-        </NavigationSection>
+        { server && <NavigationSection title={"Current Server"}>
+            <NavigationItem text={"Overview"} icon={<DashboardIcon />} redirect={`/server/${server.id}`} exact />
+            <NavigationItem text={"Players"} icon={<PlayerIcon />} redirect={`/server/${server.id}/players`} />
+            <NavigationItem text={"Console"} icon={<ConsoleIcon />} redirect={`/server/${server.id}/console`} />
+            <NavigationItem text={"Backups"} icon={<BackupIcon />} redirect={`/server/${server.id}/backups`} />
+            <NavigationItem text={"Settings"} icon={<SettingsIcon />} redirect={`/server/${server.id}/settings`} />
+            <NavigationItem text={"Addons"} icon={<AddonIcon />} redirect={`/server/${server.id}/addons`} />
+            <NavigationItem text={"Worlds"} icon={<WorldIcon />} redirect={`/server/${server.id}/worlds`} />
+            <NavigationItem text={"DSM"} icon={<DSMIcon />} redirect={`/server/${server.id}/dsm`} />
+        </NavigationSection> }
         <NavigationSection title={"General"}>
             <NavigationItem text={"Users"} icon={<UserIcon />} redirect={"/users"} />
             <NavigationItem text={"Create Server"} icon={<NewServerIcon />} redirect={"/server/new"} />

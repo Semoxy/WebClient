@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import {getServers, Server} from "../services/server";
 import {useLoading} from "./loading/loading";
 import {useHistory} from "react-router";
+import {useSocketMessage} from "./socket";
+import {ServerStateChangePacket} from "../services/socket";
 
 interface ServerContextProps {
     servers: Server[],
@@ -50,6 +52,10 @@ export const ServerProvider: React.FC = ({children}) => {
             history.replace("/dashboard")
         }
     }, [currentId, fetched])
+
+    useSocketMessage((p: ServerStateChangePacket) => {
+        setServers(servers.map(s => s.id === p.data.id ? Object.assign(s, p.data.patch) : s))
+    }, "SERVER_STATE_CHANGE")
 
     return <ServerContext.Provider value={{
         servers,
