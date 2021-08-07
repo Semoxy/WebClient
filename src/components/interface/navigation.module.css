@@ -40,10 +40,6 @@
     position: relative;
 }
 
-.item.selected {
-    color: var(--semoxy-blue);
-}
-
 .icon {
     height: 1.6em;
     width: 1.6em;
@@ -52,6 +48,11 @@
 
 .item span {
     flex-grow: 1;
+    color: var(--text);
+}
+
+.item.selected span {
+    color: var(--semoxy-blue);
 }
 
 .item::after {
