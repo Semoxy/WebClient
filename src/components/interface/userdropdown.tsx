@@ -8,7 +8,7 @@ import {useLoading} from "../../ctx/loading/loading";
 
 
 export const UserDropdown: React.FC = () => {
-    return <DropDown currentItem={<UserDisplay />} tabIndex={1} className={styles["user-menu"]} dropdownClassName={styles.dropdown}>
+    return <DropDown currentItem={<UserDisplay />} tabIndex={1} className={styles["user-menu"]} dropdownClassName={styles.dropdown} imageClassName={styles.arrow}>
         <LogoutButton />
     </DropDown>
 }
@@ -18,6 +18,7 @@ const UserDisplay: React.FC = () => {
 
     return <div className={styles["user-display"]}>
         <h3>{user.username}</h3>
+        {/* TODO: should show the highest permission role (not implemented) */}
         <p>Owner</p>
     </div>
 }

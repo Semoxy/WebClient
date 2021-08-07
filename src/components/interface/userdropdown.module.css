@@ -1,12 +1,19 @@
 .user-menu {
     border: none;
     border-radius: 0;
+    padding-right: 56px;
+    min-width: 200px;
+    width: auto;
 }
 
 .dropdown {
     border-radius: 0;
     padding: 0;
     top: 100%;
+}
+
+.arrow {
+    right: 18px;
 }
 
 /* TODO: hover background color */
@@ -21,11 +28,15 @@
     color: var(--semoxy-blue);
     display: flex;
     flex-direction: column;
+    line-height: 1em;
+    position: relative;
+    top: 3px;
+    padding: 4px 0;
 }
 
 .user-display h3 {
     font-weight: 500;
-    font-size: 1.3em;
+    font-size: 1.4em;
     margin: 0;
     white-space: nowrap;
 }
@@ -33,6 +44,6 @@
 .user-display p {
     font-weight: 300;
     font-size: .9em;
-    margin: .1em 0 0;
+    margin: 0;
     white-space: nowrap;
 }
