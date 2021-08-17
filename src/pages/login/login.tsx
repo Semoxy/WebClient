@@ -35,11 +35,19 @@ export const LoginView: React.FC = () => {
                 if (l.success) {
                     auth.setSessionId(l.sessionId)
                 } else {
-                    alert.alert({
-                        type: "error",
-                        message: "Invalid Credentials",
-                        description: "Please check your username and password!"
-                    })
+                    if (l.error === "root is disabled") {
+                        alert.alert({
+                            type: "info",
+                            message: "Root is disabled",
+                            description: "You can't login as the root user. This setting can be changed in the Semoxy configuration."
+                        })
+                    } else {
+                        alert.alert({
+                            type: "error",
+                            message: "Invalid Credentials",
+                            description: "Please check your username and password!"
+                        })
+                    }
                 }
             })
     }

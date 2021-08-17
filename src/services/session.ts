@@ -14,7 +14,8 @@ export async function getSessionInformation(): Promise<SessionInformation> {
 
 interface LoginResponse {
     success: boolean,
-    sessionId: string
+    sessionId: string,
+    error?: string
 }
 
 export async function createSession(username: string, password: string): Promise<LoginResponse> {
@@ -30,7 +31,8 @@ export async function createSession(username: string, password: string): Promise
     } catch (e) {
         return {
             success: false,
-            sessionId: "undefined"
+            sessionId: "undefined",
+            error: e.response.data.error
         }
     }
 }
