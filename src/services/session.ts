@@ -47,8 +47,7 @@ export async function deleteSession(): Promise<boolean> {
 }
 
 interface UserInformation {
-    username: string,
-    permissions: string[]
+    username: string
 }
 
 export async function getUserInformation(): Promise<UserInformation> {

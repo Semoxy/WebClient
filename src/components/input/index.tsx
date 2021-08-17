@@ -14,10 +14,12 @@ export interface IInputProps {
     readonly?: boolean,
     onChange?: ChangeEventHandler<HTMLInputElement>,
     defaultValue?: string,
-    expand?: boolean
+    expand?: boolean,
+    autoComplete?: string,
+    ref?: any
 }
 
-const Input: React.FC<IInputProps> = ({placeholder, expand, type, defaultValue, icon, label, value, readonly, onChange}) => {
+const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type, defaultValue, icon, label, value, readonly, onChange, autoComplete}, ref) => {
     const id = useUniqueId("input");
 
     const fieldClasses = [styles.field]
@@ -41,10 +43,12 @@ const Input: React.FC<IInputProps> = ({placeholder, expand, type, defaultValue, 
             readOnly={readonly}
             onChange={onChange}
             className={fieldClasses.join(" ")}
+            autoComplete={autoComplete}
+            ref={ref}
         />
         { icon && icon }
     </div>
-}
+})
 
 export default Input
 export { Input, PasswordInput }

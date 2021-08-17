@@ -9,6 +9,7 @@ import { AuthProvider } from "./ctx/auth";
 import { LoadingProvider } from "./ctx/loading/loading";
 import { AlertProvider } from "./ctx/alert/alertctx";
 import { App } from "./app";
+import {StatusProvider} from "./ctx/status";
 
 
 /*
@@ -20,9 +21,11 @@ const AppContexts: React.FC = ({children}) => {
             <ErrorProvider>
                 <LoadingProvider>
                     <BrowserRouter>
-                        <AuthProvider>
-                            {children}
-                        </AuthProvider>
+                        <StatusProvider>
+                            <AuthProvider>
+                                {children}
+                            </AuthProvider>
+                        </StatusProvider>
                     </BrowserRouter>
                 </LoadingProvider>
             </ErrorProvider>

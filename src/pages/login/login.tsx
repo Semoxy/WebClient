@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {createSession} from "../../services/session";
 import {useAuth} from "../../ctx/auth";
-import {useLoading} from "../../ctx/loading/loading";
 import Button from "../../components/button";
 import Input, {PasswordInput} from "../../components/input";
 
@@ -14,9 +13,9 @@ import {useAlert} from "../../ctx/alert/alertctx";
 export const LoginView: React.FC = () => {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [loading, setLoading] = useState(false)
 
     const auth = useAuth()
-    const loader = useLoading()
     const alert = useAlert()
 
     function login() {
@@ -29,10 +28,10 @@ export const LoginView: React.FC = () => {
             return
         }
 
-        loader.requestIntent("Logging in", "LOG_IN")
+        setLoading(true)
         createSession(username, password)
             .then(l => {
-                loader.finishIntent("LOG_IN")
+                setLoading(false)
                 if (l.success) {
                     auth.setSessionId(l.sessionId)
                 } else {
@@ -68,7 +67,7 @@ export const LoginView: React.FC = () => {
             />
             <div className={styles.buttons}>
                 <Button type={"secondary"} cutoff>Forgot Password?</Button>
-                <Button onClick={login} type={"primary"}>Login</Button>
+                <Button onClick={login} type={"primary"} loading={loading}>Login</Button>
             </div>
         </FormBox>
     </FullSizeContainer>

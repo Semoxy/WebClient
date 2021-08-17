@@ -12,3 +12,17 @@ export async function getInfo(): Promise<Info> {
     request.addCredentials()
     return (await request.get()).data
 }
+
+export interface SemoxyStatus {
+    software: string,
+    repository: string,
+    version: string,
+    description: string,
+    issueTracker: string,
+    hasRoot: boolean
+}
+
+export async function getStatus(): Promise<SemoxyStatus> {
+    let request = new APIRequest("/")
+    return (await request.get()).data
+}

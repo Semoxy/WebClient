@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useSession} from "../hooks";
 import {useHistory} from "react-router";
+import {useSemoxyStatus} from "./status";
 
 
 interface AuthContextProps {
@@ -23,12 +24,16 @@ export const AuthProvider: React.FC = ({children}) => {
     const [sessionId, setSessionId, isLoggedIn, sessionLoading, userId] = useSession()
     const [urlAfterLogin, setUrlAfterLogin] = useState<string | null>(null)
     const history = useHistory()
+    const status = useSemoxyStatus()
 
     useEffect(() => {
         if (sessionLoading) return
 
         // when not logged in
         if (!isLoggedIn && !history.location.pathname.startsWith("/login")) {
+            // don't redirect when no account exists
+            if (!status.status.hasRoot) return;
+
             setUrlAfterLogin(history.location.pathname)
             history.replace("/login")
             return

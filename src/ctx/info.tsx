@@ -1,18 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Info, getInfo} from "../services/info";
+import {Info, getInfo, SemoxyStatus, getStatus} from "../services/info";
 import {useLoading} from "./loading/loading";
 
-interface InfoContextProps {
-    info: Info
-}
-
-const InfoContext = React.createContext<InfoContextProps>({
-    info: {
-        javaVersions: {},
-        maxRam: 0,
-        publicIP: "127.0.0.1",
-        startTime: 0
-    }
+const InfoContext = React.createContext<Info>({
+    javaVersions: {},
+    maxRam: 0,
+    publicIP: "127.0.0.1",
+    startTime: 0
 })
 
 export const InfoProvider: React.FC = ({children}) => {
@@ -22,7 +16,7 @@ export const InfoProvider: React.FC = ({children}) => {
         publicIP: "127.0.0.1",
         startTime: new Date().getTime()
     });
-    const [fetched, setFetched] = useState(false)
+    const [infoFetched, setInfoFetched] = useState(false)
 
     const loading = useLoading()
 
@@ -31,12 +25,12 @@ export const InfoProvider: React.FC = ({children}) => {
         getInfo().then(c => {
             setInfo(c)
             loading.finishIntent("LOAD_INFO")
-            setFetched(true)
+            setInfoFetched(true)
         })
     }, [])
 
-    return <InfoContext.Provider value={{info: info}}>
-        { fetched && children }
+    return <InfoContext.Provider value={info}>
+        { infoFetched && children }
     </InfoContext.Provider>
 }
 

@@ -9,6 +9,7 @@ import {ServerProvider, useServers} from "./ctx/server";
 import React, {useEffect} from "react";
 import {useParams} from "react-router";
 import {InterfaceGrid} from "./components/interface/grid";
+import {CreateRootUserView} from "./pages/createRootUser/createRootUser";
 
 
 function ServerIdSetter() {
@@ -32,6 +33,10 @@ export const App: React.FC = () => {
         <Route path={"/login"}>
             <Title>Login</Title>
             <LoginView />
+        </Route>
+        <Route path={"/create-root-user"}>
+            <Title>Create Root User</Title>
+            <CreateRootUserView />
         </Route>
         { auth.isLoggedIn &&
         <Route path={"/"}>
