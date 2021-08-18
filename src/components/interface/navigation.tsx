@@ -12,12 +12,17 @@ import {
     PlayerIcon,
     SettingsIcon, UserIcon, WorldIcon
 } from "../semoxy/icons";
+import {useDesign} from "../../ctx/design";
 
 
 export const Navigation: React.FC = () => {
     const server = useServers().currentServer
+    const design = useDesign()
 
-    return <nav className={styles.nav}>
+    const classNames = [styles.nav]
+    !design.contentShown && classNames.push(styles.full)
+
+    return <nav className={classNames.join(" ")}>
         { server && <ServerSelection /> }
         <NavigationSection>
             <NavigationItem text={"Dashboard"} icon={<OverviewIcon />} redirect={"/dashboard"} />
@@ -63,11 +68,13 @@ interface INavigationItemProps {
 
 
 const NavigationItem: React.FC<INavigationItemProps> = ({text, icon, redirect, exact}) => {
+    const design = useDesign()
+
     icon = React.cloneElement(icon as JSX.Element, {
         className: styles.icon
     })
 
-    return <NavLink className={styles.item} to={redirect} activeClassName={styles.selected} exact={exact}>
+    return <NavLink className={styles.item} to={redirect} activeClassName={styles.selected} exact={exact} onClick={() => design.setNavbarOpen(false)}>
         {icon}
         <span>{text}</span>
     </NavLink>

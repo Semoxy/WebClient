@@ -22,7 +22,10 @@ export interface Server {
         plugins: boolean
     },
     consoleOut: string[],
-    description: string | null
+    description: string | null,
+    ramUsage: number,
+    cpuUsage: number,
+    onlinePlayers: string[]
 }
 
 export interface Addon {

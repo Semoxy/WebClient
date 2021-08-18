@@ -14,7 +14,7 @@ export const DropDown: React.FC<IDropDownProps> = ({currentItem, dropdownClassNa
 
     const classNames = [styles.select]
     !collapsed && classNames.push(styles.open)
-    className && classNames.push(className)
+    className && classNames.unshift(className)
 
     const dropdownClassNames = [styles.dropdown]
     dropdownClassName && dropdownClassNames.push(dropdownClassName)

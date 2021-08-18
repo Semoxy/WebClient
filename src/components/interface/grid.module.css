@@ -17,5 +17,23 @@
 .content {
     grid-area: content;
     height: 100%;
-    padding-top: 14px;
+    padding-right: .9rem;;
+}
+
+@media screen and (max-width: 590px) {
+    .grid {
+        grid-template-areas:
+            "header header"
+            "content content";
+    }
+
+    .content {
+        padding-left: .9rem;
+    }
+}
+
+.only-navbar {
+    grid-template-areas:
+        "header header"
+        "navigation navigation";
 }

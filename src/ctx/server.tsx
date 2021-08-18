@@ -3,7 +3,8 @@ import {getServers, Server} from "../services/server";
 import {useLoading} from "./loading/loading";
 import {useHistory} from "react-router";
 import {useSocketMessage} from "./socket";
-import {ServerStateChangePacket} from "../services/socket";
+import {ServerEventPacket, ServerStateChangePacket} from "../services/socket";
+import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event";
 
 interface ServerContextProps {
     servers: Server[],
@@ -53,9 +54,34 @@ export const ServerProvider: React.FC = ({children}) => {
         }
     }, [currentId, fetched])
 
+    function mutateServer(id: string, data: (s: Server) => Partial<Server>) {
+        setServers(servers.map(s => s.id === id ? Object.assign(s, data) : s))
+    }
+
+    // fixme: all three callbacks not working
     useSocketMessage((p: ServerStateChangePacket) => {
-        setServers(servers.map(s => s.id === p.data.id ? Object.assign(s, p.data.patch) : s))
+        mutateServer(p.data.id, () => p.data.patch)
     }, "SERVER_STATE_CHANGE")
+
+    useSocketMessage((p: ServerEventPacket<PlayerJoinEvent>) => {
+        mutateServer(p.data.serverId, (s) => {
+            const newPlayers = s.onlinePlayers.slice()
+            newPlayers.push(p.data.eventData.name)
+            return {
+                onlinePlayers: newPlayers
+            }
+        })
+    }, "PLAYER_JOIN")
+
+    useSocketMessage((p: ServerEventPacket<PlayerLeaveEvent>) => {
+        mutateServer(p.data.serverId, (s) => {
+            const newPlayers = s.onlinePlayers.slice()
+            newPlayers.filter(pl => pl !== p.data.eventData.name)
+            return {
+                onlinePlayers: newPlayers
+            }
+        })
+    }, "PLAYER_LEAVE")
 
     return <ServerContext.Provider value={{
         servers,

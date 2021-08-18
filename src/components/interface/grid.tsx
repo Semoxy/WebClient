@@ -3,13 +3,19 @@ import styles from "./grid.module.css"
 import FullSizeContainer from "../form/full";
 import {Navigation} from "./navigation";
 import {Header} from "./header";
+import {useDesign} from "../../ctx/design";
 
 export const InterfaceGrid: React.FC = ({children}) => {
-    return <FullSizeContainer className={styles.grid} zIndex={2}>
+    const design = useDesign()
+
+    const classNames = [styles.grid]
+    !design.contentShown && classNames.push(styles["only-navbar"])
+
+    return <FullSizeContainer className={classNames.join(" ")} zIndex={2}>
         <Header />
-        <Navigation />
-        <div className={styles.content}>
+        { design.navbarOpen && <Navigation /> }
+        { design.contentShown && <div className={styles.content}>
             {children}
-        </div>
+        </div> }
     </FullSizeContainer>
 }

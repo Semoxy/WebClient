@@ -82,3 +82,8 @@
 .item.selected {
     --icon-color: var(--semoxy-blue);
 }
+
+.full {
+    border-radius: 10px;
+    margin: .9rem;
+}

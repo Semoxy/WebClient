@@ -10,6 +10,7 @@ import React, {useEffect} from "react";
 import {useParams} from "react-router";
 import {InterfaceGrid} from "./components/interface/grid";
 import {CreateRootUserView} from "./pages/createRootUser/createRootUser";
+import {Dashboard} from "./pages/dashboard/dashboard";
 
 
 function ServerIdSetter() {
@@ -48,7 +49,7 @@ export const App: React.FC = () => {
                                 <Switch>
                                     <Route path={"/dashboard"}>
                                         <Title>Dashboard</Title>
-                                        Dashboard
+                                        <Dashboard />
                                     </Route>
                                     <Route path={"/server"}>
                                         <Switch>

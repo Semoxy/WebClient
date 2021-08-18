@@ -1,12 +1,13 @@
 import {Server} from "./server";
+import {Event, EventType} from "./event";
 
-export type Action = "SERVER_STATE_CHANGE" |
-    "CONSOLE_LINE" |
-    "META_MESSAGE" |
-    "SERVER_ADD" |
-    "SERVER_DELETE" |
-    "AUTH_ERROR" |
-    "AUTH_SUCCESS"
+export type Action =
+    "SERVER_STATE_CHANGE" |
+    "META_MESSAGE"        |
+    "SERVER_ADD"          |
+    "SERVER_DELETE"       |
+    "AUTH_ERROR"          |
+    "AUTH_SUCCESS" | EventType
 
 export interface Packet {
     action: string,
@@ -27,5 +28,12 @@ export interface ServerStateChangePacket extends Packet {
     data: {
         id: string,
         patch: Partial<Server>
+    }
+}
+
+export interface ServerEventPacket<T extends Event> extends Packet {
+    data: {
+        serverId: string,
+        eventData: T
     }
 }

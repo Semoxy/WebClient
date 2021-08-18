@@ -6,8 +6,52 @@
     background-color: #FFFFFF;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 9px 12px -13px #3a3a3a24;
 }
 
 .end {
     display: flex;
+}
+
+.toggle-navbar {
+    outline: none;
+    height: auto;
+    width: auto;
+    background-color: #FFFFFF;
+    border: none;
+}
+
+/* Burger Menu */
+.burger {
+    display: flex;
+    flex-direction: column;
+    width: 27px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.burger span {
+    background-color: var(--semoxy-blue);
+    border-radius: 10px;
+    height: 3px;
+    margin: 3px 0;
+    transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.burger input[type="checkbox"] {
+    display: none;
+}
+
+.burger input[type="checkbox"]:checked ~ span:nth-of-type(1) {
+    transform: translateY(8px) rotate(45deg);
+    transform-origin: bottom;
+}
+
+.burger input[type="checkbox"]:checked ~ span:nth-of-type(2) {
+    opacity: 0;
+}
+
+.burger input[type="checkbox"]:checked ~ span:nth-of-type(3) {
+    transform: translateY(-9px) rotate(-45deg);
+    transform-origin: top;
 }
