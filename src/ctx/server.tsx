@@ -55,10 +55,9 @@ export const ServerProvider: React.FC = ({children}) => {
     }, [currentId, fetched])
 
     function mutateServer(id: string, data: (s: Server) => Partial<Server>) {
-        setServers(servers.map(s => s.id === id ? Object.assign(s, data) : s))
+        setServers(servers.map(s => s.id === id ? Object.assign(s, data(s)) : s))
     }
 
-    // fixme: all three callbacks not working
     useSocketMessage((p: ServerStateChangePacket) => {
         mutateServer(p.data.id, () => p.data.patch)
     }, "SERVER_STATE_CHANGE")
@@ -75,8 +74,7 @@ export const ServerProvider: React.FC = ({children}) => {
 
     useSocketMessage((p: ServerEventPacket<PlayerLeaveEvent>) => {
         mutateServer(p.data.serverId, (s) => {
-            const newPlayers = s.onlinePlayers.slice()
-            newPlayers.filter(pl => pl !== p.data.eventData.name)
+            const newPlayers = s.onlinePlayers.slice().filter(pl => pl !== p.data.eventData.name)
             return {
                 onlinePlayers: newPlayers
             }

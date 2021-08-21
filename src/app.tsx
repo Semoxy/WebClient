@@ -23,6 +23,7 @@ function ServerIdSetter() {
 
     return <>
         <p>Für Server: {servers.currentServer?.displayName}</p>
+        <p>Online status: {servers.currentServer?.onlineStatus}</p>
     </>
 }
 
