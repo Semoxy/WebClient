@@ -1,28 +1,35 @@
 .container {
     z-index: 100;
     position: fixed;
-    width: 500px;
-    margin: 0 auto;
     height: 100%;
-    left: calc(50% - 250px);
-    pointer-events: none;
+    width: 100%;
+    padding: 0 1em 2em;
+
     display: flex;
-    padding-bottom: 30px;
-    box-sizing: border-box;
     flex-direction: column;
     row-gap: 16px;
     justify-content: flex-end;
+    align-items: center;
+
+    pointer-events: none;
 }
 
 .alert {
     display: flex;
-    width: 100%;
     padding: 8px;
     background-color: #FFFFFF;
     box-shadow: 0 13px 46px -1px #00000029;
     border-radius: 12px;
     pointer-events: all;
     column-gap: 10px;
+    align-items: center;
+    width: 512px;
+}
+
+@media screen and (max-width: 550px) {
+    .alert {
+        width: 100%;
+    }
 }
 
 .type {
@@ -52,4 +59,6 @@
 .close {
     margin-right: 10px;
     cursor: pointer;
+    height: 2.5em;
+    width: auto;
 }
