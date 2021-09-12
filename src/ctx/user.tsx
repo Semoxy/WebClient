@@ -1,20 +1,26 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useAuth} from "./auth";
-import {getUserInformation} from "../services/session";
+import {getUserInformation, UserInformation} from "../services/session";
 import {useLoading} from "./loading/loading";
 
 interface IUserContextProps {
-    username: string,
+    user: UserInformation,
     userId: string | null
 }
 
 const UserContext = React.createContext<IUserContextProps>({
-    username: "<unknown>",
+    user: {
+        username: "<unknown>",
+        root: false,
+    },
     userId: "<unknown>"
 })
 
 export const UserProvider: React.FC = ({children}) => {
-    const [username, setUsername] = useState<string>("")
+    const [user, setUser] = useState<UserInformation>({
+        username: "<unknown>",
+        root: false
+    })
     const [fetched, setFetched] = useState(false)
 
     const auth = useAuth()
@@ -23,14 +29,14 @@ export const UserProvider: React.FC = ({children}) => {
     useEffect(() => {
         loading.requestIntent("Loading User Information", "LOAD_USER_INFO")
         getUserInformation().then(i => {
-            setUsername(i.username)
+            setUser(i)
             loading.finishIntent("LOAD_USER_INFO")
             setFetched(true)
         })
     }, [])
 
     return <UserContext.Provider value={{
-        username,
+        user,
         userId: auth.userId
     }}>
         {fetched && children}

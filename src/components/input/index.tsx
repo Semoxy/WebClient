@@ -2,6 +2,15 @@ import React, {ChangeEventHandler} from "react";
 import styles from "./inputs.module.css"
 import {useUniqueId} from "../../hooks";
 import PasswordInput from "./password";
+import {concatClasses} from "../../util";
+
+interface IInputLabelProps {
+    htmlFor?: string
+}
+
+export const InputLabel: React.FC<IInputLabelProps> = ({children, htmlFor}) => {
+    return <label className={styles.label} htmlFor={htmlFor}>{children}</label>
+}
 
 export type InputType = "text" | "password"
 
@@ -33,7 +42,7 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
     }
 
     return <div className={styles.input}>
-        {label && <label className={styles.label} htmlFor={id}>{label}</label> }
+        {label && <InputLabel htmlFor={id}>{label}</InputLabel> }
         <input
             id={id}
             placeholder={placeholder}
@@ -47,6 +56,56 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
             ref={ref}
         />
         { icon && icon }
+    </div>
+})
+
+export interface ITextAreaProps {
+    placeholder?: string,
+    label?: string,
+    value?: string,
+    defaultValue?: string,
+    readonly?: boolean,
+    onChange?: ChangeEventHandler<HTMLTextAreaElement>,
+    expand?: boolean,
+    autoComplete?: string,
+    ref?: any,
+    wrapClassName?: string,
+    className?: string,
+    fill?: boolean
+}
+
+export const TextArea: React.FC<ITextAreaProps> = React.forwardRef<HTMLTextAreaElement, ITextAreaProps>(({
+    label,
+    placeholder,
+    value,
+    defaultValue,
+    readonly,
+    onChange,
+    expand,
+    wrapClassName,
+    className,
+    fill,
+    autoComplete}, ref) => {
+    const id = useUniqueId("textarea");
+
+    const fieldClasses = [styles.field, styles.textarea]
+
+    expand && fieldClasses.push(styles.expand)
+    className && fieldClasses.push(className)
+
+    return <div className={concatClasses(styles.input, styles["textarea-wrap"], wrapClassName, fill && styles.fill)}>
+        { label && <InputLabel htmlFor={id}>{label}</InputLabel> }
+        <textarea
+            ref={ref}
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            defaultValue={defaultValue}
+            readOnly={readonly}
+            onChange={onChange}
+            autoComplete={autoComplete}
+            className={fieldClasses.join(" ")}
+        />
     </div>
 })
 

@@ -1,34 +1,47 @@
 import styles from "./dropdown.module.css"
 import React, {useState} from "react";
+import {concatClasses} from "../../util";
+import {InputLabel} from "../input";
+import {useUniqueId} from "../../hooks";
 
 export interface IDropDownProps {
     currentItem: JSX.Element,
     tabIndex: number,
     className?: string,
     dropdownClassName?: string,
-    imageClassName?: string
+    imageClassName?: string,
+    expand?: boolean,
+    label?: string,
+    notOpenableWhenOneChild?: boolean
 }
 
-export const DropDown: React.FC<IDropDownProps> = ({currentItem, dropdownClassName, className, tabIndex, children, imageClassName}) => {
+export const DropDown: React.FC<IDropDownProps> = ({currentItem, dropdownClassName, className, tabIndex, children, imageClassName, expand, label, notOpenableWhenOneChild}) => {
     const [collapsed, setCollapsed] = useState(true)
+    const id = useUniqueId("dropdown")
 
-    const classNames = [styles.select]
-    !collapsed && classNames.push(styles.open)
-    className && classNames.unshift(className)
+    const childCount = React.Children.toArray(children).filter(c => React.isValidElement(c)).length
+    const hasChildren = !!childCount
 
-    const dropdownClassNames = [styles.dropdown]
-    dropdownClassName && dropdownClassNames.push(dropdownClassName)
+    return <div>
+        { label && <InputLabel htmlFor={id}>{label}</InputLabel> }
+        <div id={id} tabIndex={tabIndex} className={concatClasses(styles.select, !collapsed && styles.open, className, expand && styles.expand)} onClick={() => setCollapsed(!collapsed)} onBlur={() => setCollapsed(true)}>
+            { currentItem }
+            { hasChildren && !(childCount <= 0 && notOpenableWhenOneChild) ? <>
+                <img className={concatClasses(styles["dropdown-arrow"], imageClassName)} src={"assets/arrow_down.svg"} alt={"Arrow Down"} />
+                { !collapsed && <div className={concatClasses(styles.dropdown, dropdownClassName)}>
+                    {children}
+                </div> }
+            </> : <></>}
+        </div>
+    </div>
+}
 
-    const imageClassNames = [styles["dropdown-arrow"]]
-    imageClassName && imageClassNames.push(imageClassName)
+interface IDefaultDropDownItemProps {
+    onClick?(): void
+}
 
-    return <div tabIndex={tabIndex} className={classNames.join(" ")} onClick={() => setCollapsed(!collapsed)} onBlur={() => setCollapsed(true)}>
-        {currentItem}
-        { !!React.Children.toArray(children).filter(c => React.isValidElement(c)).length && <>
-            <img className={imageClassNames.join(" ")} src={"assets/arrow_down.svg"} alt={"Arrow Down"} />
-            <div className={dropdownClassNames.join(" ")}>
-                {children}
-            </div>
-        </> }
+export const DefaultDropDownItem: React.FC<IDefaultDropDownItemProps> = ({children, onClick}) => {
+    return <div className={styles.item} onClick={onClick}>
+        {children}
     </div>
 }

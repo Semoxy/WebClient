@@ -52,7 +52,7 @@ interface IServerSelectionSelectProps {
 const ServerSelectionSelect: React.FC<IServerSelectionSelectProps> = ({onChange}) => {
     const server = useServers()
 
-    return <DropDown currentItem={<ServerEntry server={server.currentServer} />} tabIndex={0} className={styles.dropdown}>
+    return <DropDown notOpenableWhenOneChild={true} currentItem={<ServerEntry server={server.currentServer} />} tabIndex={0} className={styles.dropdown}>
         {server.servers.map(s => s.id !== server.currentServer?.id && <ServerEntry key={s.id} server={s} data-id={s.id} onClick={() => onChange && onChange(s.id)} />)}
     </DropDown>
 }

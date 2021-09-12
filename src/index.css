@@ -6,7 +6,7 @@ body {
   background-color: var(--background-light-blue);
 }
 
-button, input {
+button, input, textarea {
   font: 500 1.2rem 'Roboto', sans-serif;
 }
 

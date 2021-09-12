@@ -48,8 +48,9 @@ export async function deleteSession(): Promise<boolean> {
     }
 }
 
-interface UserInformation {
-    username: string
+export interface UserInformation {
+    username: string,
+    root: boolean
 }
 
 export async function getUserInformation(): Promise<UserInformation> {

@@ -1,5 +1,6 @@
 import React, {useContext, useState} from "react";
 import {useMediaQuery} from "react-responsive";
+import {useStorage} from "../hooks";
 
 interface IDesignContextProps {
     navbarOpen: boolean,
@@ -24,13 +25,16 @@ const DesignContext = React.createContext<IDesignContextProps>({
 export const DesignProvider: React.FC = ({children}) => {
     const isMobile = useMediaQuery({ query: "(max-width: 590px)" })
     const [navbarOpen, setNavbarOpen] = useState(false)
-    const [isDarkMode, setDarkMode] = useState(false)
+    const [_isDarkMode, _setDarkMode] = useStorage("Semoxy_Darkmode", localStorage, "false")
+    const [isDarkMode, setDarkMode] = [_isDarkMode === "true", (b: boolean) => _setDarkMode(b + "")]
 
     const isNavbarShown = (isMobile && navbarOpen) || !isMobile
     const contentShown = !(isMobile && navbarOpen) || !isMobile
 
     return <DesignContext.Provider value={{navbarOpen: isNavbarShown, setNavbarOpen, isDarkMode, setDarkMode, contentShown, isMobile}}>
-        {children}
+        <div className={isDarkMode ? "dark-mode" : "light-mode"}>
+            {children}
+        </div>
     </DesignContext.Provider>
 }
 

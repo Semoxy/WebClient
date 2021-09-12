@@ -7,7 +7,8 @@ export type Action =
     "SERVER_ADD"          |
     "SERVER_DELETE"       |
     "AUTH_ERROR"          |
-    "AUTH_SUCCESS" | EventType
+    "AUTH_SUCCESS"        |
+    EventType // - all events
 
 export interface Packet {
     action: string,
@@ -36,4 +37,9 @@ export interface ServerEventPacket<T extends Event> extends Packet {
         serverId: string,
         eventData: T
     }
+}
+
+export interface ServerAddPacket extends Packet {
+    action: "SERVER_ADD",
+    data: Server
 }

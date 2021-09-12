@@ -3,7 +3,7 @@ import {getServers, Server} from "../services/server";
 import {useLoading} from "./loading/loading";
 import {useHistory} from "react-router";
 import {useSocketMessage} from "./socket";
-import {ServerEventPacket, ServerStateChangePacket} from "../services/socket";
+import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket} from "../services/socket";
 import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event";
 
 interface ServerContextProps {
@@ -80,6 +80,13 @@ export const ServerProvider: React.FC = ({children}) => {
             }
         })
     }, "PLAYER_LEAVE")
+
+    useSocketMessage((p: ServerAddPacket) => {
+        const newServers = servers.slice()
+        newServers.push(p.data)
+        setServers(newServers)
+        setCurrentId(p.data.id)
+    }, "SERVER_ADD")
 
     return <ServerContext.Provider value={{
         servers,

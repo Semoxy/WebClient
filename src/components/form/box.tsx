@@ -2,12 +2,16 @@ import React from "react";
 import styles from "./box.module.css"
 
 interface IFormBoxProps {
-    onSubmit?(): void
+    onSubmit?(): void,
+    className?: string
 }
 
-const FormBox: React.FC<IFormBoxProps> = ({children, onSubmit}) => {
+const FormBox: React.FC<IFormBoxProps> = ({children, onSubmit, className}) => {
+    const classNames = [styles.container]
+    className && classNames.push(className)
+
     return <div
-        className={styles.container}
+        className={classNames.join(" ")}
         onKeyDown={(e) => e.key === "Enter" && onSubmit && onSubmit()}
     >
         {children}
@@ -20,7 +24,7 @@ const BoxText: React.FC = ({children}) => {
     </div>
 }
 
-const BoxHeading: React.FC = ({children}) => {
+const StrongHeading: React.FC = ({children}) => {
     return <h1 className={styles.heading}>
         {children}
     </h1>
@@ -31,4 +35,4 @@ const Spacing: React.FC = () => {
 }
 
 export default FormBox
-export { FormBox, BoxHeading, BoxText, Spacing }
+export { FormBox, StrongHeading, BoxText, Spacing }

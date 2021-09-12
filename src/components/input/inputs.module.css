@@ -29,12 +29,13 @@
     border-color: var(--primary-blue);
 }
 
-.field::placeholder {
+.field::placeholder, .textarea::placeholder {
     color: var(--placeholder-color);
+    font-weight: 400;
 }
 
 .field:not(:placeholder-shown), .field:focus {
-    background-color: var(--input-backgound-filled);
+    /* background-color: var(--input-background-filled); */
 }
 
 .icon {
@@ -52,4 +53,25 @@
 
 .input {
     position: relative;
+}
+
+.textarea-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.textarea {
+    flex-grow: 1;
+    font-size: 1.2rem;
+    resize: none;
+    color: var(--text-input);
+}
+
+.textarea-wrap.fill {
+    flex-grow: 1;
+}
+
+.textarea-wrap.fill .textarea {
+    height: 100%;
+    font-family: inherit;
 }

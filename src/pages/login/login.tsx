@@ -6,7 +6,7 @@ import Input, {PasswordInput} from "../../components/input";
 
 import styles from "./login.module.css"
 import FullSizeContainer from "../../components/form/full";
-import FormBox, {BoxHeading, BoxText} from "../../components/form/box";
+import FormBox, {StrongHeading, BoxText} from "../../components/form/box";
 import {LoginScreenLogo} from "../../components/semoxy";
 import {useAlert} from "../../ctx/alert/alertctx";
 
@@ -55,7 +55,7 @@ export const LoginView: React.FC = () => {
     return <FullSizeContainer>
         <FormBox onSubmit={login}>
             <LoginScreenLogo />
-            <BoxHeading>Login</BoxHeading>
+            <StrongHeading>Login</StrongHeading>
             <BoxText>
                 You can only use Semoxy if an admin created an account for you!
                 If you want to try out the interface, visit <a href={"https://test.semoxy.mc"}>test.semoxy.mc</a>!

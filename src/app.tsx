@@ -11,6 +11,8 @@ import {useParams} from "react-router";
 import {InterfaceGrid} from "./components/interface/grid";
 import {CreateRootUserView} from "./pages/createRootUser/createRootUser";
 import {Dashboard} from "./pages/dashboard/dashboard";
+import {ServerCreation} from "./pages/serverCreation/serverCreation";
+import {LoadingProvider} from "./ctx/loading/loading";
 
 
 function ServerIdSetter() {
@@ -56,7 +58,9 @@ export const App: React.FC = () => {
                                         <Switch>
                                             <Route path={"/server/new"}>
                                                 <Title>New Server</Title>
-                                                New Server
+                                                <LoadingProvider>
+                                                    <ServerCreation />
+                                                </LoadingProvider>
                                             </Route>
 
                                             <Route path={"/server/:serverId"}>

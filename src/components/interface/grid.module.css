@@ -17,7 +17,8 @@
 .content {
     grid-area: content;
     height: 100%;
-    padding-right: .9rem;;
+    padding-right: .9rem;
+    position: relative;
 }
 
 @media screen and (max-width: 590px) {

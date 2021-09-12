@@ -1,13 +1,14 @@
 import styles from "./createRootUser.module.css"
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import FullSizeContainer from "../../components/form/full";
-import FormBox, {BoxHeading, BoxText} from "../../components/form/box";
+import FormBox, {StrongHeading, BoxText} from "../../components/form/box";
 import {LoginScreenLogo} from "../../components/semoxy";
 import Input from "../../components/input";
 import Button from "../../components/button";
 import {useHistory} from "react-router";
-import {createRootUser} from "../../services/rootUserCreation";
+import {createRootUser} from "../../services/userCreation";
 import {useAlert} from "../../ctx/alert/alertctx";
+import {useSemoxyStatus} from "../../ctx/status";
 
 
 export const CreateRootUserView: React.FC = () => {
@@ -19,6 +20,13 @@ export const CreateRootUserView: React.FC = () => {
 
     const history = useHistory()
     const alert = useAlert()
+    const status = useSemoxyStatus()
+
+    useEffect(() => {
+        if (status.status.hasRoot) {
+            history.replace("/dashboard")
+        }
+    }, [status])
 
     function onSubmit() {
         if (!username || !password) {
@@ -86,7 +94,7 @@ export const CreateRootUserView: React.FC = () => {
     return <FullSizeContainer>
         <FormBox onSubmit={onSubmit}>
             <LoginScreenLogo />
-            <BoxHeading>Create Root Account</BoxHeading>
+            <StrongHeading>Create Root Account</StrongHeading>
             <BoxText>
                 You’re about to create the first account in this Semoxy-Instance! Exciting!
             </BoxText>

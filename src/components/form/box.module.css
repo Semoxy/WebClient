@@ -6,7 +6,7 @@
     padding: 20px;
     border: 1px solid var(--placeholder-color);
     border-radius: 14px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
 }
 
 .heading {

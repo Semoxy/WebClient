@@ -17,9 +17,9 @@ const UserDisplay: React.FC = () => {
     const user = useUser()
 
     return <div className={styles["user-display"]}>
-        <h3>{user.username}</h3>
+        <h3>{user.user.username}</h3>
         {/* TODO: should show the highest permission role (not implemented) */}
-        <p>Owner</p>
+        <p>{user.user.root ? "Owner" : "User"}</p>
     </div>
 }
 

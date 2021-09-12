@@ -11,7 +11,6 @@ interface ICreateUserResponse {
 export async function createRootUser(username: string, password: string, creationSecret: string): Promise<ICreateUserResponse> {
     let r = new APIRequest("/account/create-root-user")
     let data = { username, password, creationSecret }
-    r.addCredentials()
     r.setData(data)
     try {
         await r.post()

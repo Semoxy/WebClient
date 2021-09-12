@@ -1,4 +1,4 @@
-:root {
+.light-mode {
     --semoxy-blue: #254189;
     --primary-blue: #567CC6;
     --placeholder-color: #00000033;
@@ -10,7 +10,7 @@
     --text-input: #000000CC;
     --text-small: #0000005E;
     --warning-yellow: #FBF56A;
-    --input-backgound-filled: rgb(232, 240, 254);
+    --input-background-filled: rgb(232, 240, 254);
 
     --button-primary: #567CC6;
     --button-primary-hover: #45639e;
@@ -19,4 +19,33 @@
     --button-danger: #FF7676;
     --button-danger-hover: #e66a6a;
     --button-danger-click: #cc5e5e;
+
+    --selection-blue: #9EBCF2;
+    --white: #FFFFFF;
+}
+
+.dark-mode {
+    --semoxy-blue: #254189;
+    --primary-blue: #567CC6;
+    --placeholder-color: #00000033;
+    --danger-red: #FF7676;
+    --text: #6D6D6D;
+    --background-light-blue: #EFF5FF;
+    --success-green: #62C540;
+    --text-strong: #000000B2;
+    --text-input: #000000CC;
+    --text-small: #0000005E;
+    --warning-yellow: #FBF56A;
+    --input-background-filled: rgb(232, 240, 254);
+
+    --button-primary: #567CC6;
+    --button-primary-hover: #45639e;
+    --button-primary-click: #344a77;
+
+    --button-danger: #FF7676;
+    --button-danger-hover: #e66a6a;
+    --button-danger-click: #cc5e5e;
+
+    --selection-blue: #9EBCF2;
+    --white: #FFFFFF;
 }

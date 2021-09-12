@@ -1,9 +1,9 @@
 .user-menu {
     border: none;
     border-radius: 0;
-    padding-right: 56px;
     min-width: 200px;
     width: auto;
+    padding: 6px 56px 6px 8px;
 }
 
 .dropdown {
