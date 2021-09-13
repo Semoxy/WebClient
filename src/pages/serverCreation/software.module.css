@@ -1,5 +1,6 @@
 .box {
     grid-area: software;
+    width: 100% !important;
 }
 
 .version-selection {
@@ -8,6 +9,7 @@
     height: 7rem;
     column-gap: .9rem;
     flex-wrap: nowrap;
+    overflow-x: auto;
 }
 
 .software-item {
@@ -19,6 +21,7 @@
     border: 1px solid var(--placeholder-color);
     border-radius: 14px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .text {

@@ -4,6 +4,7 @@ import styles from "./dashboard.module.css"
 import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons";
 import {useInfo} from "../../ctx/info";
 import {useServers} from "../../ctx/server";
+import {formatTime} from "../../util";
 
 
 interface IOverviewItemProps {
@@ -33,17 +34,20 @@ export const OverviewItemList: React.FC = ({children}) => {
 }
 
 
-function calculateUptime(start: number): string {
-    return `${Math.round((new Date().getTime() / 1000) - start)}`
+function calculateUptime(start: number): number {
+    return Math.round((new Date().getTime() / 1000) - start)
 }
 
 
-function useUptime(): string {
+function useUptime(): number {
     const info = useInfo()
     const [uptimeOut, setUptimeOut] = useState(calculateUptime(info.startTime))
 
     useEffect(() => {
-        const interval = setInterval(() => setUptimeOut(calculateUptime(info.startTime)), 5000)
+        const interval = setInterval(() => {
+            setUptimeOut(calculateUptime(info.startTime))
+        }, calculateUptime(info.startTime) > 3600 ? 5000 : 500)
+
         return () => clearInterval(interval)
     }, [])
 
@@ -71,7 +75,7 @@ export const Dashboard: React.FC = () => {
             <OverviewItem title={"Total Players"} value={playerCount + ""} icon={<PlayerOverviewIcon />} />
             <OverviewItem title={"RAM Usage"} value={"4.5/32GB"} icon={<RamIcon />} />
             <OverviewItem title={"CPU Usage"} value={"68%"} icon={<CPUIcon />} />
-            <OverviewItem title={"Uptime"} value={uptime} icon={<UptimeIcon />} />
+            <OverviewItem title={"Uptime"} value={formatTime(uptime)} icon={<UptimeIcon />} />
         </OverviewItemList>
     </div>
 }

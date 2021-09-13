@@ -35,6 +35,7 @@ export const ServerProvider: React.FC = ({children}) => {
             setServers(s)
 
             if (s.length === 0) {
+                // let the user create a new server when none is existing
                 history.replace("/server/new")
             } else {
                 setCurrentId(s[0].id)
@@ -51,6 +52,10 @@ export const ServerProvider: React.FC = ({children}) => {
         if (!currentServer && currentId !== undefined) {
             // redirect to dashboard when id is wrong or not present
             history.replace("/dashboard")
+        }
+
+        if (!history.location.pathname.startsWith(`/server/${currentId}`)) {
+            // history.push(`/server/${currentId}`)
         }
     }, [currentId, fetched])
 
@@ -85,7 +90,6 @@ export const ServerProvider: React.FC = ({children}) => {
         const newServers = servers.slice()
         newServers.push(p.data)
         setServers(newServers)
-        setCurrentId(p.data.id)
     }, "SERVER_ADD")
 
     return <ServerContext.Provider value={{

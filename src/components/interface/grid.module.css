@@ -1,6 +1,6 @@
 .grid {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto 1fr;
     --gap: .9em;
     gap: var(--gap);
@@ -19,6 +19,7 @@
     height: 100%;
     padding-right: .9rem;
     position: relative;
+    overflow-y: auto;
 }
 
 @media screen and (max-width: 590px) {

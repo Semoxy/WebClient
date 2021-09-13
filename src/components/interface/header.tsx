@@ -11,8 +11,10 @@ interface IBurgerMenuProps {
 
 
 export const BurgerMenu: React.FC<IBurgerMenuProps> = ({onClick}) => {
+    const design = useDesign()
+
     return <label className={styles.burger}>
-        <input type="checkbox" onClick={onClick} />
+        <input type="checkbox" onClick={onClick} checked={design.navbarOpen} />
         <span />
         <span />
         <span />

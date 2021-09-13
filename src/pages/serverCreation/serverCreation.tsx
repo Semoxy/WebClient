@@ -10,8 +10,8 @@ import {APIRequest, getAPIUrl} from "../../services";
 import { createServer as API_createServer } from "../../services/server";
 import {useInfo} from "../../ctx/info";
 import {useAlert} from "../../ctx/alert/alertctx";
-import {useHistory} from "react-router";
 import {useLoading} from "../../ctx/loading/loading";
+import {useServers} from "../../ctx/server";
 
 
 export type Versions = {[x: string]: string[]}
@@ -145,8 +145,8 @@ export const ServerCreation: React.FC = () => {
 
     const info = useInfo()
     const alert = useAlert()
-    const history = useHistory()
     const loading = useLoading()
+    const servers = useServers()
 
     const [softwares, data, resetVersion] = useServerVersions()
     const [javaVersion, setJavaVersion] = useState(Object.keys(info.javaVersions)[0])
@@ -203,7 +203,9 @@ export const ServerCreation: React.FC = () => {
                 description: `Your server "${name}" has been created successfully`,
                 type: "success"
             })
-            history.push(`/server/${r.data.add.server.id}`)
+
+            // set new server as current, redirects to the server overview
+            servers.setCurrentServer(r.data.add.server.id)
             loading.finishIntent("CREATE_SERVER")
         })
     }

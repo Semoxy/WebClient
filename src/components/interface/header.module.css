@@ -1,6 +1,5 @@
 .header {
     grid-area: header;
-    min-height: 10px;
     height: 100%;
     padding: 0 0 0 24px;
     background-color: #FFFFFF;
