@@ -2,7 +2,7 @@
     grid-area: header;
     height: 100%;
     padding: 0 0 0 24px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     display: flex;
     justify-content: space-between;
     box-shadow: 0 9px 12px -13px #3a3a3a24;

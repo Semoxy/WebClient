@@ -20,21 +20,27 @@
     --button-danger-hover: #e66a6a;
     --button-danger-click: #cc5e5e;
 
+    --button-secondary-color: var(--primary-blue);
+
     --selection-blue: #9EBCF2;
     --white: #FFFFFF;
+    --card: #FFFFFF;
+    --border: var(--placeholder-color);
+    --navigation-selected: var(--semoxy-blue);
+    --navigation-unselected: var(--text);
 }
 
 .dark-mode {
-    --semoxy-blue: #254189;
+    --semoxy-blue: #FFFFFF;
     --primary-blue: #567CC6;
-    --placeholder-color: #00000033;
+    --placeholder-color: #FFFFFF8A;
     --danger-red: #FF7676;
-    --text: #6D6D6D;
-    --background-light-blue: #EFF5FF;
+    --text: #FFFFFF;
+    --background-light-blue: #3D3F43;
     --success-green: #62C540;
-    --text-strong: #000000B2;
-    --text-input: #000000CC;
-    --text-small: #0000005E;
+    --text-strong: #FFFFFFB2;
+    --text-input: #FFFFFFCC;
+    --text-small: #FFFFFFC2;
     --warning-yellow: #FBF56A;
     --input-background-filled: rgb(232, 240, 254);
 
@@ -46,6 +52,12 @@
     --button-danger-hover: #e66a6a;
     --button-danger-click: #cc5e5e;
 
+    --button-secondary-color: #FFFFFF;
+
     --selection-blue: #9EBCF2;
-    --white: #FFFFFF;
+    --white: #525458;
+    --card: #5A5D63;
+    --border: #FFFFFF33;
+    --navigation-selected: var(--primary-blue); /* Semoxy Blue */
+    --navigation-unselected: var(--text-strong);
 }

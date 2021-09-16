@@ -7,22 +7,53 @@
 }
 
 .dropdown {
-    border-radius: 0;
-    padding: 0;
+    border-radius: .6rem;
+    padding: .3rem;
     top: 100%;
+    row-gap: .2rem;
 }
 
 .arrow {
     right: 18px;
 }
 
-/* TODO: hover background color */
-.logout {
-     width: 100%;
-     background-color: #FFFFFF;
-     padding: 12px 12px;
-     cursor: pointer;
- }
+.item {
+    width: 100%;
+    padding: .4rem .6rem;
+    cursor: pointer;
+    border-radius: .2rem;
+    display: flex;
+    column-gap: .3rem;
+    justify-content: space-between;
+    --icon-color: var(--text);
+    color: var(--icon-color);
+    align-items: center;
+    font-size: 1rem;
+}
+
+.item.default:hover, .item.default:active {
+    --icon-color: #FFFFFF;
+    background-color: var(--primary-blue);
+}
+
+.item.danger {
+    --icon-color: var(--danger-red);
+}
+
+.item.danger:hover {
+    background-color: var(--button-danger-hover);
+    --icon-color: #FFFFFF;
+}
+
+.item.danger:active {
+    background-color: var(--button-danger-click);
+    --icon-color: #FFFFFF;
+}
+
+.icon {
+    height: 24px;
+    width: 24px;
+}
 
 .user-display {
     color: var(--semoxy-blue);

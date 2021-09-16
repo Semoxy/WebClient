@@ -1,6 +1,6 @@
 .select {
     border-radius: 8px;
-    border: 1px solid var(--placeholder-color);
+    border: 1px solid var(--border);
     outline: none;
     flex-grow: 0;
     position: relative;
@@ -9,6 +9,7 @@
     color: var(--text-input);
     font: 500 1.2rem 'Roboto', sans-serif;
     padding-right: 1.5em; /* space for arrow */
+    --icon-color: var(--semoxy-blue);
 }
 
 .select:focus {
@@ -21,7 +22,7 @@
     left: 0;
     right: 0;
     z-index: 10;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     padding: 12px;
     box-shadow: 0 0 15px -4px #00000022;
     border-radius: 8px;
@@ -32,6 +33,8 @@
     transition: all 200ms;
     max-height: 10rem;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .select.open .dropdown {

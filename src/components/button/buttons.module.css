@@ -31,7 +31,7 @@
 
 .secondary {
     background-color: transparent;
-    color: var(--button-primary);
+    color: var(--button-secondary-color);
 }
 
 .secondary.border {

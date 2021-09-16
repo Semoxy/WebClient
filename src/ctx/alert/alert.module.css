@@ -17,7 +17,7 @@
 .alert {
     display: flex;
     padding: 8px;
-    background-color: #FFFFFF;
+    background-color: var(--card);
     box-shadow: 0 13px 46px -1px #00000029;
     border-radius: 12px;
     pointer-events: all;

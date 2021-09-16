@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {concatClasses} from "../../util";
 import {InputLabel} from "../input";
 import {useUniqueId} from "../../hooks";
+import {DropdownArrow} from "../semoxy/icons";
 
 export interface IDropDownProps {
     currentItem: JSX.Element,
@@ -27,7 +28,7 @@ export const DropDown: React.FC<IDropDownProps> = ({currentItem, dropdownClassNa
         <div id={id} tabIndex={tabIndex} className={concatClasses(styles.select, !collapsed && styles.open, className, expand && styles.expand)} onClick={() => setCollapsed(!collapsed)} onBlur={() => setCollapsed(true)}>
             { currentItem }
             { hasChildren && !(childCount <= 0 && notOpenableWhenOneChild) ? <>
-                <img className={concatClasses(styles["dropdown-arrow"], imageClassName)} src={"assets/arrow_down.svg"} alt={"Arrow Down"} />
+                <DropdownArrow className={concatClasses(styles["dropdown-arrow"], imageClassName)} />
                 { !collapsed && <div className={concatClasses(styles.dropdown, dropdownClassName)}>
                     {children}
                 </div> }

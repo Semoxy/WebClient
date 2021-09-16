@@ -6,6 +6,8 @@ import {useSocketMessage} from "./socket";
 import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket} from "../services/socket";
 import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event";
 
+// fixme: state update on unmounted component when F5 in /server/new
+
 interface ServerContextProps {
     servers: Server[],
     currentServer: Server | null,

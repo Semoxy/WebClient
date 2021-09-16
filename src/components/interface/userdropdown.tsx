@@ -5,10 +5,13 @@ import {useAuth} from "../../ctx/auth";
 import {deleteSession} from "../../services/session";
 import {useUser} from "../../ctx/user";
 import {useLoading} from "../../ctx/loading/loading";
+import {concatClasses} from "../../util";
+import {LogoutIcon, SettingsIcon} from "../semoxy/icons";
 
 
 export const UserDropdown: React.FC = () => {
     return <DropDown currentItem={<UserDisplay />} tabIndex={1} className={styles["user-menu"]} dropdownClassName={styles.dropdown} imageClassName={styles.arrow}>
+        <MenuDropdownItem icon={<SettingsIcon strokeWidth={3} />} label={"Account Settings"} />
         <LogoutButton />
     </DropDown>
 }
@@ -20,6 +23,26 @@ const UserDisplay: React.FC = () => {
         <h3>{user.user.username}</h3>
         {/* TODO: should show the highest permission role (not implemented) */}
         <p>{user.user.root ? "Owner" : "User"}</p>
+    </div>
+}
+
+type MenuDropdownItemType = "default" | "danger"
+
+interface IMenuDropdownItemProps {
+    icon: JSX.Element,
+    onClick?(): void,
+    label: string,
+    type?: MenuDropdownItemType
+}
+
+const MenuDropdownItem: React.FC<IMenuDropdownItemProps> = ({icon, onClick, type = "default", label}) => {
+    icon = React.cloneElement(icon as JSX.Element, {
+        className: styles.icon
+    })
+
+    return <div className={concatClasses(styles.item, styles[type])} onClick={onClick}>
+        <span>{label}</span>
+        {icon}
     </div>
 }
 
@@ -37,7 +60,5 @@ const LogoutButton: React.FC = () => {
         })
     }
 
-    return <div className={styles.logout} onClick={logout}>
-        Logout
-    </div>
+    return <MenuDropdownItem icon={<LogoutIcon />} label={"Logout"} onClick={logout} type={"danger"} />
 }

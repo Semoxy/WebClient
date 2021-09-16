@@ -1,7 +1,7 @@
 .item {
     display: flex;
     flex-direction: row;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 8px;
     padding: 12px;
     flex-grow: 1;

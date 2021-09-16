@@ -1,5 +1,6 @@
 import React, {MouseEventHandler} from "react";
 import styles from "./buttons.module.css";
+import {concatClasses} from "../../util";
 
 export type ButtonType = "primary" | "secondary" | "danger" | "online" | "warning";
 
@@ -14,13 +15,13 @@ export interface IButtonProps {
 }
 
 export const Button: React.FC<IButtonProps> = ({border, loading, cutoff, className, onClick, type, children, disabled}) => {
-    let classNames = [styles.button]
-    classNames.push(styles[type])
-    border && classNames.push(styles.border)
-    className && classNames.push(className)
-    cutoff && classNames.push(styles.cutoff)
-
-    return <button className={classNames.join(" ")} onClick={onClick} disabled={disabled || loading}>
+    return <button className={concatClasses(
+        styles.button,
+        styles[type],
+        border && styles.border,
+        className && className,
+        cutoff && styles.cutoff
+    )} onClick={onClick} disabled={disabled || loading}>
         {loading ? <>Loading</> : children }
     </button>
 }
