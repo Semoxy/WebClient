@@ -1,5 +1,6 @@
 import React, {MouseEventHandler} from "react";
 import styles from "./buttons.module.css";
+import loadingStyles from "./loading.module.css"
 import {concatClasses} from "../../util";
 
 export type ButtonType = "primary" | "secondary" | "danger" | "online" | "warning";
@@ -22,8 +23,17 @@ export const Button: React.FC<IButtonProps> = ({border, loading, cutoff, classNa
         className && className,
         cutoff && styles.cutoff
     )} onClick={onClick} disabled={disabled || loading}>
-        {loading ? <>Loading</> : children }
+        {loading ? <ButtonLoadingAnimation /> : children }
     </button>
+}
+
+export const ButtonLoadingAnimation: React.FC = () => {
+    return <div className={loadingStyles.ring}>
+        <div />
+        <div />
+        <div />
+        <div />
+    </div>
 }
 
 export default Button
