@@ -29,6 +29,11 @@
     color: var(--icon-color);
     align-items: center;
     font-size: 1rem;
+    transition: none;
+}
+
+.item > span {
+    transition: none;
 }
 
 .item.default:hover, .item.default:active {
