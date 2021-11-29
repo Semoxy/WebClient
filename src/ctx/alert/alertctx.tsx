@@ -7,7 +7,7 @@ export type AlertType = "success" | "warning" | "error" | "info"
 export interface IAlert {
     type: AlertType,
     message: string,
-    description: string,
+    description?: string,
     id?: number,
     timeout?: NodeJS.Timeout
 }

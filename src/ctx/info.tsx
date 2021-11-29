@@ -1,12 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Info, getInfo, SemoxyStatus, getStatus} from "../services/info";
+import {Info, getInfo} from "../services/info";
 import {useLoading} from "./loading/loading";
 
-const InfoContext = React.createContext<Info>({
+interface IInfoContextProps extends Info {
+    setRAMCPUUsage(ramUsage: number, cpuUsage: number): void
+}
+
+const InfoContext = React.createContext<IInfoContextProps>({
     javaVersions: {},
     maxRam: 0,
     publicIP: "127.0.0.1",
-    startTime: 0
+    startTime: 0,
+    systemRAM: 0,
+    ramUsage: 0,
+    cpuUsage: 0,
+    setRAMCPUUsage() { }
 })
 
 export const InfoProvider: React.FC = ({children}) => {
@@ -14,7 +22,10 @@ export const InfoProvider: React.FC = ({children}) => {
         javaVersions: {},
         maxRam: 0,
         publicIP: "127.0.0.1",
-        startTime: new Date().getTime()
+        startTime: new Date().getTime(),
+        systemRAM: 0,
+        ramUsage: 0,
+        cpuUsage: 0
     });
     const [infoFetched, setInfoFetched] = useState(false)
 
@@ -29,7 +40,14 @@ export const InfoProvider: React.FC = ({children}) => {
         })
     }, [])
 
-    return <InfoContext.Provider value={info}>
+    function setRAMCPUUsage(ramUsage: number, cpuUsage: number) {
+        const newInfo = Object.assign({}, info)
+        newInfo.ramUsage = ramUsage
+        newInfo.cpuUsage = cpuUsage
+        setInfo(newInfo)
+    }
+
+    return <InfoContext.Provider value={{setRAMCPUUsage, ...info}}>
         { infoFetched && children }
     </InfoContext.Provider>
 }

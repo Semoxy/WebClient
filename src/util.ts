@@ -1,3 +1,5 @@
+import {getAPIUrl} from "./services";
+
 export function concatClasses(...names: (string | undefined | false | null)[]) {
     return names.filter(e => !!e).join(" ")
 }
@@ -65,4 +67,25 @@ export function timeDelta(time: number): TimeDelta {
     }
 
     return delta as TimeDelta;
+}
+
+export function calculateUptime(start: number): number {
+    return Math.round((new Date().getTime() / 1000) - start)
+}
+
+export function buildUrl(path: string, parameters?: {[x: string]: any}): string {
+    const url = new URL(getAPIUrl(path))
+
+    if (parameters) {
+        Object.entries(parameters).forEach((e) => {
+            e[1] && url.searchParams.append(e[0], e[1])
+        })
+    }
+
+    return url.toString()
+}
+
+
+export function getIdTimestamp(id: string): number {
+    return parseInt(id.substring(0, 8), 16)
 }

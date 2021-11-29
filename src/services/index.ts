@@ -1,4 +1,5 @@
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import {buildUrl} from "../util";
 
 export function getSessionId(): string | null {
     return localStorage.getItem("Semoxy_Session");
@@ -11,9 +12,9 @@ export function getAPIUrl(path: string): string {
 export class APIRequest {
     private readonly requestConfig: AxiosRequestConfig;
 
-    constructor(uri: string) {
+    constructor(uri: string, query?: { [x: string]: any }) {
         this.requestConfig = {
-            url: getAPIUrl(uri),
+            url: buildUrl(uri, query),
             headers: {}
         };
     }

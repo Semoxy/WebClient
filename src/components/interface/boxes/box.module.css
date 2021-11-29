@@ -2,9 +2,33 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    border-radius: 14px;
+    border-radius: 8px;
     background-color: var(--white);
     padding: 11px;
-    width: auto;
+    width: 100%;
     box-shadow: 0 9px 12px -8px #3A3A3A24;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    column-gap: .4rem;
+}
+
+.buttons.space-between {
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    column-gap: .9rem;
+    row-gap: .9rem;
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 890px) {
+    .row {
+        flex-direction: column;
+    }
 }

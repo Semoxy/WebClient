@@ -1,0 +1,37 @@
+.entry {
+    background-color: var(--white);
+    padding: .4em .6em;
+    border-radius: 6px;
+    color: var(--text-input);
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.entry:not(:last-child) {
+    margin-bottom: .2rem;
+}
+
+.time {
+    color: var(--text-small);
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.entry:hover .time {
+    opacity: 1;
+}
+
+.entry > span {
+    display: flex;
+    position: relative;
+}
+
+.entry > span > img {
+    image-rendering: pixelated;
+    aspect-ratio: 1 / 1;
+    margin-right: .4rem;
+    flex-grow: 1;
+    width: 19.2px; /* TODO: keep image square using better solution */
+}

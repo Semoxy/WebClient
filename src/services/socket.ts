@@ -8,6 +8,7 @@ export type Action =
     "SERVER_DELETE"       |
     "AUTH_ERROR"          |
     "AUTH_SUCCESS"        |
+    "STAT_UPDATE"         |
     EventType // - all events
 
 export interface Packet {
@@ -35,11 +36,21 @@ export interface ServerStateChangePacket extends Packet {
 export interface ServerEventPacket<T extends Event> extends Packet {
     data: {
         serverId: string,
-        eventData: T
+        eventData: T,
+        id: string
     }
 }
 
 export interface ServerAddPacket extends Packet {
     action: "SERVER_ADD",
     data: Server
+}
+
+export interface StatUpdatePacket extends Packet {
+    action: "STAT_UPDATE",
+    data: {
+        serverId: string,
+        ramUsage: number,
+        cpuUsage: number
+    }
 }

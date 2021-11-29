@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Input, {IInputProps} from "./index";
-import styles from "./password.module.css"
 import {PasswordIcon} from "../semoxy/icons";
 
 const PasswordInput: React.FC<Partial<IInputProps>> = (props) => {
@@ -15,7 +14,7 @@ const PasswordInput: React.FC<Partial<IInputProps>> = (props) => {
         {...props}
         type={passwordShown ? "text" : "password"}
         icon={
-            <PasswordIcon shown={passwordShown} onClick={() => setPasswordShown(!passwordShown)} className={styles.icon} />
+            <PasswordIcon shown={passwordShown} onClick={() => setPasswordShown(!passwordShown)} />
         }
     />
 }

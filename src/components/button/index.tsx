@@ -12,16 +12,18 @@ export interface IButtonProps {
     className?: string,
     cutoff?: boolean,
     disabled?: boolean,
-    loading?: boolean
+    loading?: boolean,
+    expand?: boolean
 }
 
-export const Button: React.FC<IButtonProps> = ({border, loading, cutoff, className, onClick, type, children, disabled}) => {
+export const Button: React.FC<IButtonProps> = ({border, expand, loading, cutoff, className, onClick, type, children, disabled}) => {
     return <button className={concatClasses(
         styles.button,
         styles[type],
         border && styles.border,
         className && className,
-        cutoff && styles.cutoff
+        cutoff && styles.cutoff,
+        expand && styles.expand
     )} onClick={onClick} disabled={disabled || loading}>
         {loading ? <ButtonLoadingAnimation /> : children }
     </button>

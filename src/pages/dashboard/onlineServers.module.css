@@ -1,0 +1,89 @@
+.item {
+    border-radius: 8px;
+    border: 1px solid var(--placeholder-color);
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    position: relative;
+}
+
+.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 11px;
+}
+
+.texts {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    color: var(--text);
+    flex-grow: 1;
+}
+
+.name {
+    font-size: 1.6em;
+    font-weight: 500;
+}
+
+.description {
+    font-size: 0.9em;
+    font-weight: 300;
+}
+
+.playercount {
+    font-size: 2em;
+    color: #FFFFFF;
+    clip-path: polygon(1.2rem 0%, 100% 0, 100% 100%, 0% 100%);
+    margin-left: .6rem;
+    align-self: stretch;
+    padding-left: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.playercount span {
+    padding: 1rem 1.3rem 1rem 1rem;
+}
+
+.danger {
+    background-color: var(--danger-red);
+}
+
+.warning {
+    background-color: var(--warning-yellow);
+}
+
+.online {
+    background-color: var(--success-green);
+}
+
+.button {
+    --icon-color: var(--placeholder-color);
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: 2px solid var(--icon-color);
+    flex-shrink: 0;
+    padding: .4em;
+    cursor: pointer;
+    transition: fill 300ms;
+}
+
+.button:hover {
+    --icon-color: var(--text);
+}
+
+.buttons {
+    opacity: 0;
+    transition: opacity 150ms;
+    display: flex;
+    column-gap: .5rem;
+}
+
+.item:hover .buttons {
+    opacity: 1;
+}

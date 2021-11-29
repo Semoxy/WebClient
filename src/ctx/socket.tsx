@@ -16,13 +16,17 @@ type Callbacks = {
 interface SocketContextProps {
     registerCallback(callback: OnMessageCallback, action: Action, identifier: string): void,
     unregisterCallback(action: Action, identifier: string): void,
-    authenticated: boolean
+    authenticated: boolean,
+    enableIntent(intent: string): void,
+    disableIntent(intent: string): void
 }
 
 const SocketContext = React.createContext<SocketContextProps>({
     authenticated: false,
     registerCallback() { },
-    unregisterCallback() { }
+    unregisterCallback() { },
+    enableIntent() { },
+    disableIntent() { }
 })
 
 export const SocketProvider: React.FC = ({children}) => {
@@ -60,6 +64,9 @@ export const SocketProvider: React.FC = ({children}) => {
 
         socket.current = new WebSocket(`ws://${window.location.host}/api/server/events`)
 
+        // @ts-ignore
+        window.s_socket = socket.current
+        console.log("connn")
         socket.current.onopen = () => {
             // authenticate as the socket opens
             socket.current?.send(JSON.stringify({
@@ -109,10 +116,31 @@ export const SocketProvider: React.FC = ({children}) => {
         delete callbacks.current[action][identifier]
     }
 
+
+    function enableIntent(intent: string) {
+        socket.current?.send(JSON.stringify({
+            action: "ENABLE_INTENT",
+            data: {
+                intent
+            }
+        }))
+    }
+
+    function disableIntent(intent: string) {
+        socket.current?.send(JSON.stringify({
+            action: "DISABLE_INTENT",
+            data: {
+                intent
+            }
+        }))
+    }
+
     const value = {
         registerCallback,
         unregisterCallback,
-        authenticated
+        authenticated,
+        enableIntent,
+        disableIntent
     }
 
     useSocketMessage(() => {
@@ -154,6 +182,32 @@ export function useSocketMessage<T extends Packet>(callback: (packet: T) => void
 
         return () => socket.unregisterCallback(action, id)
     })
+}
+
+export function useSocketIntent(intent: string): (i: string) => void {
+    const [initialIntent, setIntent] = useState(intent)
+
+    const socket = useSocket()
+    const intentId = useUniqueId("intent-subscriber")
+
+    useEffect(() => {
+        if (!socket.authenticated) {
+            socket.registerCallback(() => {
+                socket.enableIntent(intent)
+            }, "AUTH_SUCCESS", `${intentId}:AUTH_SUCCESS`)
+
+            return () => {
+                socket.disableIntent(intent)
+                socket.unregisterCallback("AUTH_SUCCESS", `${intentId}:AUTH_SUCCESS`)
+            }
+        }
+
+        socket.enableIntent(intent)
+
+        return () => socket.disableIntent(intent)
+    }, [initialIntent])
+
+    return setIntent
 }
 
 export const useSocket = () => {

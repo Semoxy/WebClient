@@ -1,0 +1,11 @@
+.list {
+    overflow: hidden auto;
+    flex-grow: 1;
+}
+
+.buttons {
+}
+
+.buttons.shadow {
+    box-shadow: 0 -1.5rem 23px -1px var(--background-light-blue);
+}

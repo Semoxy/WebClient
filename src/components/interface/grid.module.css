@@ -20,6 +20,9 @@
     padding-right: .9rem;
     position: relative;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: .9rem;
 }
 
 @media screen and (max-width: 590px) {

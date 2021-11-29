@@ -3,15 +3,15 @@ import {getServers, Server} from "../services/server";
 import {useLoading} from "./loading/loading";
 import {useHistory} from "react-router";
 import {useSocketMessage} from "./socket";
-import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket} from "../services/socket";
+import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket, StatUpdatePacket} from "../services/socket";
 import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event";
-
-// fixme: state update on unmounted component when F5 in /server/new
+import {useInfo} from "./info";
 
 interface ServerContextProps {
     servers: Server[],
     currentServer: Server | null,
-    setCurrentServer(id: string): void
+    setCurrentServer(id: string): void,
+    currentServerId?: string
 }
 
 const ServerContext = React.createContext<ServerContextProps>({
@@ -28,6 +28,7 @@ export const ServerProvider: React.FC = ({children}) => {
 
     const loading = useLoading()
     const history = useHistory()
+    const info = useInfo()
 
     const currentServer = servers.find(s => s.id === currentId) || null
 
@@ -54,10 +55,6 @@ export const ServerProvider: React.FC = ({children}) => {
         if (!currentServer && currentId !== undefined) {
             // redirect to dashboard when id is wrong or not present
             history.replace("/dashboard")
-        }
-
-        if (!history.location.pathname.startsWith(`/server/${currentId}`)) {
-            // history.push(`/server/${currentId}`)
         }
     }, [currentId, fetched])
 
@@ -94,10 +91,25 @@ export const ServerProvider: React.FC = ({children}) => {
         setServers(newServers)
     }, "SERVER_ADD")
 
+    useSocketMessage((p: StatUpdatePacket) => {
+        if (p.data.serverId === "*") {
+            info.setRAMCPUUsage(p.data.ramUsage, p.data.cpuUsage)
+            return
+        }
+
+        mutateServer(p.data.serverId, () => {
+            return {
+                ramUsage: p.data.ramUsage,
+                cpuUsage: p.data.cpuUsage
+            }
+        })
+    }, "STAT_UPDATE")
+
     return <ServerContext.Provider value={{
         servers,
         currentServer,
-        setCurrentServer: setCurrentId
+        setCurrentServer: setCurrentId,
+        currentServerId: currentId
     }}>
         { fetched && children }
     </ServerContext.Provider>

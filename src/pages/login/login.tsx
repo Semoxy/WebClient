@@ -4,11 +4,11 @@ import {useAuth} from "../../ctx/auth";
 import Button from "../../components/button";
 import Input, {PasswordInput} from "../../components/input";
 
-import styles from "./login.module.css"
 import FullSizeContainer from "../../components/form/full";
 import FormBox, {StrongHeading, BoxText} from "../../components/form/box";
 import {LoginScreenLogo} from "../../components/semoxy";
 import {useAlert} from "../../ctx/alert/alertctx";
+import {ButtonRow} from "../../components/interface/boxes/box";
 
 export const LoginView: React.FC = () => {
     const [username, setUsername] = useState<string>("")
@@ -73,10 +73,10 @@ export const LoginView: React.FC = () => {
                 label={"Password"}
                 expand
             />
-            <div className={styles.buttons}>
+            <ButtonRow justify={"space-between"} style={{marginTop: "16px"}}>
                 <Button type={"secondary"} cutoff>Forgot Password?</Button>
                 <Button onClick={login} type={"primary"} loading={loading}>Login</Button>
-            </div>
+            </ButtonRow>
         </FormBox>
     </FullSizeContainer>
 }

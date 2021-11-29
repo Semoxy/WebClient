@@ -1,42 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Headline} from "../index";
-import styles from "./dashboard.module.css"
 import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons";
 import {useInfo} from "../../ctx/info";
 import {useServers} from "../../ctx/server";
-import {formatTime} from "../../util";
-
-
-interface IOverviewItemProps {
-    title: string,
-    value: string,
-    icon: JSX.Element
-}
-
-
-export const OverviewItem: React.FC<IOverviewItemProps> = ({icon, value, title}) => {
-    return <div className={styles.item}>
-        <div className={styles.icon}>
-            {icon}
-        </div>
-        <div className={styles.text}>
-            <h5>{title}</h5>
-            <p>{value}</p>
-        </div>
-    </div>
-}
-
-
-export const OverviewItemList: React.FC = ({children}) => {
-    return <div className={styles["icon-area"]}>
-        {children}
-    </div>
-}
-
-
-function calculateUptime(start: number): number {
-    return Math.round((new Date().getTime() / 1000) - start)
-}
+import {calculateUptime, formatTime} from "../../util";
+import {OverviewItem, OverviewItemList} from "../../components/interface/dashboardcards";
+import {BoxRow, PageBox} from "../../components/interface/boxes/box";
+import {LightHeading} from "../../components/interface/boxes/headline";
+import {OnlineServerList} from "./onlineServers";
+import {OnlinePlayerList} from "./onlinePlayers";
 
 
 function useUptime(): number {
@@ -64,18 +36,36 @@ function useTotalOnlinePlayers(): number {
 }
 
 
-export const Dashboard: React.FC = () => {
-
+const DashboardTiles: React.FC = () => {
     const uptime = useUptime()
     const playerCount = useTotalOnlinePlayers()
+    const info = useInfo()
 
-    return <div>
+    const ramUsage = (info.ramUsage / 1000000).toFixed(2)
+    const systemRam = (info.systemRAM / 1000000).toFixed(0)
+
+    return <OverviewItemList>
+        <OverviewItem title={"Total Players"} value={playerCount + ""} icon={<PlayerOverviewIcon />} />
+        <OverviewItem title={"RAM Usage"} value={`${ramUsage}/${systemRam}GB`} icon={<RamIcon />} />
+        <OverviewItem title={"CPU Usage"} value={`${info.cpuUsage.toFixed(2)}%`} icon={<CPUIcon />} />
+        <OverviewItem title={"Uptime"} value={formatTime(uptime)} icon={<UptimeIcon />} />
+    </OverviewItemList>
+}
+
+
+export const Dashboard: React.FC = () => {
+    return <>
         <Headline>Dashboard</Headline>
-        <OverviewItemList>
-            <OverviewItem title={"Total Players"} value={playerCount + ""} icon={<PlayerOverviewIcon />} />
-            <OverviewItem title={"RAM Usage"} value={"4.5/32GB"} icon={<RamIcon />} />
-            <OverviewItem title={"CPU Usage"} value={"68%"} icon={<CPUIcon />} />
-            <OverviewItem title={"Uptime"} value={formatTime(uptime)} icon={<UptimeIcon />} />
-        </OverviewItemList>
-    </div>
+        <DashboardTiles />
+        <BoxRow>
+            <PageBox>
+                <LightHeading>Online Servers</LightHeading>
+                <OnlineServerList />
+            </PageBox>
+            <PageBox>
+                <LightHeading>Online Players</LightHeading>
+                <OnlinePlayerList />
+            </PageBox>
+        </BoxRow>
+    </>
 }

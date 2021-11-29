@@ -11,7 +11,7 @@ import {LogoutIcon, SettingsIcon} from "../semoxy/icons";
 
 export const UserDropdown: React.FC = () => {
     return <DropDown currentItem={<UserDisplay />} tabIndex={1} className={styles["user-menu"]} dropdownClassName={styles.dropdown} imageClassName={styles.arrow}>
-        <MenuDropdownItem icon={<SettingsIcon strokeWidth={3} />} label={"Account Settings"} />
+        <MenuDropdownItem icon={<SettingsIcon />} label={"Account Settings"} />
         <LogoutButton />
     </DropDown>
 }

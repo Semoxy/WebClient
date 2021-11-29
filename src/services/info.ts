@@ -5,6 +5,9 @@ export interface Info {
     maxRam: number,
     publicIP: string,
     startTime: number
+    systemRAM: number,
+    ramUsage: number,
+    cpuUsage: number
 }
 
 export async function getInfo(): Promise<Info> {

@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+    flex-direction: column;
+    --icon-color: var(--text-small);
+    align-self: center;
+}
+
+.icon {
+    margin-bottom: .3em;
+}
+
+.container h4 {
+    margin: 0;
+    color: var(--navigation-unselected);
+    font-size: 1.2rem;
+}
+
+.container span {
+    color: var(--text-small)
+}
+
+.children {
+    margin-top: .7em;
+}

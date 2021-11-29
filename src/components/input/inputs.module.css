@@ -8,6 +8,7 @@
 
 .expand {
     width: 100%;
+    flex-grow: 1;
 }
 
 .field {
@@ -49,6 +50,9 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    cursor: pointer;
+    border-radius: 7px;
+    --icon-color: var(--text-input);
 }
 
 .input {

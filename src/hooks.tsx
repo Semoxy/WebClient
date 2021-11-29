@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import { getSessionInformation } from "./services/session";
 import { useLoading } from "./ctx/loading/loading";
 
+
 export function useStorage(key: string, storage: Storage = localStorage, def: string | null = null): [string | null, (val: string | null) => void] {
     const [state, setState] = useState<string | null>(storage.getItem(key) || def);
 

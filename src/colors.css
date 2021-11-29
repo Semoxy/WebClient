@@ -12,7 +12,7 @@
     --warning-yellow: #FBF56A;
     --input-background-filled: rgb(232, 240, 254);
 
-    --button-primary: #567CC6;
+    --button-primary: var(--primary-blue);
     --button-primary-hover: #45639e;
     --button-primary-click: #344a77;
 
@@ -21,6 +21,7 @@
     --button-danger-click: #cc5e5e;
 
     --button-secondary-color: var(--primary-blue);
+    --button-secondary-border: var(--primary-blue);
 
     --selection-blue: #9EBCF2;
     --white: #FFFFFF;
@@ -44,20 +45,21 @@
     --warning-yellow: #FBF56A;
     --input-background-filled: rgb(232, 240, 254);
 
-    --button-primary: #567CC6;
-    --button-primary-hover: #45639e;
-    --button-primary-click: #344a77;
+    --button-primary: var(--primary-blue);
+    --button-primary-hover: #728abc;
+    --button-primary-click: #6379a5;
 
     --button-danger: #FF7676;
     --button-danger-hover: #e66a6a;
     --button-danger-click: #cc5e5e;
 
     --button-secondary-color: #FFFFFF;
+    --button-secondary-border: var(--text-strong);
 
     --selection-blue: #9EBCF2;
     --white: #525458;
     --card: #5A5D63;
     --border: #FFFFFF33;
-    --navigation-selected: var(--primary-blue); /* Semoxy Blue */
+    --navigation-selected: var(--primary-blue);
     --navigation-unselected: var(--text-strong);
 }

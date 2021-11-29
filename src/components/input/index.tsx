@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler} from "react";
+import React, {ChangeEventHandler, KeyboardEventHandler} from "react";
 import styles from "./inputs.module.css"
 import {useUniqueId} from "../../hooks";
 import PasswordInput from "./password";
@@ -16,7 +16,7 @@ export type InputType = "text" | "password"
 
 export interface IInputProps {
     placeholder?: string,
-    type: InputType,
+    type?: InputType,
     icon?: JSX.Element,
     label?: string,
     value?: string,
@@ -25,10 +25,11 @@ export interface IInputProps {
     defaultValue?: string,
     expand?: boolean,
     autoComplete?: string,
-    ref?: any
+    ref?: any,
+    onKeyPress?: KeyboardEventHandler<HTMLInputElement>
 }
 
-const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type, defaultValue, icon, label, value, readonly, onChange, autoComplete}, ref) => {
+const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type = "text", defaultValue, icon, label, value, readonly, onChange, autoComplete, onKeyPress}, ref) => {
     const id = useUniqueId("input");
 
     const fieldClasses = [styles.field]
@@ -41,7 +42,7 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
         })
     }
 
-    return <div className={styles.input}>
+    return <div className={concatClasses(styles.input, expand && styles.expand)}>
         {label && <InputLabel htmlFor={id}>{label}</InputLabel> }
         <input
             id={id}
@@ -54,6 +55,7 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
             className={fieldClasses.join(" ")}
             autoComplete={autoComplete}
             ref={ref}
+            onKeyPress={onKeyPress}
         />
         { icon && icon }
     </div>

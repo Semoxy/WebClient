@@ -12,6 +12,7 @@ import {useInfo} from "../../ctx/info";
 import {useAlert} from "../../ctx/alert/alertctx";
 import {useLoading} from "../../ctx/loading/loading";
 import {useServers} from "../../ctx/server";
+import {ButtonRow} from "../../components/interface/boxes/box";
 
 
 export type Versions = {[x: string]: string[]}
@@ -130,14 +131,14 @@ interface IButtonProps {
 
 const Buttons: React.FC<IButtonProps> = ({create, reset}) => {
 
-    return <div className={styles.buttons}>
+    return <ButtonRow className={styles.buttons} justify={"space-between"}>
         <Button type={"secondary"} onClick={reset}>
             Reset
         </Button>
         <Button type={"primary"} onClick={create}>
             Create Server
         </Button>
-    </div>
+    </ButtonRow>
 }
 
 

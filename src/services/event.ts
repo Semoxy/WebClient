@@ -8,7 +8,6 @@ export type EventType =
     "CONSOLE_MESSAGE"
 
 export interface Event {
-    id: string
 }
 
 export interface PlayerJoinEvent extends Event {

@@ -3,7 +3,7 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {Title} from "./title";
 import {LoginView} from "./pages/login/login";
 import {UserProvider} from "./ctx/user";
-import {SocketProvider} from "./ctx/socket";
+import {SocketProvider, useSocketIntent} from "./ctx/socket";
 import {InfoProvider} from "./ctx/info";
 import {ServerProvider, useServers} from "./ctx/server";
 import React, {useEffect} from "react";
@@ -13,20 +13,24 @@ import {CreateRootUserView} from "./pages/createRootUser/createRootUser";
 import {Dashboard} from "./pages/dashboard/dashboard";
 import {ServerCreation} from "./pages/serverCreation/serverCreation";
 import {LoadingProvider} from "./ctx/loading/loading";
+import {ServerOverview} from "./pages/server/overview";
+import {ConsoleView} from "./pages/console/console";
 
 
 function ServerIdSetter() {
     const url = useParams<{serverId: string}>()
     const servers = useServers()
 
+    const setStatIntent = useSocketIntent(`stat.${url.serverId}`)
+    const setConsoleIntent = useSocketIntent(`console.${url.serverId}`)
+
     useEffect(() => {
         servers.setCurrentServer(url.serverId)
+        setStatIntent(`stat.${url.serverId}`)
+        setConsoleIntent(`console.${url.serverId}`)
     }, [url])
 
-    return <>
-        <p>Für Server: {servers.currentServer?.displayName}</p>
-        <p>Online status: {servers.currentServer?.onlineStatus}</p>
-    </>
+    return <></>
 }
 
 
@@ -64,6 +68,7 @@ export const App: React.FC = () => {
                                             </Route>
 
                                             <Route path={"/server/:serverId"}>
+                                                <ServerIdSetter />
                                                 <Switch>
                                                     <Route path={"/server/:serverId/players"}>
                                                         <Title>Players</Title>
@@ -71,7 +76,7 @@ export const App: React.FC = () => {
                                                     </Route>
                                                     <Route path={"/server/:serverId/console"}>
                                                         <Title>Console</Title>
-                                                        Console
+                                                        <ConsoleView />
                                                     </Route>
                                                     <Route path={"/server/:serverId/backups"}>
                                                         <Title>Backups</Title>
@@ -95,10 +100,9 @@ export const App: React.FC = () => {
                                                     </Route>
                                                     <Route path={"/server/:serverId"}>
                                                         <Title>Overview</Title>
-                                                        Server Overview
+                                                        <ServerOverview />
                                                     </Route>
                                                 </Switch>
-                                                <ServerIdSetter />
                                             </Route>
 
                                             <Route path={"/"}>
