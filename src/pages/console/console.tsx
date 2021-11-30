@@ -18,7 +18,7 @@ import {concatClasses, getIdTimestamp} from "../../util";
 import {useSocketMessage} from "../../ctx/socket";
 import {ServerEventPacket} from "../../services/socket";
 import {EmptyState} from "../dashboard/onlinePlayers";
-import {useStorage} from "../../hooks";
+import {useStorageJSON} from "../../hooks";
 import {Event} from "../../services/event";
 import {useAlert} from "../../ctx/alert/alertctx";
 
@@ -38,15 +38,64 @@ function useScrollBottom(offset: number): [boolean, UIEventHandler<HTMLDivElemen
 }
 
 
+function useCommandHistory(): [string | null, () => void, () => void, () => void, (_: string) => void] {
+    const [command, setCommand] = useState<string | null>("")
+    const [currentCommand, setCurrentCommand] = useState<string | null>("")
+    const [cmdHistory, setCmdHistory] = useStorageJSON<string[]>("Semoxy_CommandHistory", localStorage, [])
+    const [historyIndex, setHistoryIndex] = useState<number>(-1)
+
+    function commandSent() {
+        if (!command) {
+            return
+        }
+
+        let newHistory = cmdHistory.slice()
+        if (command === cmdHistory[historyIndex]) {
+            newHistory = newHistory.filter(s => s !== command)
+        }
+        newHistory.unshift(command)
+        setCmdHistory(newHistory)
+        setHistoryIndex(-1)
+        setCommand(null)
+    }
+
+    function up() {
+        if (historyIndex === -1) {
+            setCurrentCommand(command)
+        }
+
+        const newIndex = Math.min(historyIndex + 1, cmdHistory.length - 1)
+        setHistoryIndex(newIndex)
+        console.log(newIndex);
+    }
+
+    function down() {
+        const newIndex = Math.max(historyIndex - 1, -1)
+        setHistoryIndex(newIndex)
+        console.log(newIndex);
+    }
+
+    useEffect(() => {
+        if (historyIndex < 0) {
+            setCommand(currentCommand)
+        } else {
+            setCommand(cmdHistory[historyIndex] || command)
+        }
+    }, [historyIndex])
+
+    return [command, commandSent, up, down, setCommand]
+}
+
+
 export const ConsoleView: React.FC = () => {
     const server = useServers()
     const [messages, setMessages] = useState<ServerEvent<Event>[]>([])
     const scrollRef = useRef<HTMLDivElement | null>(null)
     const [isAtBottom, onScroll] = useScrollBottom(15)
     const [serverStarting, setServerStarting] = useState(false)
-    const [command, setCommand] = useStorage("Semoxy_Command", localStorage, "")
     const alert = useAlert()
     const [startEvent, setStartEvent] = useState<ServerEvent<ServerStartEvent>>()
+    const [command, commandSent, up, down, setCommand] = useCommandHistory()
 
     useSocketMessage((p: ServerEventPacket<ConsoleMessageEvent>) => {
         if (p.data.serverId !== server.currentServerId) return
@@ -125,9 +174,7 @@ export const ConsoleView: React.FC = () => {
             return;
         }
 
-        sendServerCommand(server.currentServerId as string, command).then(() => {
-            setCommand(null)
-        })
+        sendServerCommand(server.currentServerId as string, command).then(commandSent)
     }
 
     return <>
@@ -158,6 +205,16 @@ export const ConsoleView: React.FC = () => {
                 onKeyPress={(e) => {
                     if (e.key === "Enter") {
                         sendCommand()
+                    }
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === "ArrowUp") {
+                        e.preventDefault()
+                        up()
+                    } else
+                    if (e.key === "ArrowDown") {
+                        e.preventDefault()
+                        down()
                     }
                 }}
                 type={"text"}

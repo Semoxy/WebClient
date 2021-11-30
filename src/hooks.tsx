@@ -17,6 +17,24 @@ export function useStorage(key: string, storage: Storage = localStorage, def: st
     return [state, setState]
 }
 
+
+export function useStorageJSON<T>(key: string, storage: Storage = localStorage, def: T): [T, (val: T) => void] {
+    const storageValue = storage.getItem(key)
+    let default_ = def
+
+    if (storageValue) {
+        default_ = JSON.parse(storageValue) as T
+    }
+
+    const [state, setState] = useState<T>(default_);
+
+    useEffect(() => {
+        storage.setItem(key, JSON.stringify(state));
+    }, [state, key, storage])
+
+    return [state, setState]
+}
+
 const idCounter: {[x: string]: number} = {}
 
 export function useUniqueId(prefix: string = "component"): string {

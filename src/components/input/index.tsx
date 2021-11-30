@@ -26,10 +26,11 @@ export interface IInputProps {
     expand?: boolean,
     autoComplete?: string,
     ref?: any,
-    onKeyPress?: KeyboardEventHandler<HTMLInputElement>
+    onKeyPress?: KeyboardEventHandler<HTMLInputElement>,
+    onKeyDown?: KeyboardEventHandler<HTMLInputElement>
 }
 
-const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type = "text", defaultValue, icon, label, value, readonly, onChange, autoComplete, onKeyPress}, ref) => {
+const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type = "text", defaultValue, icon, label, value, readonly, onChange, autoComplete, onKeyPress, onKeyDown}, ref) => {
     const id = useUniqueId("input");
 
     const fieldClasses = [styles.field]
@@ -56,6 +57,7 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
             autoComplete={autoComplete}
             ref={ref}
             onKeyPress={onKeyPress}
+            onKeyDown={onKeyDown}
         />
         { icon && icon }
     </div>

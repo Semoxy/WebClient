@@ -18,6 +18,7 @@
     height: 1.4em;
     background-color: var(--primary-blue);
     border-radius: 50%;
+    border: none;
 }
 
 .selector::-webkit-slider-thumb {
@@ -26,6 +27,7 @@
     height: 1.4em;
     background-color: var(--primary-blue);
     border-radius: 50%;
+    border: none;
 }
 
 .highlight {
