@@ -1,7 +1,7 @@
-import {APIRequest} from "./index";
-import {AxiosResponse} from "axios";
-import {EventType, Event} from "./event";
-import {ServerEventPacket} from "./socket";
+import {APIRequest} from "./index"
+import {AxiosResponse} from "axios"
+import {EventType, Event} from "./event"
+import {ServerEventPacket} from "./socket"
 
 export interface Server {
     id: string,

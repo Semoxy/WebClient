@@ -1,6 +1,6 @@
-import {getAPIUrl} from "./index";
+import {getAPIUrl} from "./index"
 
 
 export function getPlayerHeadUrlByName(playerName: string): string {
-    return getAPIUrl(`/playerhead/name/${playerName}`);
+    return getAPIUrl(`/playerhead/name/${playerName}`)
 }

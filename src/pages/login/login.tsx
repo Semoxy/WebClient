@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {createSession} from "../../services/session";
-import {useAuth} from "../../ctx/auth";
-import Button from "../../components/button";
-import Input, {PasswordInput} from "../../components/input";
+import React, {useState} from "react"
+import {createSession} from "../../services/session"
+import {useAuth} from "../../ctx/auth"
+import Button from "../../components/button"
+import Input, {PasswordInput} from "../../components/input"
 
-import FullSizeContainer from "../../components/form/full";
-import FormBox, {StrongHeading, BoxText} from "../../components/form/box";
-import {LoginScreenLogo} from "../../components/semoxy";
-import {useAlert} from "../../ctx/alert/alertctx";
-import {ButtonRow} from "../../components/interface/boxes/box";
+import FullSizeContainer from "../../components/form/full"
+import FormBox, {StrongHeading, BoxText} from "../../components/form/box"
+import {LoginScreenLogo} from "../../components/semoxy"
+import {useAlert} from "../../ctx/alert/alertctx"
+import {ButtonRow} from "../../components/interface/boxes/box"
 
 export const LoginView: React.FC = () => {
     const [username, setUsername] = useState<string>("")

@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
-import {useAuth} from "./auth";
-import {getUserInformation, UserInformation} from "../services/session";
-import {useLoading} from "./loading/loading";
+import React, {useContext, useEffect, useState} from "react"
+import {useAuth} from "./auth"
+import {getUserInformation, UserInformation} from "../services/session"
+import {useLoading} from "./loading/loading"
 
 interface IUserContextProps {
     user: UserInformation,

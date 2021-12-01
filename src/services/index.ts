@@ -1,8 +1,8 @@
-import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import {buildUrl} from "../util";
+import Axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import {buildUrl} from "../util"
 
 export function getSessionId(): string | null {
-    return localStorage.getItem("Semoxy_Session");
+    return localStorage.getItem("Semoxy_Session")
 }
 
 export function getAPIUrl(path: string): string {
@@ -10,13 +10,13 @@ export function getAPIUrl(path: string): string {
 }
 
 export class APIRequest {
-    private readonly requestConfig: AxiosRequestConfig;
+    private readonly requestConfig: AxiosRequestConfig
 
     constructor(uri: string, query?: { [x: string]: any }) {
         this.requestConfig = {
             url: buildUrl(uri, query),
             headers: {}
-        };
+        }
     }
 
     setData(data: any): APIRequest {
@@ -35,17 +35,17 @@ export class APIRequest {
     }
 
     async get(): Promise<AxiosResponse> {
-        this.requestConfig.method = "get";
+        this.requestConfig.method = "get"
         return this.request()
     }
 
     async put(): Promise<AxiosResponse> {
-        this.requestConfig.method = "put";
+        this.requestConfig.method = "put"
         return this.request()
     }
 
     async post(): Promise<AxiosResponse> {
-        this.requestConfig.method = "post";
+        this.requestConfig.method = "post"
         return this.request()
     }
 
@@ -55,7 +55,7 @@ export class APIRequest {
     }
 
     async patch(): Promise<AxiosResponse> {
-        this.requestConfig.method = "patch";
+        this.requestConfig.method = "patch"
         return this.request()
     }
 }

@@ -1,5 +1,5 @@
 import styles from "./dashboardcards.module.css"
-import React from "react";
+import React from "react"
 
 
 interface IOverviewItemProps {

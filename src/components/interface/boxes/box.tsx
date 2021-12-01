@@ -1,5 +1,5 @@
-import React, {CSSProperties} from "react";
-import {concatClasses} from "../../../util";
+import React, {CSSProperties} from "react"
+import {concatClasses} from "../../../util"
 import styles from "./box.module.css"
 
 interface IPageBoxProps {

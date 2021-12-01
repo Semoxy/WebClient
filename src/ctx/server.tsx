@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import {getServers, Server} from "../services/server";
-import {useLoading} from "./loading/loading";
-import {useHistory} from "react-router";
-import {useSocketMessage} from "./socket";
-import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket, StatUpdatePacket} from "../services/socket";
-import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event";
-import {useInfo} from "./info";
+import React, {useContext, useEffect, useState} from "react"
+import {getServers, Server} from "../services/server"
+import {useLoading} from "./loading/loading"
+import {useHistory} from "react-router"
+import {useSocketMessage} from "./socket"
+import {ServerAddPacket, ServerEventPacket, ServerStateChangePacket, StatUpdatePacket} from "../services/socket"
+import {PlayerJoinEvent, PlayerLeaveEvent} from "../services/event"
+import {useInfo} from "./info"
 
 interface ServerContextProps {
     servers: Server[],
@@ -50,7 +50,7 @@ export const ServerProvider: React.FC = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if (!fetched) return;
+        if (!fetched) return
 
         if (!currentServer && currentId !== undefined) {
             // redirect to dashboard when id is wrong or not present

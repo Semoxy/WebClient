@@ -1,18 +1,18 @@
 import styles from "./serverCreation.module.css"
-import React, {useEffect, useState} from "react";
-import {Headline} from "../index";
-import {SoftwareSelection} from "./software";
-import {VersionSelection} from "./version";
-import {DetailsSelection} from "./details";
+import React, {useEffect, useState} from "react"
+import {Headline} from "../index"
+import {SoftwareSelection} from "./software"
+import {VersionSelection} from "./version"
+import {DetailsSelection} from "./details"
 import {RAMSelection} from "./ram"
-import Button from "../../components/button";
-import {APIRequest, getAPIUrl} from "../../services";
-import { createServer as API_createServer } from "../../services/server";
-import {useInfo} from "../../ctx/info";
-import {useAlert} from "../../ctx/alert/alertctx";
-import {useLoading} from "../../ctx/loading/loading";
-import {useServers} from "../../ctx/server";
-import {ButtonRow} from "../../components/interface/boxes/box";
+import Button from "../../components/button"
+import {APIRequest, getAPIUrl} from "../../services"
+import { createServer as API_createServer } from "../../services/server"
+import {useInfo} from "../../ctx/info"
+import {useAlert} from "../../ctx/alert/alertctx"
+import {useLoading} from "../../ctx/loading/loading"
+import {useServers} from "../../ctx/server"
+import {ButtonRow} from "../../components/interface/boxes/box"
 
 
 export type Versions = {[x: string]: string[]}
@@ -102,7 +102,7 @@ function useServerVersions(): [Software[], {
                 setCurrentMinor(r.data[r.data.length - 1])
                 loading.finishIntent("FETCH_MINORS")
             })
-            return;
+            return
         }
 
         setCurrentMinor(selected.versions[currentMajor][selected.versions[currentMajor].length - 1])

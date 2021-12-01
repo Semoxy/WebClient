@@ -1,5 +1,6 @@
-import React, {CSSProperties} from "react";
+import React, {CSSProperties} from "react"
 import styles from "./full.module.css"
+import {concatClasses} from "../../util"
 
 export interface IFullScreenFormContainerProps {
     zIndex?: number,
@@ -12,10 +13,7 @@ const FullSizeContainer: React.FC<IFullScreenFormContainerProps> = ({children, c
         style.zIndex = zIndex
     }
 
-    let classNames = [styles.container]
-    className && classNames.push(className)
-
-    return <div className={classNames.join(" ")} style={style}>
+    return <div className={concatClasses(styles.container, className)} style={style}>
         {children}
     </div>
 }

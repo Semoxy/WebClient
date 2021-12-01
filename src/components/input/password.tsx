@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import Input, {IInputProps} from "./index";
-import {PasswordIcon} from "../semoxy/icons";
+import React, {useEffect, useState} from "react"
+import Input, {IInputProps} from "./index"
+import {PasswordIcon} from "../semoxy/icons"
 
 const PasswordInput: React.FC<Partial<IInputProps>> = (props) => {
     const [passwordShown, setPasswordShown] = useState(false)

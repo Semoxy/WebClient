@@ -1,9 +1,9 @@
 import styles from "./dropdown.module.css"
-import React, {useState} from "react";
-import {concatClasses} from "../../util";
-import {InputLabel} from "../input";
-import {useUniqueId} from "../../hooks";
-import {DropdownArrow} from "../semoxy/icons";
+import React, {useState} from "react"
+import {concatClasses} from "../../util"
+import {InputLabel} from "../input"
+import {useUniqueId} from "../../hooks"
+import {DropdownArrow} from "../semoxy/icons"
 
 export interface IDropDownProps {
     currentItem: JSX.Element,

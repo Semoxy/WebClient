@@ -1,5 +1,5 @@
 import styles from "./pages.module.css"
-import React from "react";
+import React from "react"
 
 
 export const Headline: React.FC = ({children}) => {

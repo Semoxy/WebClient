@@ -1,9 +1,9 @@
 import styles from "./software.module.css"
-import React from "react";
-import {LightHeading} from "../../components/interface/boxes/headline";
-import {PageBox} from "../../components/interface/boxes/box";
-import {Software} from "./serverCreation";
-import {concatClasses} from "../../util";
+import React from "react"
+import {LightHeading} from "../../components/interface/boxes/headline"
+import {PageBox} from "../../components/interface/boxes/box"
+import {Software} from "./serverCreation"
+import {concatClasses} from "../../util"
 
 
 interface ISoftwareSelectionProps {

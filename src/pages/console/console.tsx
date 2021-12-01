@@ -1,26 +1,26 @@
-import React, {UIEventHandler, useEffect, useRef, useState} from "react";
+import React, {UIEventHandler, useEffect, useRef, useState} from "react"
 import styles from "./console.module.css"
-import {Headline} from "../index";
-import {useServers} from "../../ctx/server";
+import {Headline} from "../index"
+import {useServers} from "../../ctx/server"
 import {
     getEvents,
     sendServerCommand,
     ServerEvent,
     serverEventFromSocketEvent,
     startServer
-} from "../../services/server";
-import {ConsoleCommandEvent, ConsoleMessageEvent, ServerStartEvent, ServerStopEvent} from "../../services/event";
-import {ConsoleCommand, ConsoleMessage} from "./entry";
-import {ButtonRow} from "../../components/interface/boxes/box";
-import Input from "../../components/input";
-import Button from "../../components/button";
-import {concatClasses, getIdTimestamp} from "../../util";
-import {useSocketMessage} from "../../ctx/socket";
-import {ServerEventPacket} from "../../services/socket";
-import {EmptyState} from "../dashboard/onlinePlayers";
-import {useStorageJSON} from "../../hooks";
-import {Event} from "../../services/event";
-import {useAlert} from "../../ctx/alert/alertctx";
+} from "../../services/server"
+import {ConsoleCommandEvent, ConsoleMessageEvent, ServerStartEvent, ServerStopEvent} from "../../services/event"
+import {ConsoleCommand, ConsoleMessage} from "./entry"
+import {ButtonRow} from "../../components/interface/boxes/box"
+import Input from "../../components/input"
+import Button from "../../components/button"
+import {concatClasses, getIdTimestamp} from "../../util"
+import {useSocketMessage} from "../../ctx/socket"
+import {ServerEventPacket} from "../../services/socket"
+import {EmptyState} from "../dashboard/onlinePlayers"
+import {useStorageJSON} from "../../hooks"
+import {Event} from "../../services/event"
+import {useAlert} from "../../ctx/alert/alertctx"
 
 
 function useScrollBottom(offset: number): [boolean, UIEventHandler<HTMLDivElement>] {
@@ -66,13 +66,13 @@ function useCommandHistory(): [string | null, () => void, () => void, () => void
 
         const newIndex = Math.min(historyIndex + 1, cmdHistory.length - 1)
         setHistoryIndex(newIndex)
-        console.log(newIndex);
+        console.log(newIndex)
     }
 
     function down() {
         const newIndex = Math.max(historyIndex - 1, -1)
         setHistoryIndex(newIndex)
-        console.log(newIndex);
+        console.log(newIndex)
     }
 
     useEffect(() => {
@@ -171,7 +171,7 @@ export const ConsoleView: React.FC = () => {
                 message: "Server Offline",
                 description: "Your command could not be executed, because the server is offline",
             })
-            return;
+            return
         }
 
         sendServerCommand(server.currentServerId as string, command).then(commandSent)

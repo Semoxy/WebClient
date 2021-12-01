@@ -1,4 +1,4 @@
-import {getAPIUrl} from "./services";
+import {getAPIUrl} from "./services"
 
 export function concatClasses(...names: (string | undefined | false | null)[]) {
     return names.filter(e => !!e).join(" ")
@@ -66,7 +66,7 @@ export function timeDelta(time: number): TimeDelta {
         delta.ms -= delta[flags[i]] * measurements[flags[i]]
     }
 
-    return delta as TimeDelta;
+    return delta as TimeDelta
 }
 
 export function calculateUptime(start: number): number {

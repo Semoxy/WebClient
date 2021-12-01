@@ -1,8 +1,8 @@
 import styles from "./header.module.css"
-import React, {MouseEventHandler} from "react";
-import {HeaderLogo} from "../semoxy";
-import {UserDropdown} from "./userdropdown";
-import {useDesign} from "../../ctx/design";
+import React, {MouseEventHandler} from "react"
+import {HeaderLogo} from "../semoxy"
+import {UserDropdown} from "./userdropdown"
+import {useDesign} from "../../ctx/design"
 
 
 interface IBurgerMenuProps {

@@ -1,17 +1,17 @@
-import {useEffect, useRef, useState} from "react";
-import { getSessionInformation } from "./services/session";
-import { useLoading } from "./ctx/loading/loading";
+import {useEffect, useRef, useState} from "react"
+import { getSessionInformation } from "./services/session"
+import { useLoading } from "./ctx/loading/loading"
 
 
 export function useStorage(key: string, storage: Storage = localStorage, def: string | null = null): [string | null, (val: string | null) => void] {
-    const [state, setState] = useState<string | null>(storage.getItem(key) || def);
+    const [state, setState] = useState<string | null>(storage.getItem(key) || def)
 
     useEffect(() => {
         if (state === null) {
             storage.removeItem(key)
             return
         }
-        storage.setItem(key, state);
+        storage.setItem(key, state)
     }, [state, key, storage])
 
     return [state, setState]
@@ -26,10 +26,10 @@ export function useStorageJSON<T>(key: string, storage: Storage = localStorage, 
         default_ = JSON.parse(storageValue) as T
     }
 
-    const [state, setState] = useState<T>(default_);
+    const [state, setState] = useState<T>(default_)
 
     useEffect(() => {
-        storage.setItem(key, JSON.stringify(state));
+        storage.setItem(key, JSON.stringify(state))
     }, [state, key, storage])
 
     return [state, setState]
@@ -44,7 +44,7 @@ export function useUniqueId(prefix: string = "component"): string {
         firstRender.current = false
     }, [])
 
-    let idToUse = "";
+    let idToUse = ""
     if (firstRender.current) {
         if (!idCounter[prefix]) {
             idCounter[prefix] = 0
@@ -101,7 +101,7 @@ export function useSession(): [string | null, (s: string) => void, boolean, bool
             setUserId(null)
             setLoggedIn(false)
             setLoading(false)
-        });
+        })
         loader.finishIntent("CHECK_SESSION")
     }, [sessionId])
 

@@ -1,4 +1,4 @@
-import {APIRequest} from "./index";
+import {APIRequest} from "./index"
 import {AxiosError} from "axios"
 
 

@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
-import {getStatus, SemoxyStatus} from "../services/info";
-import {useLoading} from "./loading/loading";
-import {useHistory} from "react-router";
+import React, {useContext, useEffect, useState} from "react"
+import {getStatus, SemoxyStatus} from "../services/info"
+import {useLoading} from "./loading/loading"
+import {useHistory} from "react-router"
 
 
 interface IStatusContextProps {

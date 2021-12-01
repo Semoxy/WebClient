@@ -1,8 +1,8 @@
-import React, {ChangeEventHandler, KeyboardEventHandler} from "react";
+import React, {ChangeEventHandler, KeyboardEventHandler} from "react"
 import styles from "./inputs.module.css"
-import {useUniqueId} from "../../hooks";
-import PasswordInput from "./password";
-import {concatClasses} from "../../util";
+import {useUniqueId} from "../../hooks"
+import PasswordInput from "./password"
+import {concatClasses} from "../../util"
 
 interface IInputLabelProps {
     htmlFor?: string
@@ -31,10 +31,7 @@ export interface IInputProps {
 }
 
 const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputProps>(({placeholder, expand, type = "text", defaultValue, icon, label, value, readonly, onChange, autoComplete, onKeyPress, onKeyDown}, ref) => {
-    const id = useUniqueId("input");
-
-    const fieldClasses = [styles.field]
-    expand && fieldClasses.push(styles.expand)
+    const id = useUniqueId("input")
 
     if (icon) {
         // add icon class to icon element
@@ -53,7 +50,10 @@ const Input: React.FC<IInputProps> = React.forwardRef<HTMLInputElement, IInputPr
             defaultValue={defaultValue}
             readOnly={readonly}
             onChange={onChange}
-            className={fieldClasses.join(" ")}
+            className={concatClasses(
+                styles.field,
+                expand && styles.expand
+            )}
             autoComplete={autoComplete}
             ref={ref}
             onKeyPress={onKeyPress}
@@ -90,12 +90,7 @@ export const TextArea: React.FC<ITextAreaProps> = React.forwardRef<HTMLTextAreaE
     className,
     fill,
     autoComplete}, ref) => {
-    const id = useUniqueId("textarea");
-
-    const fieldClasses = [styles.field, styles.textarea]
-
-    expand && fieldClasses.push(styles.expand)
-    className && fieldClasses.push(className)
+    const id = useUniqueId("textarea")
 
     return <div className={concatClasses(styles.input, styles["textarea-wrap"], wrapClassName, fill && styles.fill)}>
         { label && <InputLabel htmlFor={id}>{label}</InputLabel> }
@@ -108,7 +103,12 @@ export const TextArea: React.FC<ITextAreaProps> = React.forwardRef<HTMLTextAreaE
             readOnly={readonly}
             onChange={onChange}
             autoComplete={autoComplete}
-            className={fieldClasses.join(" ")}
+            className={concatClasses(
+                styles.field,
+                styles.textarea,
+                expand && styles.expand,
+                className
+            )}
         />
     </div>
 })

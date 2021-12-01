@@ -1,9 +1,9 @@
-import React, {MouseEventHandler} from "react";
-import styles from "./buttons.module.css";
+import React, {MouseEventHandler} from "react"
+import styles from "./buttons.module.css"
 import loadingStyles from "./loading.module.css"
-import {concatClasses} from "../../util";
+import {concatClasses} from "../../util"
 
-export type ButtonType = "primary" | "secondary" | "danger" | "online" | "warning";
+export type ButtonType = "primary" | "secondary" | "danger" | "online" | "warning"
 
 export interface IButtonProps {
     border?: boolean,

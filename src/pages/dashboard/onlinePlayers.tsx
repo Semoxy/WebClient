@@ -1,11 +1,11 @@
-import React from "react";
-import {Server} from "../../services/server";
-import styles from "./onlinePlayers.module.css";
+import React from "react"
+import {Server} from "../../services/server"
+import styles from "./onlinePlayers.module.css"
 import { getPlayerHeadUrlByName } from "../../services/players"
-import {useServers} from "../../ctx/server";
+import {useServers} from "../../ctx/server"
 import emptyStyles from "./empty.module.css"
-import {CopyButton} from "../../components/copy/copy";
-import {useInfo} from "../../ctx/info";
+import {CopyButton} from "../../components/copy/copy"
+import {useInfo} from "../../ctx/info"
 
 interface IOnlinePlayerEntryProps {
     player: string,

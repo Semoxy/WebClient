@@ -1,5 +1,5 @@
-import {Server} from "./server";
-import {Event, EventType} from "./event";
+import {Server} from "./server"
+import {Event, EventType} from "./event"
 
 export type Action =
     "SERVER_STATE_CHANGE" |

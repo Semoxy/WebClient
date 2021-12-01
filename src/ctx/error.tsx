@@ -15,9 +15,9 @@ interface ErrorContextProps {
 
 const ErrorContext = React.createContext<ErrorContextProps>({
     errors: [],
-    pushError(e: Error) {},
+    pushError(_: Error) {},
     popError() {}
-});
+})
 
 export const ErrorProvider: React.FC = ({children}) => {
     const [errors, setErrors] = useState<Error[]>([])
@@ -60,4 +60,4 @@ export const useError = () => {
     return useContext(ErrorContext)
 }
 
-export default ErrorContext;
+export default ErrorContext

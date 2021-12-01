@@ -1,20 +1,20 @@
-import {useAuth} from "./ctx/auth";
-import {Redirect, Route, Switch} from "react-router-dom";
-import {Title} from "./title";
-import {LoginView} from "./pages/login/login";
-import {UserProvider} from "./ctx/user";
-import {SocketProvider, useSocketIntent} from "./ctx/socket";
-import {InfoProvider} from "./ctx/info";
-import {ServerProvider, useServers} from "./ctx/server";
-import React, {useEffect} from "react";
-import {useParams} from "react-router";
-import {InterfaceGrid} from "./components/interface/grid";
-import {CreateRootUserView} from "./pages/createRootUser/createRootUser";
-import {Dashboard} from "./pages/dashboard/dashboard";
-import {ServerCreation} from "./pages/serverCreation/serverCreation";
-import {LoadingProvider} from "./ctx/loading/loading";
-import {ServerOverview} from "./pages/server/overview";
-import {ConsoleView} from "./pages/console/console";
+import {useAuth} from "./ctx/auth"
+import {Redirect, Route, Switch} from "react-router-dom"
+import {Title} from "./title"
+import {LoginView} from "./pages/login/login"
+import {UserProvider} from "./ctx/user"
+import {SocketProvider, useSocketIntent} from "./ctx/socket"
+import {InfoProvider} from "./ctx/info"
+import {ServerProvider, useServers} from "./ctx/server"
+import React, {useEffect} from "react"
+import {useParams} from "react-router"
+import {InterfaceGrid} from "./components/interface/grid"
+import {CreateRootUserView} from "./pages/createRootUser/createRootUser"
+import {Dashboard} from "./pages/dashboard/dashboard"
+import {ServerCreation} from "./pages/serverCreation/serverCreation"
+import {LoadingProvider} from "./ctx/loading/loading"
+import {ServerOverview} from "./pages/server/overview"
+import {ConsoleView} from "./pages/console/console"
 
 
 function ServerIdSetter() {

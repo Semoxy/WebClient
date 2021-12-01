@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from "react"
-import {useAuth} from "./auth";
-import {Packet} from "../services/socket";
-import {useError} from "./error";
-import {Action} from "../services/socket";
-import {useUniqueId} from "../hooks";
+import {useAuth} from "./auth"
+import {Packet} from "../services/socket"
+import {useError} from "./error"
+import {Action} from "../services/socket"
+import {useUniqueId} from "../hooks"
 
 type OnMessageCallback = (data: Packet) => void
 

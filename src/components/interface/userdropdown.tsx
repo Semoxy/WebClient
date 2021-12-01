@@ -1,12 +1,12 @@
 import styles from "./userdropdown.module.css"
-import React from "react";
-import {DropDown} from "../dropdown/dropdown";
-import {useAuth} from "../../ctx/auth";
-import {deleteSession} from "../../services/session";
-import {useUser} from "../../ctx/user";
-import {useLoading} from "../../ctx/loading/loading";
-import {concatClasses} from "../../util";
-import {LogoutIcon, SettingsIcon} from "../semoxy/icons";
+import React from "react"
+import {DropDown} from "../dropdown/dropdown"
+import {useAuth} from "../../ctx/auth"
+import {deleteSession} from "../../services/session"
+import {useUser} from "../../ctx/user"
+import {useLoading} from "../../ctx/loading/loading"
+import {concatClasses} from "../../util"
+import {LogoutIcon, SettingsIcon} from "../semoxy/icons"
 
 
 export const UserDropdown: React.FC = () => {

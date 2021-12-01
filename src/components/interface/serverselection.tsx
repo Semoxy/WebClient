@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useRef} from "react";
+import React, {useCallback, useEffect, useRef} from "react"
 import styles from "./serverselection.module.css"
-import {useServers} from "../../ctx/server";
-import {useHistory} from "react-router";
-import {Server} from "../../services/server";
-import {DropDown} from "../dropdown/dropdown";
-import {concatClasses} from "../../util";
+import {useServers} from "../../ctx/server"
+import {useHistory} from "react-router"
+import {Server} from "../../services/server"
+import {DropDown} from "../dropdown/dropdown"
+import {concatClasses} from "../../util"
 
 export const ServerSelection: React.FC = () => {
     const servers = useServers()
@@ -13,13 +13,13 @@ export const ServerSelection: React.FC = () => {
     const lastId = useRef<string | undefined>(servers.currentServer?.id)
 
     const rerouteToServerId = useCallback((newId?: string) => {
-        if (!newId) return;
-        if (lastId.current === newId) return;
+        if (!newId) return
+        if (lastId.current === newId) return
 
         // redirect to server overview when the server was switched but no server page is open or no previous server was selected
         if (!history.location.pathname.startsWith("/server") || history.location.pathname.startsWith("/server/new") || !lastId.current) {
             history.replace(`/server/${newId}`)
-            return;
+            return
         }
 
         let newRoute = history.location.pathname.slice()

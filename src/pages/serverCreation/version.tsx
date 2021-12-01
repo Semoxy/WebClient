@@ -1,10 +1,10 @@
-import React from "react";
-import {PageBox} from "../../components/interface/boxes/box";
-import {LightHeading} from "../../components/interface/boxes/headline";
+import React from "react"
+import {PageBox} from "../../components/interface/boxes/box"
+import {LightHeading} from "../../components/interface/boxes/headline"
 import styles from "./version.module.css"
-import {Software} from "./serverCreation";
-import {DefaultDropDownItem, DropDown} from "../../components/dropdown/dropdown";
-import {useInfo} from "../../ctx/info";
+import {Software} from "./serverCreation"
+import {DefaultDropDownItem, DropDown} from "../../components/dropdown/dropdown"
+import {useInfo} from "../../ctx/info"
 
 
 interface IVersionSelectionProps {

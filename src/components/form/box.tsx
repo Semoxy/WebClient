@@ -1,5 +1,6 @@
-import React from "react";
+import React from "react"
 import styles from "./box.module.css"
+import {concatClasses} from "../../util"
 
 interface IFormBoxProps {
     onSubmit?(): void,
@@ -7,11 +8,8 @@ interface IFormBoxProps {
 }
 
 const FormBox: React.FC<IFormBoxProps> = ({children, onSubmit, className}) => {
-    const classNames = [styles.container]
-    className && classNames.push(className)
-
     return <div
-        className={classNames.join(" ")}
+        className={concatClasses(styles.container, className)}
         onKeyDown={(e) => e.key === "Enter" && onSubmit && onSubmit()}
     >
         {children}

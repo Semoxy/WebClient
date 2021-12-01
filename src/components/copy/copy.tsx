@@ -1,8 +1,8 @@
-import React, {useRef, MouseEvent} from "react";
-import Input, {IInputProps} from "../input";
-import {CopyIcon} from "../semoxy/icons";
-import Button, {IButtonProps} from "../button";
-import {IAlert, useAlert} from "../../ctx/alert/alertctx";
+import React, {useRef, MouseEvent} from "react"
+import Input, {IInputProps} from "../input"
+import {CopyIcon} from "../semoxy/icons"
+import Button, {IButtonProps} from "../button"
+import {IAlert, useAlert} from "../../ctx/alert/alertctx"
 
 
 export interface ICopyButtonProps extends Partial<IButtonProps> {

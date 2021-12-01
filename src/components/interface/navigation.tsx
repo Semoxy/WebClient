@@ -1,8 +1,8 @@
 import styles from "./navigation.module.css"
-import React from "react";
-import {ServerSelection} from "./serverselection";
-import { NavLink } from "react-router-dom";
-import {useServers} from "../../ctx/server";
+import React from "react"
+import {ServerSelection} from "./serverselection"
+import { NavLink } from "react-router-dom"
+import {useServers} from "../../ctx/server"
 import {
     AddonIcon,
     BackupIcon,
@@ -11,18 +11,16 @@ import {
     OverviewIcon,
     PlayerIcon,
     SettingsIcon, UserIcon, WorldIcon
-} from "../semoxy/icons";
-import {useDesign} from "../../ctx/design";
+} from "../semoxy/icons"
+import {useDesign} from "../../ctx/design"
+import {concatClasses} from "../../util"
 
 
 export const Navigation: React.FC = () => {
     const server = useServers().currentServer
     const design = useDesign()
 
-    const classNames = [styles.nav]
-    !design.contentShown && classNames.push(styles.full)
-
-    return <nav className={classNames.join(" ")}>
+    return <nav className={concatClasses(styles.nav, !design.contentShown && styles.full)}>
         { server && <ServerSelection /> }
         <NavigationSection>
             <NavigationItem text={"Dashboard"} icon={<OverviewIcon />} redirect={"/dashboard"} />

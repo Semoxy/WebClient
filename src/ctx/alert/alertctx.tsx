@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react"
 import styles from "./alert.module.css"
-import Alert from "./alert";
+import Alert from "./alert"
 
 export type AlertType = "success" | "warning" | "error" | "info"
 
@@ -21,7 +21,7 @@ const AlertContext = React.createContext<IAlertContextProps>({
 })
 
 export const AlertProvider: React.FC = ({children}) => {
-    const [alertStack, setAlertStack] = useState<IAlert[]>([]);
+    const [alertStack, setAlertStack] = useState<IAlert[]>([])
 
     const alerts = useRef(alertStack)
     alerts.current = alertStack
@@ -60,7 +60,7 @@ export const AlertProvider: React.FC = ({children}) => {
 }
 
 export function useAlert() {
-    return useContext(AlertContext);
+    return useContext(AlertContext)
 }
 
 export default AlertContext

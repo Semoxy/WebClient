@@ -1,8 +1,8 @@
-import React from "react";
-import {PageBox} from "../../components/interface/boxes/box";
-import {LightHeading} from "../../components/interface/boxes/headline";
+import React from "react"
+import {PageBox} from "../../components/interface/boxes/box"
+import {LightHeading} from "../../components/interface/boxes/headline"
 import styles from "./details.module.css"
-import Input, {TextArea} from "../../components/input";
+import Input, {TextArea} from "../../components/input"
 
 
 interface IDetailsSectionProps {

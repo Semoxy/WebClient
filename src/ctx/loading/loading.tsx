@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react"
-import FullSizeContainer from "../../components/form/full";
+import FullSizeContainer from "../../components/form/full"
 import styles from "./loading.module.css"
 
 interface LoadingContextProps {

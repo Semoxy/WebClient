@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 import "./colors.css"
 
-import { ErrorProvider } from "./ctx/error";
-import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./ctx/auth";
-import { LoadingProvider } from "./ctx/loading/loading";
-import { AlertProvider } from "./ctx/alert/alertctx";
-import { App } from "./app";
-import {StatusProvider} from "./ctx/status";
-import {DesignProvider} from "./ctx/design";
+import { ErrorProvider } from "./ctx/error"
+import { BrowserRouter } from "react-router-dom"
+import { AuthProvider } from "./ctx/auth"
+import { LoadingProvider } from "./ctx/loading/loading"
+import { AlertProvider } from "./ctx/alert/alertctx"
+import { App } from "./app"
+import {StatusProvider} from "./ctx/status"
+import {DesignProvider} from "./ctx/design"
 
 
 /*
@@ -42,4 +42,4 @@ ReactDOM.render(
         <App />
     </AppContexts>,
     document.getElementById('root')
-);
+)

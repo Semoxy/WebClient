@@ -1,13 +1,13 @@
-import React from "react";
-import {useServers} from "../../ctx/server";
-import {restartServer, Server, stopServer} from "../../services/server";
-import styles from "./onlineServers.module.css";
-import {EmptyState} from "./onlinePlayers";
-import Button from "../../components/button";
-import {useHistory} from "react-router";
-import {GoToIcon, RestartIcon, StopIcon} from "../../components/semoxy/icons";
-import {concatClasses} from "../../util";
-import {serverStatusButtonTypes} from "../server/overview";
+import React from "react"
+import {useServers} from "../../ctx/server"
+import {restartServer, Server, stopServer} from "../../services/server"
+import styles from "./onlineServers.module.css"
+import {EmptyState} from "./onlinePlayers"
+import Button from "../../components/button"
+import {useHistory} from "react-router"
+import {GoToIcon, RestartIcon, StopIcon} from "../../components/semoxy/icons"
+import {concatClasses} from "../../util"
+import {serverStatusButtonTypes} from "../server/overview"
 
 
 const ServerStopButton: React.FC<{server: Server}> = ({server}) => {

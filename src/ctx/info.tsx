@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Info, getInfo} from "../services/info";
-import {useLoading} from "./loading/loading";
+import React, {useContext, useEffect, useState} from "react"
+import {Info, getInfo} from "../services/info"
+import {useLoading} from "./loading/loading"
 
 interface IInfoContextProps extends Info {
     setRAMCPUUsage(ramUsage: number, cpuUsage: number): void
@@ -26,7 +26,7 @@ export const InfoProvider: React.FC = ({children}) => {
         systemRAM: 0,
         ramUsage: 0,
         cpuUsage: 0
-    });
+    })
     const [infoFetched, setInfoFetched] = useState(false)
 
     const loading = useLoading()

@@ -1,8 +1,8 @@
 import styles from "./entry.module.css"
-import React from "react";
-import {ServerEvent} from "../../services/server";
-import {ConsoleCommandEvent, ConsoleMessageEvent} from "../../services/event";
-import {getIdTimestamp} from "../../util";
+import React from "react"
+import {ServerEvent} from "../../services/server"
+import {ConsoleCommandEvent, ConsoleMessageEvent} from "../../services/event"
+import {getIdTimestamp} from "../../util"
 
 
 const timeStampRemove = /^\[\d+:\d+:\d+ [A-Z]+]: /

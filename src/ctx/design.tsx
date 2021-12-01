@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
-import {useMediaQuery} from "react-responsive";
-import {useStorage} from "../hooks";
+import React, {useContext, useState} from "react"
+import {useMediaQuery} from "react-responsive"
+import {useStorage} from "../hooks"
 
 interface IDesignContextProps {
     navbarOpen: boolean,

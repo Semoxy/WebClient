@@ -1,14 +1,14 @@
 import styles from "./createRootUser.module.css"
-import React, {useEffect, useRef, useState} from "react";
-import FullSizeContainer from "../../components/form/full";
-import FormBox, {StrongHeading, BoxText} from "../../components/form/box";
-import {LoginScreenLogo} from "../../components/semoxy";
-import Input from "../../components/input";
-import Button from "../../components/button";
-import {useHistory} from "react-router";
-import {createRootUser} from "../../services/userCreation";
-import {useAlert} from "../../ctx/alert/alertctx";
-import {useSemoxyStatus} from "../../ctx/status";
+import React, {useEffect, useRef, useState} from "react"
+import FullSizeContainer from "../../components/form/full"
+import FormBox, {StrongHeading, BoxText} from "../../components/form/box"
+import {LoginScreenLogo} from "../../components/semoxy"
+import Input from "../../components/input"
+import Button from "../../components/button"
+import {useHistory} from "react-router"
+import {createRootUser} from "../../services/userCreation"
+import {useAlert} from "../../ctx/alert/alertctx"
+import {useSemoxyStatus} from "../../ctx/status"
 
 
 export const CreateRootUserView: React.FC = () => {
@@ -43,7 +43,7 @@ export const CreateRootUserView: React.FC = () => {
                 message: "No Access Secret Provided",
                 description: "Please enter the 48 character access secret that you can find in the \"root.txt\" inside your server root directory"
             })
-            return;
+            return
         }
 
         setLoading(true)
@@ -65,7 +65,7 @@ export const CreateRootUserView: React.FC = () => {
                     errorMessage = "Root User already existing"
                     errorDescription = "Redirecting you to the login page"
                     history.push("/login")
-                    break;
+                    break
                 }
                 case "Wrong Token": {
                     errorMessage = "Wrong Secret"

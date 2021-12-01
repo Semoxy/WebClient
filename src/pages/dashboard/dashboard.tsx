@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Headline} from "../index";
-import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons";
-import {useInfo} from "../../ctx/info";
-import {useServers} from "../../ctx/server";
-import {calculateUptime, formatTime} from "../../util";
-import {OverviewItem, OverviewItemList} from "../../components/interface/dashboardcards";
-import {BoxRow, PageBox} from "../../components/interface/boxes/box";
-import {LightHeading} from "../../components/interface/boxes/headline";
-import {OnlineServerList} from "./onlineServers";
-import {OnlinePlayerList} from "./onlinePlayers";
+import React, {useEffect, useState} from "react"
+import {Headline} from "../index"
+import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons"
+import {useInfo} from "../../ctx/info"
+import {useServers} from "../../ctx/server"
+import {calculateUptime, formatTime} from "../../util"
+import {OverviewItem, OverviewItemList} from "../../components/interface/dashboardcards"
+import {BoxRow, PageBox} from "../../components/interface/boxes/box"
+import {LightHeading} from "../../components/interface/boxes/headline"
+import {OnlineServerList} from "./onlineServers"
+import {OnlinePlayerList} from "./onlinePlayers"
 
 
 function useUptime(): number {

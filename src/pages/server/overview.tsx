@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from "react";
-import {OverviewItem, OverviewItemList} from "../../components/interface/dashboardcards";
-import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons";
-import {calculateUptime, formatTime, getIdTimestamp} from "../../util";
-import {useServers} from "../../ctx/server";
-import {Headline} from "../index";
-import {BoxRow, ButtonRow, PageBox} from "../../components/interface/boxes/box";
-import {LightHeading} from "../../components/interface/boxes/headline";
+import React, {useEffect, useState} from "react"
+import {OverviewItem, OverviewItemList} from "../../components/interface/dashboardcards"
+import {CPUIcon, PlayerOverviewIcon, RamIcon, UptimeIcon} from "../../components/semoxy/icons"
+import {calculateUptime, formatTime, getIdTimestamp} from "../../util"
+import {useServers} from "../../ctx/server"
+import {Headline} from "../index"
+import {BoxRow, ButtonRow, PageBox} from "../../components/interface/boxes/box"
+import {LightHeading} from "../../components/interface/boxes/headline"
 import styles from "./overview.module.css"
-import {useInfo} from "../../ctx/info";
-import {CopyField} from "../../components/copy/copy";
-import Button, {ButtonType} from "../../components/button";
-import Input from "../../components/input";
-import {APIRequest} from "../../services";
-import {Software} from "../serverCreation/serverCreation";
-import {getEvents, restartServer, Server, startServer, stopServer} from "../../services/server";
-import {useSocketMessage} from "../../ctx/socket";
-import {ServerStateChangePacket} from "../../services/socket";
+import {useInfo} from "../../ctx/info"
+import {CopyField} from "../../components/copy/copy"
+import Button, {ButtonType} from "../../components/button"
+import Input from "../../components/input"
+import {APIRequest} from "../../services"
+import {Software} from "../serverCreation/serverCreation"
+import {getEvents, restartServer, Server, startServer, stopServer} from "../../services/server"
+import {useSocketMessage} from "../../ctx/socket"
+import {ServerStateChangePacket} from "../../services/socket"
 
 
 interface IServerStatusProps {
