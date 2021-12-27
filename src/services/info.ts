@@ -1,4 +1,5 @@
 import {APIRequest} from "./index"
+import {ErrorContextProps} from "../ctx/error";
 
 export interface Info {
     javaVersions: {[x: string]: string},
@@ -25,7 +26,8 @@ export interface SemoxyStatus {
     hasRoot: boolean
 }
 
-export async function getStatus(): Promise<SemoxyStatus> {
+export async function getStatus(e?: ErrorContextProps): Promise<SemoxyStatus> {
     let request = new APIRequest("/")
+    request.registerError(e)
     return (await request.get()).data
 }

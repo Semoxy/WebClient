@@ -21,7 +21,23 @@ export function getEventTime(event: ServerEvent<any>, includeDate?: boolean): st
 }
 
 
-export const ConsoleMessage: React.FC<{event: ServerEvent<ConsoleMessageEvent>}> = ({event}) => {
+export function entryFromEvent<T>(event: ServerEvent<any>): JSX.Element | null {
+    switch (event.type) {
+        case "CONSOLE_MESSAGE":
+            return <ConsoleMessage key={event.id} event={event as ServerEvent<ConsoleMessageEvent>} />
+        case "CONSOLE_COMMAND":
+            return <ConsoleCommand key={event.id} event={event as ServerEvent<ConsoleCommandEvent>} />
+    }
+    return null;
+}
+
+
+interface IConsoleEntryProps<T> {
+    event: ServerEvent<T>
+}
+
+
+export const ConsoleMessage: React.FC<IConsoleEntryProps<ConsoleMessageEvent>> = ({event}) => {
     let msg = event.data.message.replace(timeStampRemove, "")
 
     return <div className={styles.entry}>
@@ -30,7 +46,7 @@ export const ConsoleMessage: React.FC<{event: ServerEvent<ConsoleMessageEvent>}>
     </div>
 }
 
-export const ConsoleCommand: React.FC<{event: ServerEvent<ConsoleCommandEvent>}> = ({event}) => {
+export const ConsoleCommand: React.FC<IConsoleEntryProps<ConsoleCommandEvent>> = ({event}) => {
     return <div className={styles.entry}>
         <span>
             <img alt={"Server Command"} src={"assets/cmd_block.png"} />

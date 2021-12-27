@@ -10,7 +10,7 @@ import {
     startServer
 } from "../../services/server"
 import {ConsoleCommandEvent, ConsoleMessageEvent, ServerStartEvent, ServerStopEvent} from "../../services/event"
-import {ConsoleCommand, ConsoleMessage} from "./entry"
+import {entryFromEvent} from "./entry"
 import {ButtonRow} from "../../components/interface/boxes/box"
 import Input from "../../components/input"
 import Button from "../../components/button"
@@ -18,84 +18,23 @@ import {concatClasses, getIdTimestamp} from "../../util"
 import {useSocketMessage} from "../../ctx/socket"
 import {ServerEventPacket} from "../../services/socket"
 import {EmptyState} from "../dashboard/onlinePlayers"
-import {useStorageJSON} from "../../hooks"
 import {Event} from "../../services/event"
 import {useAlert} from "../../ctx/alert/alertctx"
-
-
-function useScrollBottom(offset: number): [boolean, UIEventHandler<HTMLDivElement>] {
-    const [isAtBottom, setAtBottom] = useState(false)
-
-    const onScroll: UIEventHandler<HTMLDivElement> = (e) => {
-        if (e.currentTarget.scrollTop + e.currentTarget.clientHeight >= e.currentTarget.scrollHeight - offset) {
-            setAtBottom(true)
-        } else if (isAtBottom) {
-            setAtBottom(false)
-        }
-    }
-
-    return [isAtBottom, onScroll]
-}
-
-
-function useCommandHistory(): [string | null, () => void, () => void, () => void, (_: string) => void] {
-    const [command, setCommand] = useState<string | null>("")
-    const [currentCommand, setCurrentCommand] = useState<string | null>("")
-    const [cmdHistory, setCmdHistory] = useStorageJSON<string[]>("Semoxy_CommandHistory", localStorage, [])
-    const [historyIndex, setHistoryIndex] = useState<number>(-1)
-
-    function commandSent() {
-        if (!command) {
-            return
-        }
-
-        let newHistory = cmdHistory.slice()
-        if (command === cmdHistory[historyIndex]) {
-            newHistory = newHistory.filter(s => s !== command)
-        }
-        newHistory.unshift(command)
-        setCmdHistory(newHistory)
-        setHistoryIndex(-1)
-        setCommand(null)
-    }
-
-    function up() {
-        if (historyIndex === -1) {
-            setCurrentCommand(command)
-        }
-
-        const newIndex = Math.min(historyIndex + 1, cmdHistory.length - 1)
-        setHistoryIndex(newIndex)
-        console.log(newIndex)
-    }
-
-    function down() {
-        const newIndex = Math.max(historyIndex - 1, -1)
-        setHistoryIndex(newIndex)
-        console.log(newIndex)
-    }
-
-    useEffect(() => {
-        if (historyIndex < 0) {
-            setCommand(currentCommand)
-        } else {
-            setCommand(cmdHistory[historyIndex] || command)
-        }
-    }, [historyIndex])
-
-    return [command, commandSent, up, down, setCommand]
-}
+import {useCommandHistory, useScrollBottom} from "./hooks";
 
 
 export const ConsoleView: React.FC = () => {
     const server = useServers()
     const [messages, setMessages] = useState<ServerEvent<Event>[]>([])
     const scrollRef = useRef<HTMLDivElement | null>(null)
-    const [isAtBottom, onScroll] = useScrollBottom(15)
+    const [isAtBottom, scrollHookCallback] = useScrollBottom(15)
     const [serverStarting, setServerStarting] = useState(false)
     const alert = useAlert()
     const [startEvent, setStartEvent] = useState<ServerEvent<ServerStartEvent>>()
     const [command, commandSent, up, down, setCommand] = useCommandHistory()
+    const fetchingMessages = useRef(false)
+    const fetchedPage = useRef(0)
+    const lastPage = useRef(false)
 
     useSocketMessage((p: ServerEventPacket<ConsoleMessageEvent>) => {
         if (p.data.serverId !== server.currentServerId) return
@@ -107,6 +46,7 @@ export const ConsoleView: React.FC = () => {
         let newMsgs = messages.slice()
         newMsgs.push(serverEventFromSocketEvent(p))
         setMessages(newMsgs)
+        scrollToBottom()
     }, "CONSOLE_MESSAGE")
 
     useSocketMessage((p: ServerEventPacket<ConsoleCommandEvent>) => {
@@ -115,6 +55,7 @@ export const ConsoleView: React.FC = () => {
         const newMsgs = messages.slice()
         newMsgs.push(serverEventFromSocketEvent(p))
         setMessages(newMsgs)
+        scrollToBottom()
     }, "CONSOLE_COMMAND")
 
     useSocketMessage((p: ServerEventPacket<ServerStopEvent>) => {
@@ -128,10 +69,6 @@ export const ConsoleView: React.FC = () => {
 
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-
-    useEffect(() => {
-        scrollToBottom()
-    }, [messages])
 
     useEffect(() => {
         if (!server.currentServerId) return
@@ -152,16 +89,36 @@ export const ConsoleView: React.FC = () => {
         })
     }, [server.currentServerId])
 
-    useEffect(() => {
+    function fetchOlderMessages() {
         if (!server.currentServerId || !startEvent) return
+        if (lastPage.current) return;
 
+        if (fetchedPage.current === 0) {
+            setMessages([])
+        }
+
+        fetchingMessages.current = true
         getEvents<ConsoleMessageEvent>(server.currentServerId, {
-            amount: 256,
-            min_time: getIdTimestamp(startEvent.id)
+            amount: 16,
+            min_time: getIdTimestamp(startEvent.id),
+            order: "desc",
+            page: fetchedPage.current
         }).then(e => {
-            setMessages(e)
+            if (e.length === 0) {
+                lastPage.current = true
+            }
+
+            const newMessages = messages.slice()
+            newMessages.unshift(...e)
+            setMessages(newMessages)
+            fetchingMessages.current = false
+
+            if (fetchedPage.current === 0) {
+                scrollToBottom()
+            }
         })
-    }, [startEvent])
+    }
+    useEffect(fetchOlderMessages, [startEvent])
 
     function sendCommand() {
         if (!command) return
@@ -177,18 +134,21 @@ export const ConsoleView: React.FC = () => {
         sendServerCommand(server.currentServerId as string, command).then(commandSent)
     }
 
+    const onScroll: UIEventHandler<HTMLDivElement> = (e) => {
+        scrollHookCallback(e)
+
+        const scrollProgress = e.currentTarget.scrollTop / (e.currentTarget.scrollHeight - e.currentTarget.clientHeight)
+        if (scrollProgress < 0.45 && !fetchingMessages.current) {
+            fetchingMessages.current = true
+            fetchedPage.current++
+            fetchOlderMessages()
+        }
+    }
+
     return <>
         <Headline>Server Console</Headline>
         <div className={styles.list} ref={scrollRef} onScroll={onScroll}>
-            {messages.map(msg => {
-                switch (msg.type) {
-                    case "CONSOLE_MESSAGE":
-                        return <ConsoleMessage key={msg.id} event={msg as ServerEvent<ConsoleMessageEvent>} />
-                    case "CONSOLE_COMMAND":
-                        return <ConsoleCommand key={msg.id} event={msg as ServerEvent<ConsoleCommandEvent>} />
-                }
-            }
-            )}
+            {messages.map(entryFromEvent)}
             { messages.length === 0 &&
                 <EmptyState title={"No Console Messages"} description={server.currentServer?.onlineStatus === 0 ? "Start your Server to see some!" : "Wait for some to arrive"}>
                     { server.currentServer?.onlineStatus === 0 && <Button type={"primary"} loading={serverStarting} border onClick={() => {

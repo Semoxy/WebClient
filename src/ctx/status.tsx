@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react"
 import {getStatus, SemoxyStatus} from "../services/info"
 import {useLoading} from "./loading/loading"
 import {useHistory} from "react-router"
+import {useError} from "./error";
 
 
 interface IStatusContextProps {
@@ -36,6 +37,7 @@ export const StatusProvider: React.FC = ({children}) => {
 
     const loading = useLoading()
     const history = useHistory()
+    const err = useError()
 
     useEffect(() => {
         if (!status.hasRoot) {
@@ -46,7 +48,7 @@ export const StatusProvider: React.FC = ({children}) => {
     function reload() {
         setFetched(false)
         loading.requestIntent("Loading Semoxy Status", "LOAD_STATUS")
-        getStatus().then(s => {
+        getStatus(err).then(s => {
             setStatus(s)
             loading.finishIntent("LOAD_STATUS")
             setFetched(true)

@@ -1,5 +1,6 @@
-import Axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import Axios, { AxiosRequestConfig, AxiosResponse} from "axios"
 import {buildUrl} from "../util"
+import {ErrorContextProps} from "../ctx/error";
 
 export function getSessionId(): string | null {
     return localStorage.getItem("Semoxy_Session")
@@ -11,17 +12,25 @@ export function getAPIUrl(path: string): string {
 
 export class APIRequest {
     private readonly requestConfig: AxiosRequestConfig
+    private errorContext: ErrorContextProps | null
 
     constructor(uri: string, query?: { [x: string]: any }) {
         this.requestConfig = {
             url: buildUrl(uri, query),
             headers: {}
         }
+        this.errorContext = null
     }
 
     setData(data: any): APIRequest {
         this.requestConfig.data = data
         return this
+    }
+
+    registerError(ctx?: ErrorContextProps) {
+        if (!ctx) return
+
+        this.errorContext = ctx
     }
 
     addCredentials(): APIRequest {
@@ -31,7 +40,27 @@ export class APIRequest {
     }
 
     async request(): Promise<AxiosResponse> {
-        return Axios.request(this.requestConfig)
+        try {
+            return await Axios.request(this.requestConfig)
+        } catch (e) {
+            // @ts-ignore
+            if (!this.errorContext) return
+            let out: AxiosResponse | null = null
+
+            await this.errorContext.pushError({
+                retryCallback: () => {
+                    this.request().then(e => {
+                        console.log(e)
+                        out = e
+                    })
+                    return true
+                },
+                name: "Request Error",
+                description: "Sees"
+            })
+
+            return out as unknown as AxiosResponse
+        }
     }
 
     async get(): Promise<AxiosResponse> {

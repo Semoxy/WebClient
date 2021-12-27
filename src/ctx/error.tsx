@@ -1,22 +1,39 @@
 import React, {useContext, useState} from "react"
 
+interface AsyncEvent<T> {
+    set(value: T): void,
+    promise: Promise<T>
+}
+
+function newAsyncEvent<T>() {
+    // @ts-ignore
+    let out: AsyncEvent<T> = {}
+
+    out.promise =  new Promise((res) => {
+        out.set = res
+    })
+
+    return out
+}
+
 interface Error {
     name: string,
     description: string,
-    retryCallback?(): boolean
+    retryCallback?(): boolean,
+    _p?: AsyncEvent<void>
 }
 
-interface ErrorContextProps {
+export interface ErrorContextProps {
     errors: Error[],
     currentError?: Error,
-    pushError(e: Error): void,
-    popError(): void
+    pushError(e: Error): Promise<void>,
+    popError(): Error | undefined
 }
 
 const ErrorContext = React.createContext<ErrorContextProps>({
     errors: [],
-    pushError(_: Error) {},
-    popError() {}
+    pushError(_: Error) {return new Promise(() => {})},
+    popError: () => undefined
 })
 
 export const ErrorProvider: React.FC = ({children}) => {
@@ -24,21 +41,29 @@ export const ErrorProvider: React.FC = ({children}) => {
 
     function pushError(e: Error) {
         let newErrors = errors.slice()
+        if (!e._p) {
+            e._p = newAsyncEvent()
+        }
         newErrors.push(e)
         setErrors(newErrors)
+        return e._p.promise
     }
 
-    function popError() {
+    function popError(): Error | undefined {
         let newErrors = errors.slice()
-        newErrors.pop()
+        const out = newErrors.pop()
         setErrors(newErrors)
+        return out
     }
 
     const currentError = errors[errors.length - 1]
 
     function callRetry() {
+        const err = popError() as Error
         if (currentError.retryCallback === undefined || currentError.retryCallback()) {
-            popError()
+            currentError._p?.set()
+        } else {
+            pushError(err)
         }
     }
 
