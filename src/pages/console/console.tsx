@@ -109,7 +109,7 @@ export const ConsoleView: React.FC = () => {
             }
 
             const newMessages = messages.slice()
-            newMessages.unshift(...e)
+            newMessages.unshift(...e.reverse())
             setMessages(newMessages)
             fetchingMessages.current = false
 

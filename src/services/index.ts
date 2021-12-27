@@ -43,6 +43,7 @@ export class APIRequest {
         try {
             return await Axios.request(this.requestConfig)
         } catch (e) {
+            // FIXME: EVERYTHING IS BROKEN HERE
             // @ts-ignore
             if (!this.errorContext) return
             let out: AxiosResponse | null = null
